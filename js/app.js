@@ -1,11 +1,15 @@
 import { renderHeader } from './components/header.js'
+import { renderFooter } from './components/footer.js'
 
 async function bootstrap() {
-    const app = document.getElementById('app')
+    const headerContainer = document.getElementById('header-container');
+    const footerContainer = document.getElementById('footer-container');
 
     //renderiza componentes globais
     const header = renderHeader({})
-    app.prepend(header)
+    const footer = renderFooter()
+    headerContainer.appendChild(header);
+    footerContainer.appendChild(footer);
 
     //capta data page da pagina atual, para identificação
     const page = document.body.dataset.page
@@ -29,4 +33,7 @@ async function bootstrap() {
         default:
             console.warn(`Página "${page}" não reconhecida.`);
     }
+    
 }
+
+document.addEventListener('DOMContentLoaded', bootstrap)
