@@ -139,10 +139,5 @@ Como o MVP é uma aplicação 100% client-side, não há necessidade de instalar
 
 A documentação técnica completa do projeto (visão geral, requisitos funcionais e não funcionais, casos de uso e arquitetura) está disponível separadamente na documentação técnica do Beebop.
 
-## 👨‍💻 Autores
-
-- Allan Otavio P. Reis
-- Guilherme de Miranda Silva
-- João P. de Araújo Dias
 
 Projeto desenvolvido como Projeto Integrador (PI) do programa **Serasa Experian - Transforme-se**, em parceria com o **SENAC-DF**.
