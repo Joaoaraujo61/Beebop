@@ -6,8 +6,8 @@ export function renderHeader({ onSearch, initialQuery = '' } = {}) {
 
   header.innerHTML = `
     <div class="header__logo">
-      <a href="/index.html">Beebop</a>
-    </div>
+      <a href="/index.html"><img src="../../../assets/beebop.png"></a>
+   
     <form class="header__search-form">
       <input 
         type="text" 
@@ -19,7 +19,7 @@ export function renderHeader({ onSearch, initialQuery = '' } = {}) {
     </form>
     <nav class="header__nav">
       <a href="/playlists.html">Playlists</a>
-    </nav>
+    </nav> </div>
   `;
 
   // Eventos ficam encapsulados aqui dentro — a página não precisa
