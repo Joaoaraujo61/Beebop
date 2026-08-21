@@ -1,18 +1,23 @@
-// pages/Inicio/inicio.js
+// js/pages/Inicio/inicio.js
 
-import { renderHeader } from '../../components/header.js';
+// import { searchSongs } from '../../services/itunesApi.js';
+// import { appState } from '../../store/appState.js';
 
-function initInicioPage() {
-  const app = document.getElementById('app');
+export function initInicioPage({ header }) {
+  // "header" já vem pronto, injetado pelo app.js
 
-  const header = renderHeader({
-    onSearch: (query) => {
-      console.log('Buscando por:', query);
-      // lógica de busca aqui
-    }
-  });
+  // async function handleSearch(query) {
+  //   appState.setSearchQuery(query);
+  //   const results = await searchSongs(query);
+  //   appState.setResults(results);
+  //   renderResults(results);
+  // }
 
-  app.appendChild(header);
+  // function renderResults(results) {
+    const container = document.getElementById('results-container');
+    container.innerHTML = '<p>llllll</p>';
+  // }
+
+  // conecta o header desta página específica ao handler
+  //header.setOnSearch(handleSearch);
 }
-
-document.addEventListener('DOMContentLoaded', initInicioPage);
