@@ -1,4 +1,77 @@
-.header__logo{
-    background-color: #0F0F0F;
-    opacity: 0.35;
+header{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    background-color: rgba(15, 15, 15, 0.35);
+    gap: 10%;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: auto;
+}
+a{
+    color: #E5E7EB;
+    text-decoration: none;
+}
+.header__logo_nav{
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+}
+.header__logo_nav > a > img{
+    width: 110%;
+}
+.header__nav{
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    margin: auto;
+}
+.header__nav > a{
+    font-weight: 600;
+    background-color: #2a2a2a7a;
+    padding: 9px 15px 9px 15px;
+    border: 0.5px solid #45464a6f;
+    border-radius: 20px;
+}
+.header__search_form{
+    display: flex;
+    margin-top: auto;
+    margin-bottom: auto;
+    background: linear-gradient(rgb(33, 32, 32), rgb(22, 16, 16));
+    padding: 10px;
+    width: 20%;
+    border-radius: 20px;
+}
+.header__search_form > input{
+    font-size: 16px;
+    background: transparent;
+    border: none;
+    width: 100%;
+    outline: none;
+    color: white;
+}
+.header__search_form > input:focus{
+
+}
+.header_login{
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.header_login > a{
+    font-weight: 600;
+    background-color: #2a2a2a7a;
+    padding: 9px 15px 9px 15px;
+    border: 0.5px solid #45464a6f;
+    border-radius: 20px;
+}
+.header_account{
+    font-weight: 600;
+    background: linear-gradient( rgb(244, 205, 80), rgb(254, 233, 165));
+    color: #111827;
+    padding: 7px 15px 7px 15px;
+    border: 0.5px solid #45464a6f;
+    border-radius: 20px;
 }
