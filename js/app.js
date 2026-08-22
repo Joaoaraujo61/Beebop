@@ -7,7 +7,7 @@ async function bootstrap() {
 
     //renderiza componentes globais
     const header = renderHeader({})
-    const footer = renderFooter()
+    const footer = renderFooter({})
     headerContainer.appendChild(header);
     footerContainer.appendChild(footer);
 

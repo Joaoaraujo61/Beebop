@@ -1,3 +1,6 @@
+
+/*--------- Header ---------*/
+
 header{
     display: flex;
     width: 100%;
@@ -33,6 +36,18 @@ a{
     border: 0.5px solid #45464a6f;
     border-radius: 20px;
 }
+.header__nav > a:hover{
+    background-color: #dfd07824;
+}
+body[data-page="inicio"] #inicio_nav{
+    background-color: #e0cd646e;
+}
+body[data-page="explorar"] #explorar_nav{
+    background-color: #e0cd646e;
+}
+body[data-page="charts"] #charts_nav{
+    background-color: #e0cd646e;
+}
 .header__search_form{
     display: flex;
     margin-top: auto;
@@ -41,6 +56,9 @@ a{
     padding: 10px;
     width: 20%;
     border-radius: 20px;
+}
+.header__search_form>i{
+    color: rgb(156, 163, 175);
 }
 .header__search_form > input{
     font-size: 16px;
@@ -67,6 +85,9 @@ a{
     border: 0.5px solid #45464a6f;
     border-radius: 20px;
 }
+.header_login > a:hover{
+    background-color: #2a2a2a47;
+}
 .header_account{
     font-weight: 600;
     background: linear-gradient( rgb(244, 205, 80), rgb(254, 233, 165));
@@ -75,3 +96,39 @@ a{
     border: 0.5px solid #45464a6f;
     border-radius: 20px;
 }
+
+/*--------- Footer ---------*/
+
+footer{
+    display: flex;
+    width: 100%;
+    height: 30vh;
+    flex-direction: row;
+    background-color: rgba(15, 15, 15, 0.737);
+    gap: 10%;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: auto;
+    color: rgb(163, 156, 141);
+    font-size:  16px;
+}
+.footer_beebop{
+    flex: 1;
+}
+
+.footer_links{
+    flex: 2;
+}
+.footer_links th, td{
+    padding: 10px;
+    text-align: left;
+    margin: 0;
+}
+.footer_links th{
+    font-weight: 900 ;
+}
+
+.footer_copyright{
+    width: 100%;
+}
+
