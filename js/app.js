@@ -7,7 +7,7 @@ async function bootstrap() {
 
     //renderiza componentes globais
     const header = renderHeader({})
-    const footer = renderFooter()
+    const footer = renderFooter({})
     headerContainer.appendChild(header);
     footerContainer.appendChild(footer);
 
@@ -28,6 +28,16 @@ async function bootstrap() {
         case 'artista': {
             const { initArtistaPage } = await import('./pages/Artista/artista.js');
             initArtistaPage({ header });
+            break;
+        }
+        case 'login': {
+            const { initLoginPage } = await import('./pages/Login/login.js');
+            initLoginPage({ header });
+            break;
+        }
+        case 'criar_conta': {
+            const { initCadastroPage } = await import('./pages/CriarConta/criar_conta.js');
+            initCadastroPage({ header });
             break;
         }
         default:

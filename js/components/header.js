@@ -7,10 +7,10 @@ export function renderHeader({ onSearch, initialQuery = '' } = {}) {
   header.innerHTML = `
       <div class="header__logo_nav">
         <a href="/index.html"><img src="../../../assets/beebop.png"></a>
-        <nav class="header__nav">
-          <a href="/playlists.html">Inicio</a>
-          <a href="/playlists.html">Explorar</a>
-          <a href="/playlists.html">Charts</a>
+        <nav class="header__nav ">
+          <a id="inicio_nav" href="../Inicio/inicio.html">Inicio</a>
+          <a id="explorar_nav" href="../Explorar/explorar.html">Explorar</a>
+          <a id="charts_nav" href="../Charts/charts.html">Charts</a>
         </nav>
       </div>
       <form class="header__search_form">
@@ -23,8 +23,8 @@ export function renderHeader({ onSearch, initialQuery = '' } = {}) {
       <i class="fa-solid fa-magnifying-glass" style="color: rgb(156, 163, 175);"></i>
       </form>
       <div class="header_login">
-        <a href="/playlists.html">Entrar</a>
-        <a href="/playlists.html" class="header_account">Criar Conta</a>
+        <a href="../Login/login.html">Entrar</a>
+        <a href="../CriarConta/criar_conta.html" class="header_account">Criar Conta</a>
       </div>
   `;
 
