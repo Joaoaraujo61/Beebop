@@ -80,4 +80,41 @@
   .auth-card {
     padding: 32px 24px;
   }
+  .album-page,
+  .profile-page {
+    padding: 24px 16px 56px;
+  }
+  .album-hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .album-hero__cover-wrap {
+    width: 160px;
+  }
+  .album-hero__rating {
+    flex-direction: row;
+    gap: 10px;
+  }
+  .album-content,
+  .profile-content {
+    flex-direction: column;
+  }
+  .album-sidebar,
+  .dna-card {
+    width: 100%;
+  }
+  .track-row__credit {
+    display: none;
+  }
+  .profile-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  .profile-header__stats {
+    justify-content: center;
+  }
+  .profile-favorites-grid .music-card {
+    width: 44%;
+    min-width: 130px;
+  }
 }

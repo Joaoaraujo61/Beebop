@@ -30,6 +30,11 @@ async function bootstrap() {
             initArtistaPage({ header });
             break;
         }
+        case 'perfil': {
+            const { initPerfilPage } = await import('./pages/Perfil/perfil.js');
+            initPerfilPage({ header });
+            break;
+        }
         case 'login': {
             const { initLoginPage } = await import('./pages/Login/login.js');
             initLoginPage({ header });

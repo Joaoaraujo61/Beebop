@@ -806,12 +806,25 @@ body[data-page="charts"] #charts_nav{
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
-  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(54, 46, 21, 0.51)),
-    url("../assets/fundoBeebop.png") no-repeat center / cover;
+  /* O logo fica à esquerda dentro do painel (não centralizado), com
+     respiro à direita — posição medida a partir do SVG de referência,
+     não um centro geométrico. */
+  justify-content: flex-start;
+  padding-left: 8%;
+  /*
+    Sem imagem própria aqui: o <body> (style.css) já aplica
+    fundoBeebop.png com background-attachment: fixed cobrindo a tela
+    inteira. Se este painel declarasse a MESMA imagem de novo, o
+    "cover" seria recalculado para a largura só deste painel (~metade
+    da tela) — um recorte/zoom diferente do usado no resto do site,
+    criando uma costura visível bem na borda do card. Por isso aqui só
+    reforçamos o escurecimento (mesmos valores do overlay do body) e
+    deixamos o fundo único, já configurado, aparecer por baixo.
+  */
+ 
 }
 .auth-shell__logo {
-  width: min(70%, 340px);
+  width: min(58%, 380px);
   height: auto;
 }
 
@@ -819,5 +832,772 @@ body[data-page="charts"] #charts_nav{
   .auth-form__input-wrap,
   .auth-form__submit {
     transition: border-color 0.15s ease, transform 0.15s ease, filter 0.15s ease;
+  }
+}
+
+/*--------- Album / Favorite additions to music-card ---------*/
+/*
+  Reaproveita 100% a paleta já em uso (dourado #F4CD50, texto #F9FAFB/
+  #9CA3AF, fundo escuro translúcido rgba(15,15,15,*)) — nenhuma cor
+  nova nesta seção.
+*/
+
+.music-card__favorite {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(15, 15, 15, 0.55);
+  color: #E5E7EB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.2s ease, transform 0.2s ease, color 0.2s ease;
+}
+.music-card:hover .music-card__favorite,
+.music-card__favorite.is-favorite,
+.music-card__favorite:focus-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.music-card__favorite.is-favorite {
+  color: #F4CD50;
+}
+.music-card__favorite:focus-visible {
+  outline: 2px solid #F9FAFB;
+  outline-offset: 2px;
+}
+.music-card__rating {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  background: rgba(15, 15, 15, 0.65);
+  color: #F4CD50;
+  font-size: 12px;
+  font-weight: 700;
+}
+.album-card--clickable {
+  cursor: pointer;
+}
+
+/*--------- Shared status/empty/error states (Album + Perfil) ---------*/
+
+.album-page,
+.profile-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 32px 80px;
+}
+.album-page__status,
+.album-page__empty {
+  color: #9CA3AF;
+  font-size: 14px;
+  padding: 24px 0;
+}
+.album-page__demo-flag {
+  background: #2a2a2a7a;
+  border: 0.5px solid #45464a6f;
+  color: #E5E7EB;
+  font-size: 12px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  display: inline-block;
+}
+.album-page__error {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  color: #E5E7EB;
+  padding: 48px 0;
+}
+
+/*--------- Album hero ---------*/
+
+.album-hero {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  align-items: flex-end;
+  margin-bottom: 40px;
+}
+.album-hero__cover-wrap {
+  width: 220px;
+  flex-shrink: 0;
+}
+.album-hero__cover {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 16px;
+  display: block;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45);
+}
+.album-hero__cover--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #17171a;
+  color: #45464a;
+  font-size: 56px;
+  border: 1px solid #2e2e2e;
+}
+.album-hero__info {
+  flex: 1 1 320px;
+  min-width: 0;
+}
+.album-hero__eyebrow {
+  color: #F4CD50;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.album-hero__title {
+  color: #F9FAFB;
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1.15;
+  margin-top: 6px;
+}
+.album-hero__artist {
+  display: inline-block;
+  color: #E5E7EB;
+  font-weight: 700;
+  font-size: 16px;
+  margin-top: 6px;
+}
+.album-hero__artist:hover {
+  color: #F4CD50;
+}
+.album-hero__meta {
+  color: #9CA3AF;
+  font-size: 13px;
+  margin-top: 4px;
+}
+.album-hero__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+.album-hero__play i {
+  margin-right: 6px;
+}
+.album-hero__play:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.album-hero__icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 0.5px solid #45464a6f;
+  background-color: #2a2a2a7a;
+  color: #E5E7EB;
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+.album-hero__icon-btn:hover {
+  background-color: #2a2a2a47;
+}
+.album-hero__favorite.is-favorite {
+  color: #F4CD50;
+}
+.album-hero__share-status {
+  min-height: 16px;
+  font-size: 12px;
+  color: #F4CD50;
+  margin-top: 8px;
+}
+.album-hero__rating {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: #2a2a2a7a;
+  border: 0.5px solid #45464a6f;
+  border-radius: 16px;
+  padding: 12px 20px;
+}
+.album-hero__rating-value {
+  color: #F4CD50;
+  font-weight: 800;
+  font-size: 18px;
+}
+.album-hero__rating-count {
+  color: #9CA3AF;
+  font-size: 11px;
+}
+
+/*--------- Album content: track list + sidebar ---------*/
+
+.album-content {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.album-tracklist {
+  flex: 2 1 480px;
+  min-width: 0;
+}
+.album-section__title {
+  color: #F9FAFB;
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+.track-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+.track-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 8px;
+  border-bottom: 1px solid #262626;
+  border-radius: 8px;
+  transition: background-color 0.15s ease;
+}
+.track-row:hover {
+  background-color: #2a2a2a47;
+}
+.track-row.is-playing {
+  background-color: #2a2a2a7a;
+}
+.track-row.is-playing .track-row__title {
+  color: #F4CD50;
+}
+.track-row__number {
+  width: 20px;
+  text-align: center;
+  color: #9CA3AF;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+.track-row__play {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: #2a2a2a7a;
+  color: #F9FAFB;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.track-row__play:hover,
+.track-row.is-playing .track-row__play {
+  background: linear-gradient(rgb(244, 205, 80), rgb(254, 233, 165));
+  color: #111827;
+}
+.track-row__title-wrap {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.track-row__title {
+  color: #F9FAFB;
+  font-weight: 600;
+  font-size: 14px;
+}
+.track-row__credit {
+  color: #9CA3AF;
+  font-size: 12px;
+}
+.track-row__rating {
+  color: #F4CD50;
+  font-size: 12px;
+  font-weight: 700;
+  width: 46px;
+  flex-shrink: 0;
+}
+.track-row__rating--empty {
+  color: #45464a;
+  font-weight: 400;
+}
+.track-row__duration {
+  color: #9CA3AF;
+  font-size: 13px;
+  width: 40px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.album-sidebar {
+  flex: 1 1 260px;
+  min-width: 240px;
+}
+.album-sidebar__card {
+  background: linear-gradient(180deg, rgba(28, 28, 30, 0.8), rgba(20, 20, 20, 0.9));
+  border: 1px solid #2e2e2e;
+  border-radius: 16px;
+  padding: 20px;
+}
+.album-sidebar__title {
+  color: #F9FAFB;
+  font-size: 15px;
+  font-weight: 800;
+  margin-bottom: 14px;
+}
+.album-sidebar__label {
+  color: #9CA3AF;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 12px;
+}
+.album-sidebar__value {
+  color: #F9FAFB;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 2px;
+  display: block;
+}
+.album-sidebar__artist-link:hover {
+  color: #F4CD50;
+}
+
+/*--------- Album comments ---------*/
+
+.album-comments {
+  margin-top: 48px;
+  border-top: 1px solid #262626;
+  padding-top: 32px;
+}
+.comment-row {
+  display: flex;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid #262626;
+}
+.comment-row__avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(rgb(244, 205, 80), rgb(254, 233, 165));
+  color: #111827;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 14px;
+}
+.comment-row__body {
+  min-width: 0;
+}
+.comment-row__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.comment-row__author {
+  color: #F9FAFB;
+  font-weight: 700;
+  font-size: 13px;
+}
+.comment-row__rating {
+  color: #F4CD50;
+  font-size: 12px;
+  font-weight: 700;
+}
+.comment-row__text {
+  color: #E5E7EB;
+  font-size: 14px;
+  margin-top: 4px;
+  line-height: 1.5;
+}
+.comment-row__date {
+  color: #6b6b6b;
+  font-size: 11px;
+  margin-top: 6px;
+}
+
+/*--------- Profile header ---------*/
+
+.profile-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid #262626;
+  margin-bottom: 32px;
+}
+.profile-header__avatar {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: linear-gradient(rgb(244, 205, 80), rgb(254, 233, 165));
+  color: #111827;
+  font-size: 34px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.profile-header__info {
+  flex: 1 1 220px;
+  min-width: 0;
+}
+.profile-header__name {
+  color: #F9FAFB;
+  font-size: 26px;
+  font-weight: 800;
+}
+.profile-header__handle {
+  color: #9CA3AF;
+  font-size: 13px;
+  margin-top: 2px;
+}
+.profile-header__bio {
+  color: #E5E7EB;
+  font-size: 14px;
+  margin-top: 8px;
+  max-width: 480px;
+}
+.profile-header__stats {
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+.profile-header__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.profile-header__stat-value {
+  color: #F9FAFB;
+  font-size: 20px;
+  font-weight: 800;
+}
+.profile-header__stat-label {
+  color: #9CA3AF;
+  font-size: 11px;
+  margin-top: 2px;
+  white-space: nowrap;
+}
+
+/*--------- Profile content layout ---------*/
+
+.profile-content {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.profile-main {
+  flex: 2 1 480px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.profile-section {
+  min-width: 0;
+}
+.profile-favorites-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+.profile-favorites-grid .music-card {
+  width: 160px;
+}
+
+.profile-reviews-list {
+  display: flex;
+  flex-direction: column;
+}
+.review-row {
+  display: flex;
+  gap: 14px;
+  padding: 14px 8px;
+  border-bottom: 1px solid #262626;
+  border-radius: 8px;
+  transition: background-color 0.15s ease;
+}
+.review-row:hover {
+  background-color: #2a2a2a47;
+}
+.review-row__cover {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #17171a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #45464a;
+  flex-shrink: 0;
+}
+.review-row__cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.review-row__body {
+  flex: 1;
+  min-width: 0;
+}
+.review-row__album {
+  color: #F9FAFB;
+  font-weight: 700;
+  font-size: 14px;
+}
+.review-row__artist {
+  color: #9CA3AF;
+  font-size: 12px;
+  margin-top: 1px;
+}
+.review-row__comment {
+  color: #E5E7EB;
+  font-size: 13px;
+  margin-top: 6px;
+  line-height: 1.4;
+}
+.review-row__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.review-row__rating {
+  color: #F4CD50;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.review-row__date {
+  color: #6b6b6b;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+/*--------- DNA Musical card ---------*/
+/*
+  --dna-mood-* são as únicas cores genuinamente novas desta seção: o
+  donut de "Humor predominante" precisa de 4 tons distinguíveis entre
+  si, e o projeto não tinha nenhuma paleta categórica antes (só um
+  dourado). Uma das 4 já é o próprio #F4CD50 existente (Eufórico); as
+  outras 3 são novas, indispensáveis para diferenciar as fatias.
+*/
+
+.dna-card {
+  flex: 1 1 300px;
+  min-width: 260px;
+  background: linear-gradient(180deg, rgba(28, 28, 30, 0.8), rgba(20, 20, 20, 0.9));
+  border: 1px solid #2e2e2e;
+  border-radius: 20px;
+  padding: 24px;
+  --dna-mood-1: #C97BA6;
+  --dna-mood-2: #F4CD50;
+  --dna-mood-3: #4FA98C;
+  --dna-mood-4: #8B7FD1;
+}
+.dna-card__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.dna-card__header i {
+  color: #F4CD50;
+  font-size: 18px;
+}
+.dna-card__title {
+  color: #F9FAFB;
+  font-size: 17px;
+  font-weight: 800;
+  flex: 1;
+}
+.dna-card__beta {
+  background: #F4CD5022;
+  color: #F4CD50;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  padding: 3px 8px;
+  border-radius: 8px;
+}
+.dna-block {
+  margin-bottom: 24px;
+}
+.dna-block:last-child {
+  margin-bottom: 0;
+}
+.dna-block__label {
+  color: #9CA3AF;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 10px;
+}
+
+.dna-radar {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.dna-radar__grid {
+  fill: rgba(244, 205, 80, 0.05);
+  stroke: #33333a;
+  stroke-width: 1;
+}
+.dna-radar__shape {
+  fill: rgba(244, 205, 80, 0.35);
+  stroke: #F4CD50;
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+.dna-radar__label {
+  fill: #9CA3AF;
+  font-size: 10px;
+  font-family: 'Inter', sans-serif;
+}
+
+.dna-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.dna-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.dna-bar-row__label {
+  width: 28px;
+  color: #9CA3AF;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+.dna-bar-row__track {
+  flex: 1;
+  height: 6px;
+  border-radius: 4px;
+  background-color: #262626;
+  overflow: hidden;
+}
+.dna-bar-row__fill {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, rgb(244, 205, 80), rgb(254, 233, 165));
+}
+.dna-bar-row__value {
+  width: 34px;
+  text-align: right;
+  color: #E5E7EB;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+.dna-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.dna-pill {
+  background-color: #2a2a2a7a;
+  border: 0.5px solid #45464a6f;
+  color: #E5E7EB;
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 14px;
+}
+
+.dna-mood {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.dna-mood__donut {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dna-mood__donut-hole {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #17171a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.dna-mood__label {
+  color: #F9FAFB;
+  font-size: 11px;
+  font-weight: 700;
+}
+.dna-mood-legend {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+.dna-mood-legend__item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #E5E7EB;
+  font-size: 12px;
+}
+.dna-mood-legend__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.dna-mood-legend__value {
+  margin-left: auto;
+  color: #9CA3AF;
+}
+.dna-mood__blurb {
+  color: #9CA3AF;
+  font-size: 12px;
+  line-height: 1.5;
+  margin-top: 14px;
+}
+.dna-mood__blurb strong {
+  color: #F9FAFB;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track-row,
+  .review-row,
+  .music-card__favorite,
+  .album-hero__icon-btn {
+    transition: none;
   }
 }

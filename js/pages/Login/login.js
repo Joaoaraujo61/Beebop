@@ -79,7 +79,7 @@ export function initLoginPage({ header }) {
       </section>
 
       <aside class="auth-shell__brand" aria-hidden="true">
-        <img class="auth-shell__logo" src="../../../assets/beebop.png" alt="" />
+        <img class="auth-shell__logo" src="../../../assets/beebop_grande.png" alt="" />
       </aside>
     </div>
   `;
