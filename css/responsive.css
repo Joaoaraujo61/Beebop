@@ -1,0 +1,120 @@
+/* css/responsive.css */
+
+@media (max-width: 1024px) {
+  .header__search_form {
+    width: 30%;
+  }
+}
+
+@media (max-width: 900px) {
+  .hero {
+    justify-content: center;
+    text-align: center;
+    padding: 56px 24px;
+  }
+  .hero__actions {
+    justify-content: center;
+  }
+  .header {
+    justify-content: center;
+    row-gap: 16px;
+  }
+  .header__search_form {
+    width: 60%;
+    order: 3;
+  }
+  .features {
+    padding: 48px 32px 16px;
+  }
+  .features__title {
+    text-align: center;
+    max-width: none;
+  }
+  .feature__row {
+    justify-content: center;
+    text-align: center;
+  }
+  .feature__text {
+    max-width: none;
+  }
+  .auth-shell__brand {
+    flex-basis: 260px;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero__title {
+    font-size: 32px;
+  }
+  .music-card {
+    width: 44%;
+    min-width: 130px;
+  }
+  .header__search_form {
+    width: 90%;
+  }
+  .features__title {
+    font-size: 26px;
+  }
+  .feature__row {
+    flex-direction: column-reverse;
+    gap: 16px;
+  }
+  .feature__vinyl {
+    width: 64px;
+    height: 64px;
+    font-size: 26px;
+  }
+  .closing {
+    padding: 32px 24px 64px;
+  }
+  .closing__title {
+    font-size: 24px;
+  }
+  .auth-shell {
+    min-height: auto;
+  }
+  .auth-shell__brand {
+    display: none;
+  }
+  .auth-card {
+    padding: 32px 24px;
+  }
+  .album-page,
+  .profile-page {
+    padding: 24px 16px 56px;
+  }
+  .album-hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .album-hero__cover-wrap {
+    width: 160px;
+  }
+  .album-hero__rating {
+    flex-direction: row;
+    gap: 10px;
+  }
+  .album-content,
+  .profile-content {
+    flex-direction: column;
+  }
+  .album-sidebar,
+  .dna-card {
+    width: 100%;
+  }
+  .track-row__credit {
+    display: none;
+  }
+  .profile-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  .profile-header__stats {
+    justify-content: center;
+  }
+  .profile-favorites-grid .music-card {
+    width: 44%;
+    min-width: 130px;
+  }
+}

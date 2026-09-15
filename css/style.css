@@ -1,0 +1,330 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+}
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100vw;
+    height: 100vh;
+    min-height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(54, 46, 21, 0.51)),
+            url("../assets/fundoBeebop.png") no-repeat center / cover;
+    background-attachment: fixed
+}
+#results-container{
+    flex: 1;
+}
+footer{
+    margin: 0;
+}
+body > p{
+    font-size: 200px;
+}
+
+/*------- EXPLORAR --------*/
+
+.explorar {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 56px 32px 80px;
+  color: #ffffff;
+  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+}
+ 
+/* ---------- Intro ---------- */
+ 
+.explorar_intro h1 {
+  font-size: 32px;
+  font-weight: 800;
+  margin: 0 0 8px;
+}
+ 
+.explorar_intro > p {
+  font-size: 14px;
+  color: #9a9a9a;
+  margin: 0 0 24px;
+}
+ 
+/* Search bar */
+ 
+.explorar_search {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 640px;
+  background: #17171a;
+  border: 1px solid #2a2a2e;
+  border-radius: 999px;
+  padding: 14px 20px;
+  margin-bottom: 20px;
+}
+ 
+.explorar_search i {
+  color: #7a7a7a;
+  font-size: 14px;
+}
+ 
+.explorar_search input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-size: 14px;
+  font-family: inherit;
+}
+ 
+.explorar_search input::placeholder {
+  color: #7a7a7a;
+}
+ 
+/* Tabs (Tudo / Músicas / Álbuns / Artistas) */
+ 
+.explorar_tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+ 
+.explorar_tab {
+  border: none;
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  color: #d0d0d0;
+  background: #232326;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+ 
+.explorar_tab:hover {
+  background: #2c2c30;
+}
+ 
+.explorar_tab--active {
+  background: transparent;
+  color: #f5c400;
+}
+ 
+/* Genre chips */
+ 
+.explorar_genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 40px;
+}
+ 
+.explorar_chip {
+  border: none;
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
+  color: #d0d0d0;
+  background: #232326;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+}
+ 
+.explorar_chip:hover {
+  background: #2c2c30;
+}
+ 
+.explorar_chip--active {
+  background: #f5c400;
+  color: #1a1200;
+}
+ 
+/* ---------- Sections ---------- */
+ 
+.explorar_section {
+  margin-bottom: 44px;
+}
+ 
+.explorar_section h2 {
+  font-size: 20px;
+  font-weight: 800;
+  margin: 0 0 20px;
+}
+ 
+/* ---------- Track cards ---------- */
+ 
+.track_grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+ 
+.track_card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #1c1c1f;
+  border: 1px solid #2a2a2e;
+  border-radius: 12px;
+  padding: 12px;
+}
+ 
+.track_cover {
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #333;
+  flex-shrink: 0;
+}
+ 
+.track_info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  padding-right: 36px;
+}
+ 
+.track_title_row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+ 
+.track_title {
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+ 
+.track_rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #f5c400;
+  color: #1a1200;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+ 
+.track_rating i { font-size: 9px; }
+ 
+.track_artist {
+  font-size: 12px;
+  color: #a3a3a3;
+}
+ 
+.track_year {
+  font-size: 11px;
+  color: #6b6b6b;
+}
+ 
+.track_like {
+  position: absolute;
+  right: 14px;
+  bottom: 12px;
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+ 
+.track_like:hover {
+  transform: scale(1.15);
+}
+ 
+/* ---------- Album cards ---------- */
+ 
+.album_grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+ 
+.album_card {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  gap: 10px;
+}
+ 
+.album_cover {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  object-fit: cover;
+  background: #333;
+}
+ 
+.album_info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+ 
+.album_title_row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+ 
+.album_title {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+ 
+.album_rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #f5c400;
+  color: #1a1200;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+ 
+.album_rating i { font-size: 8px; }
+ 
+.album_artist {
+  font-size: 12px;
+  color: #a3a3a3;
+}
+
+/* ---------- Responsive ---------- */
+ 
+@media (max-width: 900px) {
+  .track_grid { grid-template-columns: repeat(2, 1fr); }
+  .album_grid { grid-template-columns: repeat(3, 1fr); }
+}
+ 
+@media (max-width: 600px) {
+  .explorar { padding: 40px 20px 60px; }
+  .track_grid { grid-template-columns: 1fr; }
+  .album_grid { grid-template-columns: repeat(2, 1fr); }
+}
