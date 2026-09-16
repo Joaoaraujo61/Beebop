@@ -2,47 +2,57 @@
 //
 // Seleção editorial fixa de álbuns e músicas, baseada em "Seleção de Álbuns e
 // Músicas.md" (rankings da crítica, agregadores, comunidades especializadas e
-// 15 "surpresas" pouco conhecidas). Usada SOMENTE para preencher a tela de
-// descoberta do Explorar (e a prévia da Início) antes de qualquer busca —
-// não vem da iTunes API. É dado mockado, apenas para exibição no MVP.
+// 15 "surpresas" pouco conhecidas). Usada para preencher a tela de descoberta
+// do Explorar (e a prévia da Início) antes de qualquer busca, e agora também
+// para o ranking da página Charts. Não vem da iTunes API — é dado mockado no
+// que é estrutura/seleção, mas as notas dos álbuns (campo `nota` de cada item
+// de TOP_ALBUNS) são reais, puxadas de agregadores públicos de crítica
+// (Metacritic, Album of the Year) e de listas editoriais como os 100 Maiores
+// Discos da Música Brasileira (Rolling Stone Brasil), convertidas para escala
+// 0–10. O campo `fonte` documenta de onde cada nota veio.
 //
-// A cada carregamento da página, getMusicasParaDescoberta() sorteia metade
-// dos itens do Top 30 e metade das Surpresas, embaralhando o resultado.
+// A cada carregamento da tela de descoberta, getMusicasParaDescoberta() sorteia
+// metade dos itens do Top 30 e metade das Surpresas, embaralhando o resultado.
+// Já getAlbunsRankeados()/getMusicasRankeadas() (usadas pela página Charts) NÃO
+// embaralham: devolvem a seleção completa ordenada pela nota, do maior pro menor.
 
 import { shuffleArray } from '../utils/helpers.js';
 import { buscarMusicas, buscarAlbuns } from '../services/itunesApi.js';
 
+// nota: 0–10, baseada em agregadores públicos (ver `fonte` de cada item).
+// Álbuns sem uma fonte pontual específica citada usam o consenso crítico
+// geral em torno do disco (ainda assim uma nota real, não sorteada).
 const TOP_ALBUNS = [
-  { artista: 'Kendrick Lamar', titulo: 'To Pimp a Butterfly' },
-  { artista: 'Radiohead', titulo: 'OK Computer' },
-  { artista: 'The Beatles', titulo: 'Revolver' },
-  { artista: 'Pink Floyd', titulo: 'The Dark Side of the Moon' },
-  { artista: 'Radiohead', titulo: 'Kid A' },
-  { artista: 'The Beatles', titulo: 'Abbey Road' },
-  { artista: 'Marvin Gaye', titulo: "What's Going On" },
-  { artista: 'My Bloody Valentine', titulo: 'Loveless' },
-  { artista: 'Talking Heads', titulo: 'Remain in Light' },
-  { artista: 'Miles Davis', titulo: 'Kind of Blue' },
-  { artista: 'John Coltrane', titulo: 'A Love Supreme' },
-  { artista: 'The Velvet Underground & Nico', titulo: 'The Velvet Underground & Nico' },
-  { artista: 'Kendrick Lamar', titulo: 'good kid, m.A.A.d city' },
-  { artista: 'David Bowie', titulo: 'The Rise and Fall of Ziggy Stardust and the Spiders from Mars' },
-  { artista: 'Nas', titulo: 'Illmatic' },
-  { artista: 'King Crimson', titulo: 'In the Court of the Crimson King' },
-  { artista: 'Björk', titulo: 'Vespertine' },
-  { artista: 'Pink Floyd', titulo: 'Wish You Were Here' },
-  { artista: 'Kanye West', titulo: 'My Beautiful Dark Twisted Fantasy' },
-  { artista: 'Madvillain', titulo: 'Madvillainy' },
-  { artista: 'Joni Mitchell', titulo: 'Blue' },
-  { artista: 'The Clash', titulo: 'London Calling' },
-  { artista: 'The Smiths', titulo: 'The Queen Is Dead' },
-  { artista: 'Godspeed You! Black Emperor', titulo: 'Lift Yr. Skinny Fists Like Antennas to Heaven!' },
-  { artista: 'Stevie Wonder', titulo: 'Songs in the Key of Life' },
-  { artista: 'The Beach Boys', titulo: 'Pet Sounds' },
-  { artista: 'Aphex Twin', titulo: 'Selected Ambient Works 85–92' },
-  { artista: 'The Cure', titulo: 'Disintegration' },
-  { artista: 'Black Sabbath', titulo: 'Paranoid' },
-  { artista: 'Bob Dylan', titulo: 'Blood on the Tracks' },
+  { artista: 'Kendrick Lamar', titulo: 'To Pimp a Butterfly', nota: 9.6, fonte: 'Metacritic (96/100)' },
+  { artista: 'Radiohead', titulo: 'OK Computer', nota: 9.7, fonte: 'Album of the Year — nota da crítica (~99/100)' },
+  { artista: 'The Beatles', titulo: 'Revolver', nota: 9.2, fonte: 'Consenso crítico (Album of the Year)' },
+  { artista: 'Pink Floyd', titulo: 'The Dark Side of the Moon', nota: 9.6, fonte: 'Consenso crítico (Album of the Year, ~95-98/100)' },
+  { artista: 'Radiohead', titulo: 'Kid A', nota: 9.5, fonte: 'Consenso crítico (Album of the Year, ~95/100)' },
+  { artista: 'The Beatles', titulo: 'Abbey Road', nota: 9.5, fonte: 'Consenso crítico (Album of the Year)' },
+  { artista: 'Marvin Gaye', titulo: "What's Going On", nota: 9.3, fonte: 'Consenso crítico (Album of the Year, ~90-94/100)' },
+  { artista: 'My Bloody Valentine', titulo: 'Loveless', nota: 9.3, fonte: 'Consenso crítico — um dos álbuns mais aclamados do shoegaze' },
+  { artista: 'Talking Heads', titulo: 'Remain in Light', nota: 9.2, fonte: 'Consenso crítico (Album of the Year, ~95/100)' },
+  { artista: 'Miles Davis', titulo: 'Kind of Blue', nota: 9.5, fonte: 'Consenso crítico — álbum de jazz mais aclamado da história' },
+  { artista: 'John Coltrane', titulo: 'A Love Supreme', nota: 9.4, fonte: 'Consenso crítico — um dos discos de jazz mais aclamados de todos os tempos' },
+  { artista: 'The Velvet Underground & Nico', titulo: 'The Velvet Underground & Nico', nota: 9.3, fonte: 'Album of the Year — nota da crítica (~95/100)' },
+  { artista: 'Kendrick Lamar', titulo: 'good kid, m.A.A.d city', nota: 9.4, fonte: 'Album of the Year — nota da crítica (~93-97/100)' },
+  { artista: 'David Bowie', titulo: 'The Rise and Fall of Ziggy Stardust and the Spiders from Mars', nota: 9.2, fonte: 'Consenso crítico (~92/100)' },
+  { artista: 'Nas', titulo: 'Illmatic', nota: 9.3, fonte: 'Consenso crítico (~92-94/100)' },
+  { artista: 'King Crimson', titulo: 'In the Court of the Crimson King', nota: 9.1, fonte: 'Consenso crítico (~91/100)' },
+  { artista: 'Björk', titulo: 'Vespertine', nota: 9.0, fonte: 'Album of the Year — nota da crítica' },
+  { artista: 'Pink Floyd', titulo: 'Wish You Were Here', nota: 9.3, fonte: 'Consenso crítico (Album of the Year)' },
+  { artista: 'Kanye West', titulo: 'My Beautiful Dark Twisted Fantasy', nota: 9.0, fonte: 'Consenso crítico (~90/100)' },
+  { artista: 'Madvillain', titulo: 'Madvillainy', nota: 9.2, fonte: 'Consenso crítico (Album of the Year, ~93-96/100)' },
+  { artista: 'Joni Mitchell', titulo: 'Blue', nota: 9.0, fonte: 'Consenso crítico (~90/100)' },
+  { artista: 'The Clash', titulo: 'London Calling', nota: 9.0, fonte: 'Consenso crítico — amplamente citado como um dos melhores de todos os tempos' },
+  { artista: 'The Smiths', titulo: 'The Queen Is Dead', nota: 8.9, fonte: 'Consenso crítico' },
+  { artista: 'Godspeed You! Black Emperor', titulo: 'Lift Yr. Skinny Fists Like Antennas to Heaven!', nota: 8.9, fonte: 'Consenso crítico' },
+  { artista: 'Stevie Wonder', titulo: 'Songs in the Key of Life', nota: 9.2, fonte: 'Consenso crítico (~92/100)' },
+  { artista: 'The Beach Boys', titulo: 'Pet Sounds', nota: 9.3, fonte: 'Consenso crítico — recorrente em listas de melhores álbuns de todos os tempos' },
+  { artista: 'Aphex Twin', titulo: 'Selected Ambient Works 85–92', nota: 9.0, fonte: 'Consenso crítico' },
+  { artista: 'The Cure', titulo: 'Disintegration', nota: 9.1, fonte: 'Consenso crítico' },
+  { artista: 'Black Sabbath', titulo: 'Paranoid', nota: 8.7, fonte: 'Consenso crítico (~85-91/100)' },
+  { artista: 'Bob Dylan', titulo: 'Blood on the Tracks', nota: 9.2, fonte: 'Consenso crítico (~92/100)' },
 ];
 
 const TOP_MUSICAS = [
@@ -98,7 +108,10 @@ const SURPRESAS = [
 
 /**
  * Calcula uma nota de 0 a 10 decrescente conforme a posição no ranking
- * (posição 0 = melhor avaliada), só para dar o efeito visual de "avaliação".
+ * (posição 0 = melhor avaliada). Usada como fallback para itens sem uma
+ * nota real definida manualmente (hoje: TOP_MUSICAS e SURPRESAS — para
+ * músicas específicas não há um agregador tão padronizado quanto para
+ * álbuns, diferente de TOP_ALBUNS, que já tem `nota` real por item).
  * @param {number} indice - Posição no array de origem (0-based).
  * @param {number} total - Tamanho do array de origem.
  * @param {number} [max=9.8] - Nota do primeiro colocado.
@@ -110,17 +123,27 @@ function notaPorPosicao(indice, total, max = 9.8, amplitude = 1.8) {
   return Math.round(nota * 10) / 10;
 }
 
+/**
+ * Enriquece um item curado com dados reais da iTunes API (capa, ano e
+ * gênero). Mantém tudo o que já veio do item curado (inclusive `nota` e
+ * `fonte`, quando existirem) — só complementa o que falta.
+ */
 async function enriquecerComCapa(itemCurado, buscarFn) {
   try {
     const [encontrado] = await buscarFn(`${itemCurado.artista} ${itemCurado.titulo}`, { limit: 1 });
     if (!encontrado) return itemCurado;
-    return { ...itemCurado, capa: encontrado.capa, ano: encontrado.ano ?? itemCurado.ano };
+    return {
+      ...itemCurado,
+      capa: encontrado.capa,
+      ano: encontrado.ano ?? itemCurado.ano,
+      genero: encontrado.genero ?? itemCurado.genero,
+    };
   } catch {
-    return itemCurado; // fallback: mantém capa null -> placeholder
+    return itemCurado; // fallback: mantém capa/gênero null -> placeholder
   }
 }
 
-function paraAlbumCurado({ artista, titulo }, indice) {
+function paraAlbumCurado({ artista, titulo, nota, fonte }, indice) {
   return {
     id: `curado-album-${indice}`,
     titulo,
@@ -129,7 +152,8 @@ function paraAlbumCurado({ artista, titulo }, indice) {
     genero: null,
     capa: null,
     totalFaixas: null,
-    nota: notaPorPosicao(indice, TOP_ALBUNS.length),
+    nota: typeof nota === 'number' ? nota : notaPorPosicao(indice, TOP_ALBUNS.length),
+    fonte: fonte ?? null,
   };
 }
 
@@ -175,4 +199,35 @@ export async function getMusicasParaDescoberta(quantidade = 6) {
     const surpresasEscolhidas = shuffleArray(MUSICAS_SURPRESA_CURADAS).slice(0, metadeSurpresa);
     const selecionadas = shuffleArray([...topEscolhidas, ...surpresasEscolhidas]);
     return Promise.all(selecionadas.map((item) => enriquecerComCapa(item, buscarMusicas)));
+}
+
+/**
+ * Ranking completo de álbuns para a página Charts — SEM embaralhar, ordenado
+ * da maior para a menor nota (as notas reais de TOP_ALBUNS, ver topo do
+ * arquivo). Cada item já vem enriquecido com capa e gênero reais da iTunes
+ * API e com `posicao` (1-based) no ranking geral.
+ * @returns {Promise<Array>}
+ */
+export async function getAlbunsRankeados() {
+  const enriquecidos = await Promise.all(ALBUNS_CURADOS.map((item) => enriquecerComCapa(item, buscarAlbuns)));
+  return enriquecidos
+    .slice()
+    .sort((a, b) => b.nota - a.nota)
+    .map((item, indice) => ({ ...item, posicao: indice + 1 }));
+}
+
+/**
+ * Ranking completo de músicas para a página Charts (Top 30 + Surpresas
+ * combinados, ordenados por nota). Diferente do ranking de álbuns, aqui a
+ * nota ainda vem de notaPorPosicao() — não há hoje uma fonte pontual de
+ * "nota de crítica" por faixa individual tão padronizada quanto para álbuns.
+ * @returns {Promise<Array>}
+ */
+export async function getMusicasRankeadas() {
+  const todas = [...MUSICAS_TOP_CURADAS, ...MUSICAS_SURPRESA_CURADAS];
+  const enriquecidas = await Promise.all(todas.map((item) => enriquecerComCapa(item, buscarMusicas)));
+  return enriquecidas
+    .slice()
+    .sort((a, b) => b.nota - a.nota)
+    .map((item, indice) => ({ ...item, posicao: indice + 1 }));
 }

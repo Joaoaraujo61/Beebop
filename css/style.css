@@ -328,3 +328,251 @@ body > p{
   .track_grid { grid-template-columns: 1fr; }
   .album_grid { grid-template-columns: repeat(2, 1fr); }
 }
+
+/*------- CHARTS --------*/
+/* Mesma paleta/convenção de classe da seção EXPLORAR acima (fundo #232326,
+   destaque #f5c400) — cada página tem seu próprio bloco de CSS neste
+   arquivo, então em vez de generalizar .explorar_tab/.explorar_chip para
+   as duas páginas, este bloco replica os mesmos valores sob o prefixo
+   charts_, seguindo o padrão já usado pelo restante do projeto. */
+
+.charts {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 56px 32px 80px;
+  color: #ffffff;
+  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* ---------- Intro ---------- */
+
+.charts_intro h1 {
+  font-size: 32px;
+  font-weight: 800;
+  margin: 0 0 8px;
+}
+
+.charts_intro h1 span {
+  color: #f5c400;
+}
+
+.charts_intro > p {
+  font-size: 14px;
+  color: #9a9a9a;
+  margin: 0 0 24px;
+  max-width: 560px;
+}
+
+/* ---------- Period pills (Semana / Mês / Ano / Todos os tempos) ---------- */
+
+.charts_period {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.charts_period_btn {
+  border: none;
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  color: #d0d0d0;
+  background: #232326;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.charts_period_btn:hover {
+  background: #2c2c30;
+}
+
+.charts_period_btn--active {
+  background: #f5c400;
+  color: #1a1200;
+}
+
+/* ---------- Pódio (top 3) ---------- */
+
+.charts_podium {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr 1fr;
+  gap: 16px;
+  align-items: end;
+  margin-bottom: 36px;
+}
+
+.charts_podium_slot {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.charts_podium_slot--1 { order: 2; }
+.charts_podium_slot--2 { order: 1; align-self: end; }
+.charts_podium_slot--3 { order: 3; align-self: end; }
+
+.charts_podium_slot--1 .music-card {
+  border-color: #f5c400;
+  box-shadow: 0 0 0 1px rgba(245, 196, 0, 0.25);
+}
+
+.charts_podium_slot .music-card {
+  width: 100%;
+}
+
+.charts_podium_count {
+  font-size: 11px;
+  color: #6b6b6b;
+  text-align: center;
+}
+
+/* ---------- Category tabs (Álbuns / Músicas / Artistas) ---------- */
+
+.charts_tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.charts_tab {
+  border: none;
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  color: #d0d0d0;
+  background: #232326;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.charts_tab:hover {
+  background: #2c2c30;
+}
+
+.charts_tab--active {
+  background: transparent;
+  color: #f5c400;
+}
+
+/* ---------- Genre chips ---------- */
+
+.charts_genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 28px;
+  min-height: 34px;
+}
+
+.charts_chip {
+  border: none;
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
+  color: #d0d0d0;
+  background: #232326;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+}
+
+.charts_chip:hover {
+  background: #2c2c30;
+}
+
+.charts_chip--active {
+  background: #f5c400;
+  color: #1a1200;
+}
+
+/* ---------- Lista de ranking ---------- */
+
+.charts_list_label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #6b6b6b;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.charts_list {
+  display: flex;
+  flex-direction: column;
+}
+
+.charts_status {
+  color: #9a9a9a;
+  font-size: 14px;
+  padding: 24px 0;
+}
+
+.charts_pager {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.charts_pager_btn {
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: inherit;
+  color: #d0d0d0;
+  background: #232326;
+  cursor: pointer;
+}
+
+.charts_pager_btn--active {
+  background: #f5c400;
+  color: #1a1200;
+}
+
+/* ---------- Metodologia ---------- */
+
+.charts_methodology {
+  margin-top: 28px;
+  font-size: 11.5px;
+  color: #6b6b6b;
+  line-height: 1.6;
+  border-top: 1px solid #262626;
+  padding-top: 16px;
+}
+
+.charts_methodology b {
+  color: #9a9a9a;
+}
+
+.charts_methodology code {
+  color: #9a9a9a;
+  background: #1c1c1f;
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 900px) {
+  .charts_podium {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .charts {
+    padding: 40px 20px 60px;
+  }
+  .charts_podium {
+    gap: 10px;
+  }
+}
