@@ -47,6 +47,9 @@ body[data-page="explorar"] #explorar_nav{
 body[data-page="charts"] #charts_nav{
     background-color: #e0cd646e;
 }
+body[data-page="noticias"] #news_nav{
+    background-color: #e0cd646e;
+}
 .header__search_form{
     display: flex;
     margin-top: auto;

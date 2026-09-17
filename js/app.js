@@ -30,6 +30,11 @@ async function bootstrap() {
             initChartsPage({header})
             break
         }
+        case 'noticias':{
+            const { initNoticiasPage } = await import('./pages/Noticias/noticias.js')
+            initNoticiasPage({header})
+            break
+        }
         case 'album': {
             const { initAlbumPage } = await import('./pages/Album/album.js');
             initAlbumPage({ header });

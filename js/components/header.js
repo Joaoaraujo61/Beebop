@@ -11,6 +11,7 @@ export function renderHeader({ onSearch, initialQuery = '' } = {}) {
           <a id="inicio_nav" href="../Inicio/inicio.html">Inicio</a>
           <a id="explorar_nav" href="../Explorar/explorar.html">Explorar</a>
           <a id="charts_nav" href="../Charts/charts.html">Charts</a>
+           <a id="news_nav" href="../Noticias/noticias.html">Notícias</a>
         </nav>
       </div>
       <form class="header__search_form">
