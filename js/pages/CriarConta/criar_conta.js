@@ -7,6 +7,7 @@ import {
   passwordsMatch,
   MIN_PASSWORD_LENGTH,
 } from '../../utils/validators.js';
+import { registerUser, loginAndPersist } from '../../services/authService.js';
 
 export function initCadastroPage({ header }) {
   // "header" já vem pronto, injetado pelo app.js
@@ -151,12 +152,9 @@ export function initCadastroPage({ header }) {
 }
 
 /**
- * Liga a validação client-side ao formulário de cadastro.
- *
- * Assim como no Login, não existe endpoint/serviço de contas no projeto
- * (js/services/itunesApi.js está vazio e é só para busca de música).
- * O envio válido não cria uma conta de verdade — só confirma que os
- * dados passaram nas regras de js/utils/validators.js.
+ * Liga a validação client-side ao formulário de cadastro e, se os dados
+ * forem válidos, cria a conta de verdade em localStorage (services/
+ * authService.js, chave 'beebop_users') e já efetua o login automático.
  */
 function setupCadastroForm(container) {
   const form = container.querySelector('.auth-form');
@@ -166,6 +164,7 @@ function setupCadastroForm(container) {
   const senhaInput = form.querySelector('#cadastro-senha');
   const confirmarSenhaInput = form.querySelector('#cadastro-confirmar-senha');
   const statusEl = form.querySelector('.auth-form__status');
+  const submitButton = form.querySelector('.auth-form__submit');
 
   const passwordHint = `Use pelo menos ${MIN_PASSWORD_LENGTH} caracteres.`;
 
@@ -191,14 +190,42 @@ function setupCadastroForm(container) {
     event.preventDefault();
     statusEl.classList.remove('is-success', 'is-error');
 
-    if (runValidation()) {
-      statusEl.textContent =
-        'Dados válidos! (Integração com o servidor ainda não existe neste projeto.)';
-      statusEl.classList.add('is-success');
-    } else {
+    if (!runValidation()) {
       statusEl.textContent = 'Revise os campos destacados abaixo.';
       statusEl.classList.add('is-error');
+      return;
     }
+
+    const result = registerUser({
+      nome: nomeInput.value.trim(),
+      email: emailInput.value.trim(),
+      usuario: usuarioInput.value.trim(),
+      senha: senhaInput.value,
+    });
+
+    if (!result.ok) {
+      statusEl.textContent = result.error;
+      statusEl.classList.add('is-error');
+      if (result.field === 'email') {
+        validateField(emailInput, false, result.error);
+      }
+      if (result.field === 'usuario') {
+        validateField(usuarioInput, false, result.error);
+      }
+      return;
+    }
+
+    loginAndPersist(result.user);
+
+    statusEl.textContent = 'Conta criada com sucesso! Redirecionando...';
+    statusEl.classList.add('is-success');
+    submitButton.disabled = true;
+
+    // TODO: confirmar o caminho real da página inicial (assumindo o mesmo
+    // padrão de pasta usado em ../Login/login.html acima).
+    setTimeout(() => {
+      window.location.href = '../Inicio/inicio.html';
+    }, 700);
   });
 
   // Revalida cada campo assim que o usuário digita de novo, sem esperar

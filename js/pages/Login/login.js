@@ -1,6 +1,7 @@
 // js/pages/Login/login.js
 
 import { isRequired, isValidEmail } from '../../utils/validators.js';
+import { loginUser, loginAndPersist } from '../../services/authService.js';
 
 export function initLoginPage({ header }) {
   // "header" já vem pronto, injetado pelo app.js
@@ -91,19 +92,17 @@ export function initLoginPage({ header }) {
 }
 
 /**
- * Liga a validação client-side ao formulário de login.
- *
- * Não existe endpoint/serviço de autenticação no projeto (o único
- * serviço, js/services/itunesApi.js, ainda está vazio e é dedicado a
- * busca de música, não a contas de usuário). Por isso o envio nunca
- * chega a "logar" ninguém de verdade — só confirmamos que os dados
- * passaram na validação, sem fingir uma sessão que não existe.
+ * Liga a validação client-side ao formulário de login e, se os campos
+ * forem válidos, tenta autenticar de verdade contra as contas salvas em
+ * localStorage (services/authService.js). Não há backend: a "conta" é a
+ * lista mantida em 'beebop_users' pelo próprio authService.
  */
 function setupLoginForm(container) {
   const form = container.querySelector('.auth-form');
   const identifierInput = form.querySelector('#login-identifier');
   const passwordInput = form.querySelector('#login-password');
   const statusEl = form.querySelector('.auth-form__status');
+  const submitButton = form.querySelector('.auth-form__submit');
 
   form.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -123,14 +122,34 @@ function setupLoginForm(container) {
 
     statusEl.classList.remove('is-success', 'is-error');
 
-    if (identifierValid && passwordValid) {
-      statusEl.textContent =
-        'Dados válidos! (Integração com o servidor ainda não existe neste projeto.)';
-      statusEl.classList.add('is-success');
-    } else {
+    if (!identifierValid || !passwordValid) {
       statusEl.textContent = 'Revise os campos destacados abaixo.';
       statusEl.classList.add('is-error');
+      return;
     }
+
+    const result = loginUser({
+      identifier: identifierInput.value.trim(),
+      senha: passwordInput.value,
+    });
+
+    if (!result.ok) {
+      statusEl.textContent = result.error;
+      statusEl.classList.add('is-error');
+      return;
+    }
+
+    loginAndPersist(result.user);
+
+    statusEl.textContent = `Login realizado! Bem-vindo(a), ${result.user.nome || result.user.usuario}.`;
+    statusEl.classList.add('is-success');
+    submitButton.disabled = true;
+
+    // TODO: confirmar o caminho real da página inicial (assumindo o mesmo
+    // padrão de pasta usado em ../CriarConta/criar_conta.html acima).
+    setTimeout(() => {
+      window.location.href = '../Inicio/inicio.html';
+    }, 700);
   });
 
   // Revalida um campo assim que o usuário corrige, sem esperar novo submit.

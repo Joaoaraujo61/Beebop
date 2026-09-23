@@ -99,6 +99,46 @@ body[data-page="noticias"] #news_nav{
     border-radius: 20px;
 }
 
+/*--------- Header: avatar de perfil (logado) ---------*/
+/*
+  Adicionar ao final de css/components.css, dentro (ou logo após) do
+  bloco "Header".
+
+  .header_login > a já estiliza qualquer link direto ali dentro como
+  pílula escura (mesmo efeito de "Entrar"). Isso é ótimo para o link
+  "Sair" (fica igual ao "Entrar", sem CSS extra) — mas precisa ser
+  desligado no link do avatar (.header_profile), senão ele também vira
+  uma pílula retangular em vez de um círculo.
+
+  Cor do avatar: mesmo gradiente dourado + #111827 já usados em
+  .profile-header__avatar e .comment-row__avatar. Nenhuma cor nova.
+*/
+.header_login > a.header_profile {
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.header_login > a.header_profile:hover {
+  background: none;
+  opacity: 0.85;
+}
+.header_profile__avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(rgb(244, 205, 80), rgb(254, 233, 165));
+  color: #111827;
+  font-weight: 800;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /*--------- Footer ---------*/
 
 .footer {

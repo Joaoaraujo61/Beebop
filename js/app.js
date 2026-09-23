@@ -1,7 +1,28 @@
 import { renderHeader } from './components/header.js'
 import { renderFooter } from './components/footer.js'
+import { appState } from './store/appState.js'
+
+/**
+ * Páginas que exigem login. Se não houver usuário na sessão (appState.user),
+ * o visitante é redirecionado para o Login antes de a página renderizar.
+ *
+ * TODO: adicionar 'salvos' aqui assim que essa rota existir neste switch
+ * (hoje o projeto ainda não tem um case 'salvos' — ver pages/Salvos).
+ * Reviews não entram aqui: são uma seção dentro da página de Álbum
+ * (pública), então o bloqueio delas deve acontecer dentro do próprio
+ * componente de reviews, não como redirecionamento de rota inteira.
+ */
+const PROTECTED_PAGES = ['perfil'];
 
 async function bootstrap() {
+    const page = document.body.dataset.page
+
+    // Bloqueia páginas que exigem login antes de renderizar qualquer coisa.
+    if (PROTECTED_PAGES.includes(page) && !appState.getState().user) {
+        window.location.href = '../Login/login.html';
+        return;
+    }
+
     const headerContainer = document.getElementById('header-container');
     const footerContainer = document.getElementById('footer-container');
 
@@ -10,9 +31,6 @@ async function bootstrap() {
     const footer = renderFooter({})
     headerContainer.appendChild(header);
     footerContainer.appendChild(footer);
-
-    //capta data page da pagina atual, para identificação
-    const page = document.body.dataset.page
 
     switch(page){
         case 'inicio':{

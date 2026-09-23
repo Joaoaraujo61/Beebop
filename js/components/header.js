@@ -1,5 +1,8 @@
 // components/Header/Header.js
 
+import { appState } from '../store/appState.js';
+import { logout } from '../services/authService.js';
+
 export function renderHeader({ onSearch, initialQuery = '' } = {}) {
   const header = document.createElement('header');
   header.className = 'header';
@@ -23,16 +26,14 @@ export function renderHeader({ onSearch, initialQuery = '' } = {}) {
         />
       <i class="fa-solid fa-magnifying-glass" style="color: rgb(156, 163, 175);"></i>
       </form>
-      <div class="header_login">
-        <a href="../Login/login.html">Entrar</a>
-        <a href="../CriarConta/criar_conta.html" class="header_account">Criar Conta</a>
-      </div>
+      <div class="header_login"></div>
   `;
 
   // Eventos ficam encapsulados aqui dentro — a página não precisa
   // saber COMO o header funciona, só o QUE ele faz (callback)
   const form = header.querySelector('.header__search_form');
   const input = header.querySelector('.header__search_input');
+  const loginArea = header.querySelector('.header_login');
 
   form.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -42,5 +43,44 @@ export function renderHeader({ onSearch, initialQuery = '' } = {}) {
     }
   });
 
+  // Reflete appState.user na área de conta do header. appState.subscribe
+  // já chama o listener imediatamente com o estado atual (ver
+  // store/appState.js), então isso cobre tanto a renderização inicial
+  // quanto login/logout feitos nesta mesma aba.
+  appState.subscribe((state) => renderLoginArea(loginArea, state.user));
+
+  // Login/logout feito em OUTRA aba não passa pelo appState desta aba —
+  // só chega via localStorage. Esse listener cobre esse caso.
+  window.addEventListener('storage', (event) => {
+    if (event.key === 'beebop_user') {
+      renderLoginArea(loginArea, appState.getState().user);
+    }
+  });
+
   return header;
+}
+
+/** Renderiza "Entrar/Criar Conta" (deslogado) ou "Olá, {nome}/Sair" (logado). */
+function renderLoginArea(loginArea, user) {
+  if (user) {
+    const label = user.nome || user.usuario || '';
+    const initial = label.trim().charAt(0).toUpperCase() || '?';
+
+    loginArea.innerHTML = `
+      <a href="#" class="header_logout" title="Sair">Sair</a>
+      <a href="../Perfil/perfil.html" class="header_profile" title="${label}">
+        <span class="header_profile__avatar">${initial}</span>
+      </a>
+    `;
+    loginArea.querySelector('.header_logout').addEventListener('click', (event) => {
+      event.preventDefault();
+      logout();
+      window.location.href = '../Inicio/inicio.html';
+    });
+  } else {
+    loginArea.innerHTML = `
+      <a href="../Login/login.html">Entrar</a>
+      <a href="../CriarConta/criar_conta.html" class="header_account">Criar Conta</a>
+    `;
+  }
 }
