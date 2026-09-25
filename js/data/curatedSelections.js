@@ -231,3 +231,31 @@ export async function getMusicasRankeadas() {
     .sort((a, b) => b.nota - a.nota)
     .map((item, indice) => ({ ...item, posicao: indice + 1 }));
 }
+
+/**
+ * Tenta casar uma faixa (artista + título, normalmente vindos de um
+ * lookup/busca real na iTunes API) com a seleção curada, para reaproveitar
+ * a nota mockada já existente (Top músicas / Surpresas) na página de
+ * Música. Comparação case-insensitive e tolerante a espaços nas pontas —
+ * não é um match perfeito (ex.: "feat." ou variações de título podem não
+ * bater), mas cobre o caso comum de abrir a página de Música a partir de
+ * um card de descoberta ou de charts.
+ *
+ * Só cobre músicas (MUSICAS_TOP_CURADAS/MUSICAS_SURPRESA_CURADAS): não há
+ * hoje uma nota mockada por faixa dentro de um álbum, só a nota do álbum
+ * inteiro (ver TOP_ALBUNS) — esses ficam de fora deste helper.
+ *
+ * @param {string} artista
+ * @param {string} titulo
+ * @returns {{nota: number}|null}
+ */
+export function getNotaCurada(artista, titulo) {
+  const normalizar = (texto) => (texto ?? '').trim().toLowerCase();
+  const todasMusicas = [...MUSICAS_TOP_CURADAS, ...MUSICAS_SURPRESA_CURADAS];
+
+  const encontrada = todasMusicas.find(
+    (item) => normalizar(item.artista) === normalizar(artista) && normalizar(item.titulo) === normalizar(titulo)
+  );
+
+  return encontrada ? { nota: encontrada.nota } : null;
+}
