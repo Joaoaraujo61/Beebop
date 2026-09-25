@@ -1856,3 +1856,297 @@ body[data-page="noticias"] #news_nav{
     display: none;
   }
 }
+/* =========================================================
+   Música (página de detalhe da faixa)
+   Reaproveita a mesma linguagem visual do Álbum (.album-hero,
+   .album-sidebar) — aqui como .musica-hero/.musica-sidebar, com o
+   mesmo dourado (#F4CD50), fundo translúcido (#2a2a2a7a) e cards em
+   gradiente escuro (rgba(28,28,30,.8) -> rgba(20,20,20,.9)) já usados
+   em .music-card e .album-sidebar__card. Nenhuma cor nova nesta seção.
+========================================================= */
+
+.musica-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 32px 80px;
+  color: #E5E7EB;
+}
+.musica-page__status,
+.musica-page__error {
+  color: #9CA3AF;
+  font-size: 14px;
+  padding: 24px 0;
+}
+.musica-page__error a {
+  color: #F4CD50;
+  font-weight: 600;
+}
+
+.musica-hero {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  align-items: flex-end;
+  margin-bottom: 40px;
+}
+.musica-hero__cover-wrap {
+  width: 220px;
+  flex-shrink: 0;
+}
+.musica-hero__cover {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 16px;
+  display: block;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45);
+}
+.musica-hero__cover--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #17171a;
+  color: #45464a;
+  font-size: 56px;
+  border: 1px solid #2e2e2e;
+}
+.musica-hero__info {
+  flex: 1 1 320px;
+  min-width: 0;
+}
+.musica-hero__eyebrow {
+  color: #F4CD50;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.musica-hero__title {
+  color: #F9FAFB;
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1.15;
+  margin-top: 6px;
+}
+.musica-hero__artist {
+  display: block;
+  color: #E5E7EB;
+  font-weight: 700;
+  font-size: 16px;
+  margin-top: 6px;
+}
+.musica-hero__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+.musica-hero__play {
+  font-weight: 700;
+  font-size: 14px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(rgb(244, 205, 80), rgb(254, 233, 165));
+  color: #111827;
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+.musica-hero__play:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+.musica-hero__play:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.musica-hero__icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 0.5px solid #45464a6f;
+  background-color: #2a2a2a7a;
+  color: #E5E7EB;
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+.musica-hero__icon-btn:hover {
+  background-color: #2a2a2a47;
+}
+.musica-hero__favorite.is-favorite {
+  color: #F4CD50;
+}
+.musica-hero__share-status {
+  min-height: 16px;
+  font-size: 12px;
+  color: #F4CD50;
+  margin-top: 8px;
+}
+.musica-hero__rating {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: #2a2a2a7a;
+  border: 0.5px solid #45464a6f;
+  border-radius: 16px;
+  padding: 12px 20px;
+}
+.musica-hero__rating-value {
+  color: #F4CD50;
+  font-weight: 800;
+  font-size: 18px;
+}
+.musica-hero__rating-count {
+  color: #9CA3AF;
+  font-size: 11px;
+}
+
+.musica-content {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.musica-main {
+  flex: 2 1 480px;
+  min-width: 0;
+}
+.musica-section__title {
+  color: #F9FAFB;
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.musica-letra__traduzir {
+  font-size: 11px;
+  font-weight: 700;
+  color: #9CA3AF;
+  background: #2a2a2a7a;
+  border: 0.5px solid #45464a6f;
+  border-radius: 999px;
+  padding: 4px 12px;
+  cursor: not-allowed;
+}
+.musica-letra__body {
+  color: #E5E7EB;
+  font-size: 15px;
+  line-height: 1.8;
+}
+.musica-letra__indisponivel {
+  color: #9CA3AF;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.musica-letra__genius-link {
+  display: inline-block;
+  margin-top: 16px;
+  color: #F4CD50;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.musica-sidebar {
+  flex: 1 1 280px;
+  min-width: 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.musica-sidebar__card {
+  background: linear-gradient(180deg, rgba(28, 28, 30, 0.8), rgba(20, 20, 20, 0.9));
+  border: 1px solid #2e2e2e;
+  border-radius: 16px;
+  padding: 20px;
+}
+.musica-sidebar__title {
+  color: #9CA3AF;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 14px;
+}
+.musica-sidebar__label {
+  color: #9CA3AF;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 12px;
+  display: block;
+}
+.musica-sidebar__value {
+  color: #F9FAFB;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 2px;
+  display: block;
+}
+
+.musica-plataformas {
+  display: flex;
+  gap: 12px;
+}
+.musica-plataformas a {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #2a2a2a7a;
+  border: 0.5px solid #45464a6f;
+  color: #E5E7EB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+.musica-plataformas a:hover {
+  color: #F4CD50;
+  background-color: #2a2a2a47;
+}
+
+.musica-avalie {
+  display: flex;
+  gap: 6px;
+}
+.musica-avalie__star {
+  border: none;
+  background: transparent;
+  color: #F4CD50;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0;
+}
+.musica-avalie__status {
+  color: #9CA3AF;
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+/* Cards clicáveis: navegam para a página de Música (ver musicCard.js/trackCard.js) */
+.music-card--clickable,
+.track_card {
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .musica-page {
+    padding: 24px 16px 56px;
+  }
+  .musica-hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .musica-hero__cover-wrap {
+    width: 160px;
+  }
+  .musica-content {
+    flex-direction: column;
+  }
+  .musica-sidebar {
+    width: 100%;
+  }
+}
