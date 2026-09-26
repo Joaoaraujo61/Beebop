@@ -18,13 +18,22 @@
 // carregada com essa seleção; sem match, a página simplesmente não
 // mostra nenhum badge de nota (em vez de inventar um número).
 //
-// Letra: a busca do lado da Genius (título/artista -> id da música lá)
-// passa por js/services/geniusApi.js, que por sua vez depende de um
-// proxy serverless próprio (ver /api/genius-search.js) — a Genius API
-// não aceita chamada direta do navegador (exige token + não libera
-// CORS). O TEXTO da letra nunca passa pelo nosso código: quem renderiza
-// é o widget oficial de embed da própria Genius, carregado a partir de
-// genius.com dentro da seção "Letra".
+// Comentários/avaliação da comunidade: tenta usar um componente real de
+// comentários (js/components/comentarios.js), se ele existir no
+// projeto. Como isso é opcional, o import é feito em runtime
+// (import() dinâmico) dentro de tentarRenderComentarios — assim, se o
+// arquivo não existir ainda, a página não quebra: ela cai de volta pro
+// widget de estrelas mock (attachEventosAvalie), do mesmo jeito que
+// funcionava antes.
+//
+// Letra: busca em paralelo o widget OFICIAL de embed da Genius
+// (buscarLetraGenius, que depende de um proxy publicado à parte — ver
+// js/services/geniusApi.js e /api/genius-search.js, já que a Genius
+// Search API exige token e não libera CORS pro navegador) e o texto
+// puro da lyrics.ovh (buscarLetraLyricsOvh). Se achar letra na
+// lyrics.ovh, mostra com collapse/expand e ainda oferece o link pra
+// Genius (genius.geniusUrl) quando disponível. O TEXTO da letra nunca
+// passa pelo nosso código/estado além de ser escapado e exibido.
 
 import { buscarMusicaPorId, buscarMusicas } from '../../services/itunesApi.js';
 import { buscarLetraGenius, buscarLetraLyricsOvh } from '../../services/geniusApi.js';
@@ -128,7 +137,7 @@ function renderPagina(container, faixa) {
             <button class="musica-letra__traduzir" type="button" disabled title="Tradução ainda não disponível">Traduzir</button>
           </h2>
           <div class="musica-letra__body" data-letra>
-            <p class="musica-page__status">Buscando letra na Genius...</p>
+            <p class="musica-page__status">Buscando letra...</p>
           </div>
         </section>
       </div>
@@ -169,6 +178,65 @@ function renderPagina(container, faixa) {
   attachEventosHero(container, faixa);
   attachEventosAvalie(container);
   carregarLetra(container, faixa);
+
+  // Comentários "de verdade" (opcionais): se js/components/comentarios.js
+  // existir no projeto, ele é carregado em runtime e anexado abaixo da
+  // letra, complementando as estrelas acima. Se o arquivo não existir
+  // (import falha), simplesmente não aparece nada aqui — sem quebrar o
+  // resto da página.
+  tentarRenderComentarios(container, faixa);
+}
+
+async function tentarRenderComentarios(container, faixa) {
+  try {
+    const mod = await import('../../components/comentarios.js');
+    if (!mod || typeof mod.renderComentarios !== 'function') return;
+
+    const comentariosEl = mod.renderComentarios({
+      tipo: 'musica',
+      id: faixa.id,
+      placeholder: 'O que você achou dessa música?',
+    });
+    container.querySelector('.musica-main')?.appendChild(comentariosEl);
+  } catch (erro) {
+    // Componente de comentários ainda não existe no projeto — tudo bem,
+    // a página segue funcionando normalmente sem ele.
+    console.info('Comentários indisponíveis nesta página:', erro?.message ?? erro);
+  }
+}
+
+// Avaliação por estrelas: só interface por enquanto (visual + feedback de
+// texto), igual à versão original. Fica como fallback sempre visível
+// enquanto não existir um serviço real de avaliação por FAIXA — o
+// componente de comentários (tentarRenderComentarios), quando presente
+// no projeto, complementa isso abaixo da letra.
+function attachEventosAvalie(container) {
+  const wrap = container.querySelector('[data-avalie]');
+  const status = container.querySelector('.musica-avalie__status');
+  if (!wrap || !status) return;
+
+  let notaEscolhida = 0;
+  const botoes = wrap.querySelectorAll('.musica-avalie__star');
+
+  function pintarEstrelas(ate) {
+    botoes.forEach((btn) => {
+      const valor = Number(btn.dataset.valor);
+      btn.querySelector('i').className = valor <= ate ? 'fa-solid fa-star' : 'fa-regular fa-star';
+    });
+  }
+
+  botoes.forEach((btn) => {
+    const valor = Number(btn.dataset.valor);
+
+    btn.addEventListener('mouseenter', () => pintarEstrelas(valor));
+    btn.addEventListener('mouseleave', () => pintarEstrelas(notaEscolhida));
+
+    btn.addEventListener('click', () => {
+      notaEscolhida = valor;
+      pintarEstrelas(valor);
+      status.textContent = `Você avaliou com ${valor} estrela${valor > 1 ? 's' : ''}.`;
+    });
+  });
 }
 
 function attachEventosHero(container, faixa) {
@@ -232,46 +300,10 @@ function attachEventosHero(container, faixa) {
   }
 }
 
-// Avaliação por estrelas: só interface por enquanto (visual + feedback de
-// texto). Não persiste em lugar nenhum — assim como reviewService.js é um
-// mock hoje (comentários fixos, só para o álbum "mock-1", conforme o
-// contexto do projeto), não existe ainda um serviço real de avaliação por
-// FAIXA para gravar essa nota. Fica marcado como pendência abaixo.
-function attachEventosAvalie(container) {
-  const wrap = container.querySelector('[data-avalie]');
-  const status = container.querySelector('.musica-avalie__status');
-  if (!wrap || !status) return;
-
-  let notaEscolhida = 0;
-  const botoes = wrap.querySelectorAll('.musica-avalie__star');
-
-  function pintarEstrelas(ate) {
-    botoes.forEach((btn) => {
-      const valor = Number(btn.dataset.valor);
-      btn.querySelector('i').className = valor <= ate ? 'fa-solid fa-star' : 'fa-regular fa-star';
-    });
-  }
-
-  botoes.forEach((btn) => {
-    const valor = Number(btn.dataset.valor);
-
-    btn.addEventListener('mouseenter', () => pintarEstrelas(valor));
-    btn.addEventListener('mouseleave', () => pintarEstrelas(notaEscolhida));
-
-    btn.addEventListener('click', () => {
-      notaEscolhida = valor;
-      pintarEstrelas(valor);
-      // TODO: persistir a avaliação quando existir um serviço de reviews
-      // por faixa (hoje reviewService.js cobre só álbuns, em modo mock).
-      status.textContent = `Você avaliou com ${valor} estrela${valor > 1 ? 's' : ''}.`;
-    });
-  });
-}
-
 // Busca o id da faixa na Genius (via proxy — ver js/services/geniusApi.js)
-// e, se encontrado, carrega o widget OFICIAL de embed da própria Genius
-// para renderizar a letra. O texto da letra nunca passa pelo nosso
-// código/estado — só o id público da música na Genius.
+// e, em paralelo, o texto puro na lyrics.ovh. O texto da letra nunca
+// passa pelo nosso código além de ser escapado e exibido — é a mesma
+// lógica comprovadamente funcional da versão original.
 async function carregarLetra(container, faixa) {
   const letraBody = container.querySelector('[data-letra]');
   if (!letraBody) return;
@@ -281,7 +313,7 @@ async function carregarLetra(container, faixa) {
     buscarLetraLyricsOvh(faixa.artista, faixa.titulo),
   ]);
 
-  const linkGenius = genius
+  const linkGeniusHtml = genius
     ? `<a class="musica-letra__genius-link" href="${genius.geniusUrl}" target="_blank" rel="noopener">
          Ver letra completa na Genius <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
        </a>`
@@ -292,7 +324,7 @@ async function carregarLetra(container, faixa) {
       <p class="musica-letra__indisponivel">
         Letra não encontrada.${genius ? ' Você ainda pode tentar na Genius pelo link abaixo.' : ' Isso pode acontecer se a lyrics.ovh não tiver essa faixa, ou se o proxy da Genius (ver js/services/geniusApi.js e /api/genius-search.js) ainda não estiver publicado.'}
       </p>
-      ${linkGenius}
+      ${linkGeniusHtml}
     `;
     return;
   }
@@ -300,7 +332,7 @@ async function carregarLetra(container, faixa) {
   // A letra da lyrics.ovh vem como texto puro com \n. Convertemos para
   // <br> depois de escapar HTML — nunca inserimos o texto cru no
   // innerHTML (evita que algum caractere da letra vire markup).
-   const letraHtml = escaparHtml(lyricsOvh.letra).replace(/\n/g, '<br>');
+  const letraHtml = escaparHtml(lyricsOvh.letra).replace(/\n/g, '<br>');
 
   letraBody.innerHTML = `
     <div class="musica-letra__collapse is-collapsed" data-letra-collapse>
@@ -309,12 +341,13 @@ async function carregarLetra(container, faixa) {
     <button class="musica-letra__toggle" type="button" data-letra-toggle hidden aria-label="Ver letra completa">
       <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
     </button>
-    ${linkGenius}
+    ${linkGeniusHtml}
   `;
 
   attachEventosLetraToggle(container);
+}
 
-  function attachEventosLetraToggle(container) {
+function attachEventosLetraToggle(container) {
   const collapseEl = container.querySelector('[data-letra-collapse]');
   const toggleBtn = container.querySelector('[data-letra-toggle]');
   if (!collapseEl || !toggleBtn) return;
@@ -333,7 +366,6 @@ async function carregarLetra(container, faixa) {
     toggleBtn.classList.toggle('is-expanded', expandido);
     toggleBtn.setAttribute('aria-label', expandido ? 'Recolher letra' : 'Ver letra completa');
   });
-}
 }
 
 // Escapa &, <, > e " antes de inserir texto de terceiros no innerHTML.
