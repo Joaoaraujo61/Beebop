@@ -27,12 +27,6 @@ a{
     margin: 0;           /* tira o `margin: auto` atual que centraliza */
 }
 
-.header__search_form{
-    flex: 1 1 240px;     /* busca é o item elástico */
-    max-width: 420px;
-    margin: 0 0 0 auto;  /* empurra pra direita */
-}
-
 .header_login{
     display: flex;
     gap: 10px;
@@ -96,21 +90,30 @@ body[data-page="noticias"] #news_nav{
 }
 .header__search_form{
     display: flex;
+    align-items: center;
+    gap: 8px;             /* faltava — sem isso o ícone fica colado/sobreposto ao texto */
     margin-top: auto;
     margin-bottom: auto;
+    margin-left: auto;   /* empurra pra direita, junto do nav */
     background: linear-gradient(rgb(33, 32, 32), rgb(22, 16, 16));
     padding: 10px;
-    width: 20%;
+    flex: 1 1 20%;       /* flex-basis controla o tamanho — width sozinho
+                            era ignorado por causa da flex-basis de 240px
+                            que existia numa declaração duplicada acima */
+    max-width: 420px;
+    min-width: 160px;
     border-radius: 20px;
 }
 .header__search_form>i{
     color: rgb(156, 163, 175);
+    flex-shrink: 0;       /* nunca deixa o ícone encolher/sumir por baixo do texto */
 }
 .header__search_form > input{
     font-size: 16px;
     background: transparent;
     border: none;
-    width: 100%;
+    flex: 1 1 auto;       /* em vez de width:100%, que ignorava o espaço do ícone */
+    min-width: 0;
     outline: none;
     color: white;
 }
@@ -274,6 +277,35 @@ body[data-page="noticias"] #news_nav{
   color: #6b6b6b;
 }
 
+/*--------- Footer: mobile ---------*/
+/*
+  .footer_up tinha gap:150px fixo (cabia só em telas largas) e
+  .footer_links (uma <table>) tinha border-spacing:56px + white-space:
+  nowrap nas células — em telas pequenas isso ultrapassava a largura da
+  viewport. Aqui o gap vira vertical (marca em cima, tabela embaixo) e o
+  espaçamento da tabela encolhe, sem mudar a marcação (continua <table>).
+*/
+@media (max-width: 700px) {
+  .footer {
+    padding: 40px 24px 24px;
+    gap: 24px;
+  }
+  .footer_up {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 32px;
+  }
+  .footer_beebop {
+    align-items: center;
+    max-width: none;
+  }
+  .footer_links {
+    border-spacing: 24px 10px;
+    margin: -10px 0 0 -24px;
+  }
+}
+
 /* ---------- Responsive ---------- */
 
 /*--------- Header: estado mobile (drawer) ---------*/
@@ -293,6 +325,9 @@ body[data-page="noticias"] #news_nav{
 
   .header__logo_nav {
     flex: 1 1 auto;
+    flex-wrap: wrap;   /* a nav é filha DESTE container (não do .header) —
+                          sem wrap aqui, o flex-basis:100% dela não consegue
+                          empurrá-la pra uma linha nova */
     align-items: center;
     gap: 12px;
     justify-content: space-between;

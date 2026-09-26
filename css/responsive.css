@@ -9,9 +9,9 @@
       380px — celular pequeno (iPhone SE, Galaxy A0x)
    ========================================================================== */
 
-@media (max-width: 1024px) {
+@media (min-width: 901px) and (max-width: 1024px) {
   .header__search_form {
-    width: 30%;
+    flex-basis: 30%;
   }
 }
 

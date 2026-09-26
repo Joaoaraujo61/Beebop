@@ -15,13 +15,20 @@ html, body {
 body{
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-    width: 100vw;
-    height: 100vh;
-    min-height: 100vh;
+    min-height: 100dvh; /* 100vh não conta com a barra de endereço dinâmica do mobile */
+    width: 100%;        /* 100vw pode incluir a scrollbar do desktop e causar overflow horizontal */
     background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(54, 46, 21, 0.51)),
             url("../assets/fundoBeebop.png") no-repeat center / cover;
-    background-attachment: fixed
+    background-attachment: fixed;
+}
+
+/* background-attachment: fixed é bugado/pesado no Safari iOS e em muitos
+   Android — em telas de toque o fundo passa a rolar com a página, que é
+   um comportamento estável e leve em qualquer aparelho. */
+@media (max-width: 768px) {
+  body {
+    background-attachment: scroll;
+  }
 }
 #results-container{
     flex: 1;
