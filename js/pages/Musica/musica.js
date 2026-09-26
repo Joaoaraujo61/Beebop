@@ -27,7 +27,7 @@
 // genius.com dentro da seção "Letra".
 
 import { buscarMusicaPorId, buscarMusicas } from '../../services/itunesApi.js';
-import { buscarLetraGenius } from '../../services/geniusApi.js';
+import { buscarLetraGenius, buscarLetraLyricsOvh } from '../../services/geniusApi.js';
 import { getNotaCurada } from '../../data/curatedSelections.js';
 import { getState, subscribe, toggleSavedItem, isSavedItem, togglePlay } from '../../store/appState.js';
 
@@ -276,27 +276,47 @@ async function carregarLetra(container, faixa) {
   const letraBody = container.querySelector('[data-letra]');
   if (!letraBody) return;
 
-  const resultado = await buscarLetraGenius(faixa.artista, faixa.titulo);
+  const [genius, lyricsOvh] = await Promise.all([
+    buscarLetraGenius(faixa.artista, faixa.titulo),
+    buscarLetraLyricsOvh(faixa.artista, faixa.titulo),
+  ]);
 
-  if (!resultado) {
+  const linkGenius = genius
+    ? `<a class="musica-letra__genius-link" href="${genius.geniusUrl}" target="_blank" rel="noopener">
+         Ver letra completa na Genius <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+       </a>`
+    : '';
+
+  if (!lyricsOvh) {
     letraBody.innerHTML = `
       <p class="musica-letra__indisponivel">
-        Letra não encontrada. Isso pode acontecer se o proxy da Genius (ver js/services/geniusApi.js e /api/genius-search.js) ainda não estiver publicado, ou se não houver correspondência para esta faixa.
-      </p>`;
+        Letra não encontrada.${genius ? ' Você ainda pode tentar na Genius pelo link abaixo.' : ' Isso pode acontecer se a lyrics.ovh não tiver essa faixa, ou se o proxy da Genius (ver js/services/geniusApi.js e /api/genius-search.js) ainda não estiver publicado.'}
+      </p>
+      ${linkGenius}
+    `;
     return;
   }
 
-  const embedId = `genius-embed-${resultado.geniusId}`;
-  letraBody.innerHTML = `
-    <div id="${embedId}"></div>
-    <a class="musica-letra__genius-link" href="${resultado.geniusUrl}" target="_blank" rel="noopener">
-      Ver letra completa na Genius <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
-    </a>
-  `;
+  // A letra da lyrics.ovh vem como texto puro com \n. Convertemos para
+  // <br> depois de escapar HTML — nunca inserimos o texto cru no
+  // innerHTML (evita que algum caractere da letra vire markup).
+  const letraHtml = escaparHtml(lyricsOvh.letra).replace(/\n/g, '<br>');
 
-  const script = document.createElement('script');
-  script.src = `https://genius.com/songs/${resultado.geniusId}/embed.js`;
-  document.getElementById(embedId).appendChild(script);
+  letraBody.innerHTML = `
+    <p class="musica-letra__texto">${letraHtml}</p>
+    ${linkGenius}
+  `;
+}
+
+// Escapa &, <, > e " antes de inserir texto de terceiros no innerHTML.
+// A letra vem de uma API externa — mesmo sendo "só texto", é conteúdo
+// não confiável e não pode virar markup por acidente.
+function escaparHtml(texto) {
+  return texto
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
 }
 
 function renderErro(mensagem) {

@@ -75,3 +75,36 @@ export async function buscarLetraGenius(artista, titulo) {
     capaGenius: hit.song_art_image_thumbnail_url ?? null,
   };
 }
+export async function buscarLetraLyricsOvh(artista, titulo) {
+  if (!artista?.trim() || !titulo?.trim()) return null;
+
+  // encodeURIComponent já cobre espaços/acentos; o replace remove
+  // barras que quebrariam o path do endpoint (/v1/{artista}/{titulo}).
+  const artistaSeguro = encodeURIComponent(artista.trim()).replace(/%2F/gi, ' ');
+  const tituloSeguro = encodeURIComponent(titulo.trim()).replace(/%2F/gi, ' ');
+
+  const url = `https://api.lyrics.ovh/v1/${artistaSeguro}/${tituloSeguro}`;
+
+  let resposta;
+  try {
+    resposta = await fetch(url);
+  } catch (erro) {
+    console.warn('Não foi possível consultar a lyrics.ovh:', erro.message);
+    return null;
+  }
+
+  // 404 aqui significa "letra não encontrada", não erro de servidor.
+  if (!resposta.ok) return null;
+
+  let dados;
+  try {
+    dados = await resposta.json();
+  } catch {
+    return null;
+  }
+
+  const letra = dados?.lyrics?.trim();
+  if (!letra) return null;
+
+  return { letra, fonte: 'lyrics.ovh' };
+}
