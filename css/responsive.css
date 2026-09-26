@@ -1,5 +1,14 @@
 /* css/responsive.css */
 
+/* ==========================================================================
+   Breakpoints:
+     1024px — tablet paisagem / notebook pequeno
+      900px — tablet retrato   (header vira drawer em components.css)
+      768px — tablet estreito
+      600px — celular grande
+      380px — celular pequeno (iPhone SE, Galaxy A0x)
+   ========================================================================== */
+
 @media (max-width: 1024px) {
   .header__search_form {
     width: 30%;
@@ -7,6 +16,9 @@
 }
 
 @media (max-width: 900px) {
+  /* Header mobile é tratado em components.css (junto do componente).
+     Aqui só o que é layout de PÁGINA. */
+
   .hero {
     justify-content: center;
     text-align: center;
@@ -15,14 +27,7 @@
   .hero__actions {
     justify-content: center;
   }
-  .header {
-    justify-content: center;
-    row-gap: 16px;
-  }
-  .header__search_form {
-    width: 60%;
-    order: 3;
-  }
+
   .features {
     padding: 48px 32px 16px;
   }
@@ -37,8 +42,51 @@
   .feature__text {
     max-width: none;
   }
+
   .auth-shell__brand {
     flex-basis: 260px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Grids de card: 2 colunas de verdade, sem min-width que estoure. */
+  .music-card {
+    width: calc(50% - 12px);
+    min-width: 0;
+  }
+
+  /* Track cards (lista) — coluna de meta pode quebrar. */
+  .track_card {
+    gap: 10px;
+  }
+  .track_title_row {
+    flex-wrap: wrap;
+    row-gap: 4px;
+  }
+
+  /* Página de Música: hero empilha. */
+  .musica-hero {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+  }
+  .musica-hero__cover-wrap {
+    width: 200px;
+    max-width: 60vw;
+  }
+  .musica-hero__actions {
+    justify-content: center;
+  }
+  .musica-hero__rating {
+    align-self: center;
+  }
+  .musica-content {
+    flex-direction: column;
+  }
+  .musica-sidebar {
+    width: 100%;
+    min-width: 0;
   }
 }
 
@@ -46,13 +94,12 @@
   .hero__title {
     font-size: 32px;
   }
+
   .music-card {
-    width: 44%;
-    min-width: 130px;
+    width: calc(50% - 10px);
+    min-width: 0;
   }
-  .header__search_form {
-    width: 90%;
-  }
+
   .features__title {
     font-size: 26px;
   }
@@ -65,12 +112,14 @@
     height: 64px;
     font-size: 26px;
   }
+
   .closing {
     padding: 32px 24px 64px;
   }
   .closing__title {
     font-size: 24px;
   }
+
   .auth-shell {
     min-height: auto;
   }
@@ -80,32 +129,70 @@
   .auth-card {
     padding: 32px 24px;
   }
+
+  /* Páginas de conteúdo: padding enxuto. */
   .album-page,
-  .profile-page {
+  .profile-page,
+  .musica-page {
     padding: 24px 16px 56px;
   }
-  .album-hero {
+
+  /* Heroes empilham e capa vira bloco. */
+  .album-hero,
+  .musica-hero {
     flex-direction: column;
     align-items: flex-start;
   }
-  .album-hero__cover-wrap {
-    width: 160px;
+  .album-hero__cover-wrap,
+  .musica-hero__cover-wrap {
+    width: 180px;
+    max-width: 70vw;
   }
   .album-hero__rating {
     flex-direction: row;
     gap: 10px;
   }
+
   .album-content,
-  .profile-content {
+  .profile-content,
+  .musica-content {
     flex-direction: column;
   }
   .album-sidebar,
-  .dna-card {
+  .dna-card,
+  .musica-sidebar {
     width: 100%;
+    min-width: 0;
   }
+
   .track-row__credit {
     display: none;
   }
+
+  /* Track cards: mais compactos sem ficar ilegíveis. */
+  .track_card {
+    padding: 10px;
+    gap: 10px;
+  }
+  .track_cover {
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+  }
+  .track_title {
+    font-size: 0.95rem;
+  }
+  .track_artist,
+  .track_year {
+    font-size: 0.8rem;
+  }
+  /* O like estava em bottom:12/right:14 — em 2 colunas o padding-right
+     do .track_info (36px) já reserva o espaço. Só garante que não
+     invade o título. */
+  .track_info {
+    padding-right: 30px;
+  }
+
   .profile-header {
     flex-direction: column;
     text-align: center;
@@ -114,7 +201,70 @@
     justify-content: center;
   }
   .profile-favorites-grid .music-card {
-    width: 44%;
-    min-width: 130px;
+    width: calc(50% - 10px);
+    min-width: 0;
+  }
+
+  /* Letra: leitura confortável. */
+  .musica-letra__body {
+    font-size: 15px;
+    line-height: 1.9;
+  }
+  .musica-letra__traduzir {
+    font-size: 10px;
+    padding: 4px 10px;
+  }
+
+  /* Chart rows no celular: menos colunas. */
+  .chart-row__count,
+  .chart-row__credit {
+    display: none;
+  }
+}
+
+@media (max-width: 380px) {
+  /* Celular pequeno: 2 colunas ainda cabem, gap mínimo. */
+  .music-card {
+    width: calc(50% - 8px);
+    min-width: 0;
+  }
+  .music-card__title {
+    font-size: 0.85rem;
+  }
+  .music-card__artist {
+    font-size: 0.75rem;
+  }
+
+  .hero__title {
+    font-size: 26px;
+  }
+  .hero {
+    padding: 40px 16px;
+  }
+
+  .closing {
+    padding: 24px 16px 48px;
+  }
+
+  .album-page,
+  .profile-page,
+  .musica-page {
+    padding: 16px 12px 48px;
+  }
+
+  .album-hero__cover-wrap,
+  .musica-hero__cover-wrap {
+    width: 140px;
+    max-width: 60vw;
+  }
+
+  .musica-hero__title {
+    font-size: 1.4rem;
+  }
+
+  .track_cover {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
   }
 }

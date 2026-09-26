@@ -2,13 +2,13 @@
 
 header{
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
     width: 100%;
-    flex-direction: row;
+    padding: 12px 32px;
     background-color: rgba(15, 15, 15, 0.35);
-    gap: 10%;
-    justify-content: center;
     flex-wrap: wrap;
-    padding: auto;
 }
 a{
     color: #E5E7EB;
@@ -16,17 +16,31 @@ a{
 }
 .header__logo_nav{
     display: flex;
-    flex-direction: row;
-    gap: 40px;
+    align-items: center;
+    gap: 32px;           /* espaço entre logo e nav */
+    flex-shrink: 0;
+}
+
+.header__nav{
+    display: flex;
+    gap: 8px;            /* links mais colados entre si */
+    margin: 0;           /* tira o `margin: auto` atual que centraliza */
+}
+
+.header__search_form{
+    flex: 1 1 240px;     /* busca é o item elástico */
+    max-width: 420px;
+    margin: 0 0 0 auto;  /* empurra pra direita */
+}
+
+.header_login{
+    display: flex;
+    gap: 10px;
+    margin: 0;
+    flex-shrink: 0;
 }
 .header__logo_nav > a > img{
     width: 110%;
-}
-.header__nav{
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
-    margin: auto;
 }
 .header__nav > a{
     font-weight: 600;
@@ -38,6 +52,36 @@ a{
 .header__nav > a:hover{
     background-color: #dfd07824;
 }
+
+/*--------- Header: botão hambúrguer (mobile) ---------*/
+/*
+  Fica escondido no desktop. Abaixo de 900px (ver responsive.css)
+  aparece e a .header__nav vira um drawer full-width abaixo do header.
+  Nenhuma cor nova: mesma paleta das pílulas (.header__nav > a) —
+  #2a2a2a7a de fundo, #45464a6f de borda, #E5E7EB de ícone.
+*/
+.header__burger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin: auto 0;
+  border-radius: 50%;
+  border: 0.5px solid #45464a6f;
+  background-color: #2a2a2a7a;
+  color: #E5E7EB;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.header__burger:hover,
+.header__burger:focus-visible {
+  background-color: #dfd07824;
+  color: #F4CD50;
+  outline: none;
+}
+
 body[data-page="inicio"] #inicio_nav{
     background-color: #e0cd646e;
 }
@@ -232,14 +276,77 @@ body[data-page="noticias"] #news_nav{
 
 /* ---------- Responsive ---------- */
 
-@media (max-width: 720px) {
-  .footer {
-    flex-direction: column;
-    padding: 40px 24px 24px;
+/*--------- Header: estado mobile (drawer) ---------*/
+@media (max-width: 900px) {
+  /* Header deixa de tentar caber tudo em uma linha: vira
+     [logo | hambúrguer] em cima, e a nav abre como drawer abaixo
+     quando .is-menu-open. A busca e o login ficam em uma linha
+     própria (order alto) — assim não competem com o logo. */
+  .header {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px;
   }
 
-  .footer_links {
-    gap: 32px;
+  .header__logo_nav {
+    flex: 1 1 auto;
+    align-items: center;
+    gap: 12px;
+    justify-content: space-between;
+    min-width: 0;
+  }
+
+  .header__logo_nav > a > img {
+    width: auto;
+    height: 40px;
+    display: block;
+  }
+
+  .header__burger {
+    display: inline-flex;
+  }
+
+  /* Nav vira drawer: some por padrão, ocupa a linha inteira quando
+     aberta. O "flex-basis: 100%" força a quebra de linha dentro do
+     header (que tem flex-wrap: wrap), então ela cai embaixo do logo
+     sem precisar de position: absolute. */
+  .header__nav {
+    display: none;
+    flex-basis: 100%;
+    flex-direction: column;
+    gap: 8px;
+    margin: 4px 0 0;
+    order: 10;
+  }
+  .header.is-menu-open .header__nav {
+    display: flex;
+  }
+
+  .header__nav > a {
+    /* Pílula vira linha cheia: área de toque maior, alinhamento
+       à esquerda (mais legível em lista vertical que centralizado). */
+    text-align: left;
+    padding: 12px 16px;
+    border-radius: 12px;
+  }
+
+  /* Busca e login vão para baixo do logo/nav. search ocupa a linha
+     toda; login fica alinhado à direita. */
+  .header__search_form {
+    flex-basis: 100%;
+    width: 100%;
+    order: 20;
+    margin: 0;
+  }
+  .header_login {
+    flex-basis: 100%;
+    order: 30;
+    justify-content: flex-end;
+    gap: 10px;
+    margin: 0;
   }
 }
 
