@@ -2033,8 +2033,59 @@ body[data-page="noticias"] #news_nav{
 }
 .musica-letra__body {
   color: #E5E7EB;
-  font-size: 15px;
-  line-height: 1.8;
+  font-size: 17px;
+  line-height: 1.9;
+}
+
+/* Letra recolhida por padrão: altura máxima + fade no final, com botão
+   de seta para expandir. Só aparece quando o texto realmente ultrapassa
+   a altura recolhida (JS decide isso — ver attachEventosLetraToggle). */
+.musica-letra__collapse {
+  position: relative;
+  overflow: hidden;
+}
+.musica-letra__collapse.is-collapsed {
+  max-height: 340px;
+}
+.musica-letra__collapse.is-collapsed::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 84px;
+  background: linear-gradient(180deg, rgba(10, 10, 9, 0) 0%, rgba(10, 10, 9, 0.92) 85%);
+  pointer-events: none;
+}
+
+.musica-letra__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 8px;
+  padding: 10px;
+  border: none;
+  background: transparent;
+  color: #9CA3AF;
+  font-size: 16px;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+.musica-letra__toggle:hover {
+  color: #F4CD50;
+}
+.musica-letra__toggle i {
+  transition: transform 0.2s ease;
+}
+.musica-letra__toggle.is-expanded i {
+  transform: rotate(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .musica-letra__toggle i {
+    transition: none;
+  }
 }
 .musica-letra__indisponivel {
   color: #9CA3AF;

@@ -300,12 +300,40 @@ async function carregarLetra(container, faixa) {
   // A letra da lyrics.ovh vem como texto puro com \n. Convertemos para
   // <br> depois de escapar HTML — nunca inserimos o texto cru no
   // innerHTML (evita que algum caractere da letra vire markup).
-  const letraHtml = escaparHtml(lyricsOvh.letra).replace(/\n/g, '<br>');
+   const letraHtml = escaparHtml(lyricsOvh.letra).replace(/\n/g, '<br>');
 
   letraBody.innerHTML = `
-    <p class="musica-letra__texto">${letraHtml}</p>
+    <div class="musica-letra__collapse is-collapsed" data-letra-collapse>
+      <p class="musica-letra__texto">${letraHtml}</p>
+    </div>
+    <button class="musica-letra__toggle" type="button" data-letra-toggle hidden aria-label="Ver letra completa">
+      <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+    </button>
     ${linkGenius}
   `;
+
+  attachEventosLetraToggle(container);
+
+  function attachEventosLetraToggle(container) {
+  const collapseEl = container.querySelector('[data-letra-collapse]');
+  const toggleBtn = container.querySelector('[data-letra-toggle]');
+  if (!collapseEl || !toggleBtn) return;
+
+  const cabeInteira = collapseEl.scrollHeight <= collapseEl.clientHeight + 4;
+  if (cabeInteira) {
+    collapseEl.classList.remove('is-collapsed');
+    return;
+  }
+
+  toggleBtn.hidden = false;
+
+  toggleBtn.addEventListener('click', () => {
+    const aindaColapsado = collapseEl.classList.toggle('is-collapsed');
+    const expandido = !aindaColapsado;
+    toggleBtn.classList.toggle('is-expanded', expandido);
+    toggleBtn.setAttribute('aria-label', expandido ? 'Recolher letra' : 'Ver letra completa');
+  });
+}
 }
 
 // Escapa &, <, > e " antes de inserir texto de terceiros no innerHTML.
