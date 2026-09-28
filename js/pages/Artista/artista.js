@@ -31,6 +31,7 @@ import { renderAlbumCard, attachAlbumCardEvents } from '../../components/albumCa
 import { renderTrackCard, attachTrackCardEvents } from '../../components/trackCard.js';
 import { getNotaAlbumCurada, getNotaCurada } from '../../data/curatedSelections.js';
 import { renderComentarios } from '../../components/comentarios.js';
+import { buscarImagemArtista } from '../../services/audioDbApi.js';
 
 const ALBUNS_VISIVEIS_INICIAL = 6;
 const MUSICAS_VISIVEIS_INICIAL = 6;
@@ -81,6 +82,20 @@ async function carregarArtista({ idParam, nomeParam }) {
 
   return null;
 }
+async function carregarFotoHero(container, nome) {
+  const avatar = container.querySelector('.artista-hero__avatar');
+  const url = await buscarImagemArtista(nome);
+  if (!url || !avatar) return; // sem foto: ficam as iniciais
+
+  const img = new Image();
+  img.alt = nome;
+  img.onload = () => {
+    avatar.textContent = '';
+    avatar.appendChild(img);
+  };
+  img.src = url;
+}
+
 
 async function buscarMusicasDoArtista(nomeArtista) {
   try {
@@ -130,7 +145,7 @@ function renderPagina(container, artista, albuns, musicas) {
     </section>
   `;
 
-  
+  carregarFotoHero(container, artista.nome);
 
   renderGridExpandivel(container, {
     chave: 'albuns',

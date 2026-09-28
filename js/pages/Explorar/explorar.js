@@ -23,6 +23,7 @@ import { renderAlbumCard, attachAlbumCardEvents } from '../../components/albumCa
 import { renderArtistCard, attachArtistCardEvents } from '../../components/artistCard.js';
 import {
   getMusicasParaDescoberta,
+  getMusicasPorGenero,
   getAlbunsParaDescoberta,
   getArtistasParaDescoberta,
 } from '../../data/curatedSelections.js';
@@ -109,6 +110,20 @@ function buildShellMarkup(state, generos) {
   `;
 }
 
+// Comparação de gênero tolerante a maiúsculas e acentos
+// ("R&B/Soul" === "r&b/soul", "Eletrônica" === "eletronica").
+function normalizarGenero(texto) {
+  return String(texto ?? '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim();
+}
+
+function renderVazio(texto) {
+  return `<p class="explorar_vazio">${texto}</p>`;
+}
+
 export function initExplorarPage({ header } = {}) {
   const container = document.getElementById('results-container');
 
@@ -132,6 +147,15 @@ export function initExplorarPage({ header } = {}) {
   let paginaMusicas = 1;
   let paginaAlbuns = 1;
   let modoDescoberta = true; // true = mostrando a seleção curada (sem busca ativa)
+
+  // Seleção curada completa (antes do filtro de gênero). Guardada pra que
+  // trocar o chip de gênero em modo descoberta só refiltre, sem nova requisição.
+  let descobertaMusicas = [];
+  let descobertaAlbuns = [];
+  let descobertaArtistas = [];
+  // Músicas curadas do gênero escolhido no chip (ver getMusicasPorGenero);
+  // vazio quando o filtro está em "Todos os gêneros".
+  let descobertaMusicasGenero = [];
 
   container.classList.add('explorar');
   container.innerHTML = buildShellMarkup(getState(), generos);
@@ -167,7 +191,29 @@ export function initExplorarPage({ header } = {}) {
   function generoFiltrado(lista) {
     const genero = getState().filters.genero;
     if (!genero || genero === generos[0]) return lista;
-    return lista.filter((item) => item.genero === genero);
+    const alvo = normalizarGenero(genero);
+    return lista.filter((item) => normalizarGenero(item.genero) === alvo);
+  }
+
+  function generoAtivoEhTodos() {
+    const genero = getState().filters.genero;
+    return !genero || genero === generos[0];
+  }
+
+  function unicosPorId(lista) {
+    const vistos = new Set();
+    return lista.filter((item) => {
+      const chave = String(item.id);
+      if (vistos.has(chave)) return false;
+      vistos.add(chave);
+      return true;
+    });
+  }
+
+  async function carregarMusicasDoGenero() {
+    descobertaMusicasGenero = generoAtivoEhTodos()
+      ? []
+      : await getMusicasPorGenero(getState().filters.genero, ITENS_MUSICAS_DESCOBERTA);
   }
 
   // Em modo descoberta (sem busca ativa) não há requisição nova ao trocar
@@ -184,20 +230,37 @@ export function initExplorarPage({ header } = {}) {
     modoDescoberta = true;
     mostrarStatus('Carregando sugestões...');
 
-    const [musicas, albuns, artistas] = await Promise.all([
+    [descobertaMusicas, descobertaAlbuns, descobertaArtistas] = await Promise.all([
       getMusicasParaDescoberta(ITENS_MUSICAS_DESCOBERTA),
       getAlbunsParaDescoberta(ITENS_ALBUNS_DESCOBERTA),
       getArtistasParaDescoberta(ITENS_ARTISTAS_DESCOBERTA),
     ]);
+
+    await carregarMusicasDoGenero();
+    desenharDescoberta();
+    mostrarStatus(null);
+  }
+
+  // Desenha a seleção curada já carregada aplicando o filtro de gênero ativo.
+  function desenharDescoberta() {
     const savedIds = new Set(getState().savedItems.map((item) => String(item.id)));
+    const musicas = unicosPorId([...descobertaMusicasGenero, ...generoFiltrado(descobertaMusicas)]);
+    const albuns = generoFiltrado(descobertaAlbuns);
+    const artistas = generoFiltrado(descobertaArtistas);
 
     el.musicasSection.querySelector('h2').textContent = 'Músicas em Alta';
     el.albunsSection.querySelector('h2').textContent = 'Álbuns';
     el.artistasSection.querySelector('h2').textContent = 'Artistas';
 
-    el.musicasGrid.innerHTML = musicas.map((m) => renderTrackCard(m, { saved: savedIds.has(String(m.id)) })).join('');
-    el.albunsGrid.innerHTML = albuns.map((a) => renderAlbumCard(a, { saved: savedIds.has(String(a.id)) })).join('');
-    el.artistasGrid.innerHTML = artistas.map(renderArtistCard).join('');
+    el.musicasGrid.innerHTML = musicas.length
+      ? musicas.map((m) => renderTrackCard(m, { saved: savedIds.has(String(m.id)) })).join('')
+      : renderVazio('Nenhuma música deste gênero nas sugestões.');
+    el.albunsGrid.innerHTML = albuns.length
+      ? albuns.map((a) => renderAlbumCard(a, { saved: savedIds.has(String(a.id)) })).join('')
+      : renderVazio('Nenhum álbum deste gênero nas sugestões.');
+    el.artistasGrid.innerHTML = artistas.length
+      ? artistas.map(renderArtistCard).join('')
+      : renderVazio('Nenhum artista deste gênero nas sugestões.');
 
     removerPager('musicas');
     removerPager('albuns');
@@ -207,7 +270,6 @@ export function initExplorarPage({ header } = {}) {
     attachArtistCardEvents(el.artistasGrid, artistas);
 
     aplicarVisibilidadeDescoberta();
-    mostrarStatus(null);
   }
 
   // --- Modo busca: consulta a iTunes API de acordo com a categoria (tab) ativa ---
@@ -286,7 +348,9 @@ export function initExplorarPage({ header } = {}) {
     const pagina = paginate(filtradas, paginaMusicas, ITENS_POR_PAGINA);
     const savedIds = new Set(getState().savedItems.map((item) => String(item.id)));
 
-    el.musicasGrid.innerHTML = pagina.map((track) => renderTrackCard(track, { saved: savedIds.has(String(track.id)) })).join('');
+    el.musicasGrid.innerHTML = pagina.length
+      ? pagina.map((track) => renderTrackCard(track, { saved: savedIds.has(String(track.id)) })).join('')
+      : renderVazio('Nenhuma música deste gênero.');
 
     removerPager('musicas');
     el.musicasSection.insertAdjacentHTML(
@@ -303,7 +367,9 @@ export function initExplorarPage({ header } = {}) {
     const pagina = paginate(filtrados, paginaAlbuns, ITENS_POR_PAGINA);
     const savedIds = new Set(getState().savedItems.map((item) => String(item.id)));
 
-    el.albunsGrid.innerHTML = pagina.map((album) => renderAlbumCard(album, { saved: savedIds.has(String(album.id)) })).join('');
+    el.albunsGrid.innerHTML = pagina.length
+      ? pagina.map((album) => renderAlbumCard(album, { saved: savedIds.has(String(album.id)) })).join('')
+      : renderVazio('Nenhum álbum deste gênero.');
 
     removerPager('albuns');
     el.albunsSection.insertAdjacentHTML(
@@ -316,8 +382,13 @@ export function initExplorarPage({ header } = {}) {
   }
 
   function renderArtistas() {
-    el.artistasGrid.innerHTML = resultadoArtistas.map(renderArtistCard).join('');
-    attachArtistCardEvents(el.artistasGrid, resultadoArtistas);
+    const filtrados = generoFiltrado(resultadoArtistas);
+
+    el.artistasGrid.innerHTML = filtrados.length
+      ? filtrados.map(renderArtistCard).join('')
+      : renderVazio('Nenhum artista deste gênero.');
+
+    attachArtistCardEvents(el.artistasGrid, filtrados);
   }
 
   // Liga os botões de página de cada grid (musicas/albuns) sem refazer a requisição
@@ -357,13 +428,21 @@ export function initExplorarPage({ header } = {}) {
 
   function attachChipEvents() {
     el.chips.forEach((chip) => {
-      chip.addEventListener('click', () => {
+      chip.addEventListener('click', async () => {
         el.chips.forEach((c) => c.classList.remove('explorar_chip--active'));
         chip.classList.add('explorar_chip--active');
         setFilter('genero', chip.dataset.genero);
-        if (!modoDescoberta) {
-          paginaMusicas = 1;
-          paginaAlbuns = 1;
+
+        paginaMusicas = 1;
+        paginaAlbuns = 1;
+
+        // O filtro vale nos dois modos: em descoberta refiltra a seleção
+        // curada já carregada (e traz as músicas curadas do gênero); em
+        // busca refiltra os resultados da consulta.
+        if (modoDescoberta) {
+          await carregarMusicasDoGenero();
+          desenharDescoberta();
+        } else {
           renderSecoesBusca();
         }
       });

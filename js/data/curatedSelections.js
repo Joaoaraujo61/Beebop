@@ -15,6 +15,15 @@
 // metade dos itens do Top 30 e metade das Surpresas, embaralhando o resultado.
 // Já getAlbunsRankeados()/getMusicasRankeadas() (usadas pela página Charts) NÃO
 // embaralham: devolvem a seleção completa ordenada pela nota, do maior pro menor.
+//
+// MUSICAS_POR_GENERO garante ao menos uma música para cada gênero do filtro de
+// Explorar (a lista de gêneros da iTunes API, storefront BR). Cada item tem um
+// `genero` explícito, com o nome EXATO do chip — esse valor tem prioridade
+// sobre o gênero que a iTunes devolve na busca (ver enriquecerComCapa), porque
+// a classificação da Apple varia por lançamento/região e não é confiável para
+// garantir que o filtro encontre a faixa. Essas faixas ficam de fora do sorteio
+// geral e do ranking de Charts: aparecem quando o gênero é escolhido no filtro
+// (ver getMusicasPorGenero).
 
 import { shuffleArray } from '../utils/helpers.js';
 import { buscarMusicas, buscarAlbuns, buscarArtistas } from '../services/itunesApi.js';
@@ -106,6 +115,69 @@ const SURPRESAS = [
   { artista: 'Mid-Air Thief', titulo: 'These Chains' },
 ];
 
+// Ao menos uma música para cada gênero do filtro de Explorar. O campo `genero`
+// usa o nome EXATO do chip (a comparação no filtro ignora maiúsculas e acentos,
+// mas o nome precisa ser o mesmo). Se a lista de gêneros da iTunes mudar, é só
+// ajustar/adicionar entradas aqui — pode haver mais de uma música por gênero.
+//
+// Observação: alguns gêneros são categorias de catálogo da Apple, não estilos
+// (Fitness e malhação, Inspiradoras, Karaokê, Vocal, Ligeira, Marcha, Hörspiel
+// — este último é áudio falado, não música). Para eles a faixa foi escolhida
+// pelo tema; a capa/duração vêm da iTunes, mas o gênero exibido é o curado.
+const MUSICAS_POR_GENERO = [
+  { genero: 'Africana', artista: 'Fela Kuti', titulo: 'Zombie' },
+  { genero: 'Alternativo', artista: 'Pixies', titulo: 'Where Is My Mind?' },
+  { genero: 'Anime', artista: 'Yoko Takahashi', titulo: "A Cruel Angel's Thesis" },
+  { genero: 'Árabe', artista: 'Fairuz', titulo: 'Li Beirut' },
+  { genero: 'Blues', artista: 'B.B. King', titulo: 'The Thrill Is Gone' },
+  { genero: 'Brasileira', artista: 'Jorge Ben Jor', titulo: 'Mas Que Nada' },
+  { genero: 'Cantores/Compositores', artista: 'Joni Mitchell', titulo: 'A Case of You' },
+  { genero: 'Chinês', artista: 'Teresa Teng', titulo: 'The Moon Represents My Heart' },
+  { genero: 'Comédia', artista: '"Weird Al" Yankovic', titulo: 'Eat It' },
+  { genero: 'Coreano', artista: 'PSY', titulo: 'Gangnam Style' },
+  { genero: 'Country', artista: 'Johnny Cash', titulo: 'Ring of Fire' },
+  { genero: 'Cuba', artista: 'Buena Vista Social Club', titulo: 'Chan Chan' },
+  { genero: 'Dance', artista: 'Donna Summer', titulo: 'I Feel Love' },
+  { genero: 'Disney', artista: 'Idina Menzel', titulo: 'Let It Go' },
+  { genero: 'Eletrônica', artista: 'Kraftwerk', titulo: 'Trans-Europe Express' },
+  { genero: 'Em russo', artista: 'Кино', titulo: 'Группа крови' },
+  { genero: 'Enka', artista: 'Hibari Misora', titulo: 'Kawa no Nagare no You ni' },
+  { genero: 'Fitness e malhação', artista: 'Survivor', titulo: 'Eye of the Tiger' },
+  { genero: 'Folk', artista: 'Nick Drake', titulo: 'Pink Moon' },
+  { genero: 'Folk alemão', artista: 'Reinhard Mey', titulo: 'Über den Wolken' },
+  { genero: 'Hip-Hop/Rap', artista: 'Wu-Tang Clan', titulo: 'C.R.E.A.M.' },
+  { genero: 'Hörspiel', artista: 'Die drei ???', titulo: '...und der Super-Papagei' },
+  { genero: 'Indiana', artista: 'A. R. Rahman', titulo: 'Jai Ho' },
+  { genero: 'Inspiradoras', artista: 'MercyMe', titulo: 'I Can Only Imagine' },
+  { genero: 'Instrumental', artista: "Booker T. & the M.G.'s", titulo: 'Green Onions' },
+  { genero: 'J-pop', artista: 'Utada Hikaru', titulo: 'First Love' },
+  { genero: 'Jazz', artista: 'The Dave Brubeck Quartet', titulo: 'Take Five' },
+  { genero: 'Jewish Music', artista: 'Ofra Haza', titulo: "Im Nin'alu" },
+  { genero: 'Karaokê', artista: 'Ameritz Karaoke Band', titulo: 'Bohemian Rhapsody (Karaoke Version)' },
+  { genero: 'Kayokyoku', artista: 'Kyu Sakamoto', titulo: 'Ue o Muite Arukou' },
+  { genero: 'Ligeira', artista: 'Henry Mancini', titulo: 'Moon River' },
+  { genero: 'Marcha', artista: 'John Philip Sousa', titulo: 'The Stars and Stripes Forever' },
+  { genero: 'Música clássica', artista: 'Ludwig van Beethoven', titulo: 'Für Elise' },
+  { genero: 'Música do mundo', artista: "Youssou N'Dour", titulo: '7 Seconds' },
+  { genero: 'Música Latina', artista: 'Celia Cruz', titulo: 'La Vida Es un Carnaval' },
+  { genero: 'Música orquestral', artista: 'London Symphony Orchestra', titulo: 'Mars, the Bringer of War' },
+  { genero: 'Música para crianças', artista: 'Pinkfong', titulo: 'Baby Shark' },
+  { genero: 'Música religiosa', artista: 'Aretha Franklin', titulo: 'Amazing Grace' },
+  { genero: 'Natal', artista: 'Mariah Carey', titulo: 'All I Want for Christmas Is You' },
+  { genero: 'New Age', artista: 'Enya', titulo: 'Orinoco Flow' },
+  { genero: 'Pop', artista: 'ABBA', titulo: 'Dancing Queen' },
+  { genero: 'Pop alemão', artista: 'Nena', titulo: '99 Luftballons' },
+  { genero: 'Pop francês', artista: 'Stromae', titulo: 'Papaoutai' },
+  { genero: 'R&B/soul', artista: 'Sam Cooke', titulo: 'A Change Is Gonna Come' },
+  { genero: 'Reggae', artista: 'Bob Marley & The Wailers', titulo: 'No Woman, No Cry' },
+  { genero: 'Rock', artista: 'Led Zeppelin', titulo: 'Stairway to Heaven' },
+  { genero: 'Spoken Word', artista: 'Gil Scott-Heron', titulo: 'The Revolution Will Not Be Televised' },
+  { genero: 'Tarab', artista: 'Umm Kulthum', titulo: 'Enta Omri' },
+  { genero: 'Trilha sonora', artista: 'Hans Zimmer', titulo: 'Time' },
+  { genero: 'Turca', artista: 'Tarkan', titulo: 'Şımarık' },
+  { genero: 'Vocal', artista: 'Nat King Cole', titulo: 'Unforgettable' },
+];
+
 /**
  * Calcula uma nota de 0 a 10 decrescente conforme a posição no ranking
  * (posição 0 = melhor avaliada). Usada como fallback para itens sem uma
@@ -123,10 +195,29 @@ function notaPorPosicao(indice, total, max = 9.8, amplitude = 1.8) {
   return Math.round(nota * 10) / 10;
 }
 
+/** Slug seguro para ids (mantém letras de qualquer alfabeto e números). */
+function slug(texto) {
+  return String(texto ?? '')
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}]+/gu, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+/** Normaliza nome de gênero: sem acento, minúsculo, sem espaços nas pontas. */
+function normalizarGenero(texto) {
+  return String(texto ?? '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim();
+}
+
 /**
  * Enriquece um item curado com dados reais da iTunes API (capa, ano e
- * gênero). Mantém tudo o que já veio do item curado (inclusive `nota` e
- * `fonte`, quando existirem) — só complementa o que falta.
+ * gênero). Mantém tudo o que já veio do item curado (inclusive `nota`,
+ * `fonte` e `genero`, quando existirem) — só complementa o que falta.
+ * O `genero` curado tem prioridade sobre o da iTunes: é ele que garante que o
+ * filtro de gênero de Explorar encontre a faixa.
  */
 async function enriquecerComCapa(itemCurado, buscarFn) {
   try {
@@ -136,7 +227,7 @@ async function enriquecerComCapa(itemCurado, buscarFn) {
       ...itemCurado,
       capa: encontrado.capa,
       ano: encontrado.ano ?? itemCurado.ano,
-      genero: encontrado.genero ?? itemCurado.genero,
+      genero: itemCurado.genero ?? encontrado.genero ?? null,
       // id real do artista na iTunes API — usado por Explorar/Artista para
       // abrir a página do artista de um item curado (que não tem id próprio).
       artistaId: encontrado.artistaId ?? itemCurado.artistaId ?? null,
@@ -160,16 +251,25 @@ function paraAlbumCurado({ artista, titulo, nota, fonte }, indice) {
   };
 }
 
-function paraMusicaCurada({ artista, titulo }, indice, total, notaMax, amplitude) {
+function paraMusicaCurada({ artista, titulo, genero }, indice, total, notaMax, amplitude) {
   return {
     id: `curado-musica-${artista}-${titulo}`.toLowerCase().replace(/\s+/g, '-'),
     titulo,
     artista,
     ano: null,
-    genero: null,
+    genero: genero ?? null,
     capa: null,
     duracaoMs: null,
     nota: notaPorPosicao(indice, total, notaMax, amplitude),
+  };
+}
+
+// Variante para MUSICAS_POR_GENERO: id com slug (esses nomes têm aspas, barras
+// e alfabetos não latinos, que quebrariam o atributo data-id do card).
+function paraMusicaPorGenero(item, indice, total) {
+  return {
+    ...paraMusicaCurada(item, indice, total, 9.0, 1.4),
+    id: `curado-genero-${slug(item.artista)}-${slug(item.titulo)}`,
   };
 }
 
@@ -178,6 +278,7 @@ const MUSICAS_TOP_CURADAS = TOP_MUSICAS.map((item, i) => paraMusicaCurada(item, 
 // Surpresas recebem notas altas (público especializado), mas levemente mais baixas
 // que o topo do ranking geral, para diferenciar visualmente as duas origens.
 const MUSICAS_SURPRESA_CURADAS = SURPRESAS.map((item, i) => paraMusicaCurada(item, i, SURPRESAS.length, 9.2, 1.2));
+const MUSICAS_GENERO_CURADAS = MUSICAS_POR_GENERO.map((item, i) => paraMusicaPorGenero(item, i, MUSICAS_POR_GENERO.length));
 
 // Nomes únicos de artista presentes na seleção curada — usados como base
 // para a descoberta de artistas em destaque (ver getArtistasParaDescoberta).
@@ -208,6 +309,21 @@ export async function getMusicasParaDescoberta(quantidade = 6) {
     const surpresasEscolhidas = shuffleArray(MUSICAS_SURPRESA_CURADAS).slice(0, metadeSurpresa);
     const selecionadas = shuffleArray([...topEscolhidas, ...surpresasEscolhidas]);
     return Promise.all(selecionadas.map((item) => enriquecerComCapa(item, buscarMusicas)));
+}
+
+/**
+ * Músicas curadas de um gênero do filtro de Explorar (ver MUSICAS_POR_GENERO).
+ * A comparação ignora maiúsculas e acentos. Devolve [] se o gênero não tiver
+ * nenhuma faixa curada.
+ * @param {string} genero - Nome do gênero (o mesmo texto do chip).
+ * @param {number} [quantidade=6]
+ * @returns {Promise<Array>} Músicas no mesmo formato normalizado de services/itunesApi.js.
+ */
+export async function getMusicasPorGenero(genero, quantidade = 6) {
+  const alvo = normalizarGenero(genero);
+  const doGenero = MUSICAS_GENERO_CURADAS.filter((item) => normalizarGenero(item.genero) === alvo);
+  const selecionadas = shuffleArray(doGenero).slice(0, quantidade);
+  return Promise.all(selecionadas.map((item) => enriquecerComCapa(item, buscarMusicas)));
 }
 
 /**
@@ -256,6 +372,7 @@ export async function getAlbunsRankeados() {
  * combinados, ordenados por nota). Diferente do ranking de álbuns, aqui a
  * nota ainda vem de notaPorPosicao() — não há hoje uma fonte pontual de
  * "nota de crítica" por faixa individual tão padronizada quanto para álbuns.
+ * As faixas de MUSICAS_POR_GENERO não entram aqui de propósito.
  * @returns {Promise<Array>}
  */
 export async function getMusicasRankeadas() {
@@ -293,14 +410,14 @@ function notaMockada(chave) {
 const normalizarTexto = (texto) => (texto ?? '').trim().toLowerCase();
 
 /**
- * Nota de uma música: a da seleção curada (Top músicas / Surpresas) quando
- * artista + título batem; senão, uma nota mockada determinística.
+ * Nota de uma música: a da seleção curada (Top músicas / Surpresas / por
+ * gênero) quando artista + título batem; senão, uma nota mockada determinística.
  * @param {string} artista
  * @param {string} titulo
  * @returns {{nota: number, mock?: boolean}|null}
  */
 export function getNotaCurada(artista, titulo) {
-  const todasMusicas = [...MUSICAS_TOP_CURADAS, ...MUSICAS_SURPRESA_CURADAS];
+  const todasMusicas = [...MUSICAS_TOP_CURADAS, ...MUSICAS_SURPRESA_CURADAS, ...MUSICAS_GENERO_CURADAS];
 
   const encontrada = todasMusicas.find(
     (item) =>
