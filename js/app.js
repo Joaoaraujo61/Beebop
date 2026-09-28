@@ -88,6 +88,11 @@ async function bootstrap() {
             initMusicaPage({ header });
             break;
         }
+        case 'artista': {
+            const { initArtistaPage } = await import('./pages/Artista/artista.js');
+            initArtistaPage({ header });
+            break;
+        }
         default:
             console.warn(`Página "${page}" não reconhecida.`);
     }

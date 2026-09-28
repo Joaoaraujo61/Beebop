@@ -215,4 +215,42 @@ export async function buscarMusicaPorId(trackId, { country = DEFAULT_COUNTRY } =
  */
 export async function lookupPorId(id, { entity, country = DEFAULT_COUNTRY } = {}) {
   return request('/lookup', { id, entity, country });
-} 
+}
+
+/**
+ * Busca a lista oficial de gêneros musicais da Apple (hierarquia completa
+ * de subgêneros dentro de "Music", id 34). Não é o endpoint /search — é o
+ * catálogo de gêneros do iTunes Store, usado aqui só para preencher os
+ * chips de gênero do Explorar dinamicamente, em vez de uma lista fixa.
+ *
+ * Esse endpoint é diferente do resto deste arquivo (WebObjects, não
+ * /search), e não há garantia documentada de que ele libere CORS pra
+ * chamadas do navegador como o /search libera — por isso quem chama esta
+ * função (ver js/pages/Explorar/explorar.js) sempre trata falha com um
+ * fallback estático, nunca deixa o Explorar quebrado por causa disso.
+ * @param {{country?: string}} opcoes
+ * @returns {Promise<string[]>} nomes dos subgêneros, ordenados alfabeticamente
+ */
+export async function buscarGenerosMusicais({ country = DEFAULT_COUNTRY } = {}) {
+  const url = `${BASE_URL}/WebObjects/MZStoreServices.woa/ws/genres?id=34&cc=${country}`;
+
+  let response;
+  try {
+    response = await fetch(url);
+  } catch (erro) {
+    throw new Error(`Não foi possível buscar os gêneros: ${erro.message}`);
+  }
+
+  if (!response.ok) {
+    throw new Error(`Erro ao buscar gêneros: ${response.status} ${response.statusText}`);
+  }
+
+  const dados = await response.json();
+  const musica = dados?.['34'];
+  if (!musica?.subgenres) return [];
+
+  return Object.values(musica.subgenres)
+    .map((genero) => genero.name)
+    .filter(Boolean)
+    .sort((a, b) => a.localeCompare(b, 'pt-BR'));
+}

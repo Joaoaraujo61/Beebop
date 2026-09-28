@@ -17,7 +17,7 @@
 // embaralham: devolvem a seleção completa ordenada pela nota, do maior pro menor.
 
 import { shuffleArray } from '../utils/helpers.js';
-import { buscarMusicas, buscarAlbuns } from '../services/itunesApi.js';
+import { buscarMusicas, buscarAlbuns, buscarArtistas } from '../services/itunesApi.js';
 
 // nota: 0–10, baseada em agregadores públicos (ver `fonte` de cada item).
 // Álbuns sem uma fonte pontual específica citada usam o consenso crítico
@@ -137,6 +137,9 @@ async function enriquecerComCapa(itemCurado, buscarFn) {
       capa: encontrado.capa,
       ano: encontrado.ano ?? itemCurado.ano,
       genero: encontrado.genero ?? itemCurado.genero,
+      // id real do artista na iTunes API — usado por Explorar/Artista para
+      // abrir a página do artista de um item curado (que não tem id próprio).
+      artistaId: encontrado.artistaId ?? itemCurado.artistaId ?? null,
     };
   } catch {
     return itemCurado; // fallback: mantém capa/gênero null -> placeholder
@@ -176,6 +179,12 @@ const MUSICAS_TOP_CURADAS = TOP_MUSICAS.map((item, i) => paraMusicaCurada(item, 
 // que o topo do ranking geral, para diferenciar visualmente as duas origens.
 const MUSICAS_SURPRESA_CURADAS = SURPRESAS.map((item, i) => paraMusicaCurada(item, i, SURPRESAS.length, 9.2, 1.2));
 
+// Nomes únicos de artista presentes na seleção curada — usados como base
+// para a descoberta de artistas em destaque (ver getArtistasParaDescoberta).
+const ARTISTAS_UNICOS = Array.from(
+  new Set([...TOP_ALBUNS, ...TOP_MUSICAS, ...SURPRESAS].map((item) => item.artista))
+);
+
 /**
  * Sorteia uma seleção de álbuns para a tela de descoberta (Explorar sem busca).
  * @param {number} [quantidade=6]
@@ -199,6 +208,32 @@ export async function getMusicasParaDescoberta(quantidade = 6) {
     const surpresasEscolhidas = shuffleArray(MUSICAS_SURPRESA_CURADAS).slice(0, metadeSurpresa);
     const selecionadas = shuffleArray([...topEscolhidas, ...surpresasEscolhidas]);
     return Promise.all(selecionadas.map((item) => enriquecerComCapa(item, buscarMusicas)));
+}
+
+/**
+ * Sorteia alguns artistas em destaque para a tela de descoberta (Explorar
+ * sem busca, aba "Artistas"). Os nomes vêm da própria seleção curada (Top
+ * álbuns/músicas/Surpresas); o id real do artista é resolvido via busca na
+ * iTunes API (necessário para navegar até a página do Artista). Quando a
+ * busca falha para um nome específico, o card ainda é devolvido (com um id
+ * "curado-artista-..." sem link funcional) em vez de sumir da lista.
+ * @param {number} [quantidade=8]
+ * @returns {Promise<Array<{id: string|number, nome: string, genero: string|null}>>}
+ */
+export async function getArtistasParaDescoberta(quantidade = 8) {
+  const nomes = shuffleArray(ARTISTAS_UNICOS).slice(0, quantidade);
+
+  return Promise.all(
+    nomes.map(async (nome) => {
+      try {
+        const [encontrado] = await buscarArtistas(nome, { limit: 1 });
+        if (encontrado) return encontrado;
+      } catch {
+        // segue para o fallback abaixo
+      }
+      return { id: `curado-artista-${nome}`.toLowerCase().replace(/\s+/g, '-'), nome, genero: null };
+    })
+  );
 }
 
 /**
@@ -232,56 +267,77 @@ export async function getMusicasRankeadas() {
     .map((item, indice) => ({ ...item, posicao: indice + 1 }));
 }
 
+// ---------------------------------------------------------------------------
+// Notas mockadas
+// ---------------------------------------------------------------------------
+// Quando a faixa/álbum NÃO está na seleção curada, as funções abaixo devolvem
+// uma nota mockada, determinística (a mesma nota sempre para o mesmo
+// artista+título, em qualquer página — Explorar, Artista, Álbum, Música). Não é
+// avaliação real: é só para o MVP ter notas em todo o catálogo da iTunes API.
+// Retornam `mock: true` nesses casos, pra interface poder rotular como "nota
+// de exemplo". Para desligar (voltar a devolver null sem nota curada), troque
+// MOCKAR_NOTAS para false.
+const MOCKAR_NOTAS = true;
+
+/** Hash simples (FNV-1a) de texto -> nota de 6.4 a 9.6, com uma casa decimal. */
+function notaMockada(chave) {
+  let h = 2166136261;
+  for (let i = 0; i < chave.length; i += 1) {
+    h ^= chave.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  const fracao = (h >>> 0) / 4294967295;
+  return Math.round((6.4 + fracao * 3.2) * 10) / 10;
+}
+
+const normalizarTexto = (texto) => (texto ?? '').trim().toLowerCase();
+
 /**
- * Tenta casar uma faixa (artista + título, normalmente vindos de um
- * lookup/busca real na iTunes API) com a seleção curada, para reaproveitar
- * a nota mockada já existente (Top músicas / Surpresas) na página de
- * Música. Comparação case-insensitive e tolerante a espaços nas pontas —
- * não é um match perfeito (ex.: "feat." ou variações de título podem não
- * bater), mas cobre o caso comum de abrir a página de Música a partir de
- * um card de descoberta ou de charts.
- *
- * Só cobre músicas (MUSICAS_TOP_CURADAS/MUSICAS_SURPRESA_CURADAS): não há
- * hoje uma nota mockada por faixa dentro de um álbum, só a nota do álbum
- * inteiro (ver TOP_ALBUNS) — esses ficam de fora deste helper.
- *
+ * Nota de uma música: a da seleção curada (Top músicas / Surpresas) quando
+ * artista + título batem; senão, uma nota mockada determinística.
  * @param {string} artista
  * @param {string} titulo
- * @returns {{nota: number}|null}
+ * @returns {{nota: number, mock?: boolean}|null}
  */
 export function getNotaCurada(artista, titulo) {
-  const normalizar = (texto) => (texto ?? '').trim().toLowerCase();
   const todasMusicas = [...MUSICAS_TOP_CURADAS, ...MUSICAS_SURPRESA_CURADAS];
 
   const encontrada = todasMusicas.find(
-    (item) => normalizar(item.artista) === normalizar(artista) && normalizar(item.titulo) === normalizar(titulo)
+    (item) =>
+      normalizarTexto(item.artista) === normalizarTexto(artista) &&
+      normalizarTexto(item.titulo) === normalizarTexto(titulo)
   );
 
-  return encontrada ? { nota: encontrada.nota } : null;
+  if (encontrada) return { nota: encontrada.nota };
+  if (!MOCKAR_NOTAS || !titulo) return null;
+  return { nota: notaMockada(`musica|${normalizarTexto(artista)}|${normalizarTexto(titulo)}`), mock: true };
 }
 
 /**
- * Equivalente de getNotaCurada() para álbuns: casa artista + título (vindos
- * da iTunes API) com TOP_ALBUNS e devolve a nota real (agregadores de
- * crítica) e a fonte. A comparação é mais tolerante que a de músicas
- * porque a iTunes costuma acrescentar sufixos ao título do álbum (ex.:
- * "OK Computer (Remastered)"): basta um título começar com o outro.
+ * Nota de um álbum: a real de TOP_ALBUNS (agregadores de crítica) quando
+ * artista + título batem — comparação tolerante a sufixos da iTunes (ex.:
+ * "OK Computer (Remastered)") —, senão uma nota mockada determinística.
  * @param {string} artista
  * @param {string} titulo
- * @returns {{nota: number, fonte: string|null}|null}
+ * @returns {{nota: number, fonte: string|null, mock?: boolean}|null}
  */
 export function getNotaAlbumCurada(artista, titulo) {
-  const normalizar = (texto) => (texto ?? '').trim().toLowerCase();
-  const art = normalizar(artista);
-  const tit = normalizar(titulo);
+  const art = normalizarTexto(artista);
+  const tit = normalizarTexto(titulo);
 
   const encontrado = ALBUNS_CURADOS.find((item) => {
-    const itemArt = normalizar(item.artista);
-    const itemTit = normalizar(item.titulo);
+    const itemArt = normalizarTexto(item.artista);
+    const itemTit = normalizarTexto(item.titulo);
     const mesmoArtista = art.includes(itemArt) || itemArt.includes(art);
     const mesmoTitulo = tit.startsWith(itemTit) || itemTit.startsWith(tit);
     return mesmoArtista && mesmoTitulo;
   });
 
-  return encontrado ? { nota: encontrado.nota, fonte: encontrado.fonte ?? null } : null;
+  if (encontrado) return { nota: encontrado.nota, fonte: encontrado.fonte ?? null };
+  if (!MOCKAR_NOTAS || !titulo) return null;
+  return {
+    nota: notaMockada(`album|${art}|${tit}`),
+    fonte: 'Nota de exemplo (mock)',
+    mock: true,
+  };
 }

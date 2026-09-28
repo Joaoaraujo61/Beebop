@@ -1,6 +1,12 @@
 // js/pages/Explorar/explorar.js
 
-import { buscarMusicas, buscarAlbuns, buscarArtistas, buscarTudo } from '../../services/itunesApi.js';
+import {
+  buscarMusicas,
+  buscarAlbuns,
+  buscarArtistas,
+  buscarTudo,
+  buscarGenerosMusicais,
+} from '../../services/itunesApi.js';
 import {
   getState,
   setSearchTerm,
@@ -14,19 +20,27 @@ import { validateSearchTerm, sanitizeInput } from '../../utils/validators.js';
 import { paginate, getPaginationInfo, getPageRange } from '../../utils/pagination.js';
 import { renderTrackCard, attachTrackCardEvents } from '../../components/trackCard.js';
 import { renderAlbumCard, attachAlbumCardEvents } from '../../components/albumCard.js';
-import { renderArtistCard } from '../../components/artistCard.js';
-import { getMusicasParaDescoberta, getAlbunsParaDescoberta } from '../../data/curatedSelections.js';
-import { applyActiveNavLink } from '../../components/nav.js';
+import { renderArtistCard, attachArtistCardEvents } from '../../components/artistCard.js';
+import {
+  getMusicasParaDescoberta,
+  getAlbunsParaDescoberta,
+  getArtistasParaDescoberta,
+} from '../../data/curatedSelections.js';
 
-const generos = [
+// Lista estática só como fallback: usada se buscarGenerosMusicais() falhar
+// (rede indisponível, ou o endpoint de gêneros da Apple não liberar CORS —
+// ver o comentário em services/itunesApi.js). Assim que a API responde, a
+// lista real assume o lugar desta.
+const GENEROS_FALLBACK = [
   'Todos os gêneros', 'Pop', 'Rock', 'Hip-Hop', 'K-pop', 'Jazz', 'Indie', 'MPB'
 ];
 
 const ITENS_POR_PAGINA = 6;
 const ITENS_MUSICAS_DESCOBERTA = 6;
 const ITENS_ALBUNS_DESCOBERTA = 10;
+const ITENS_ARTISTAS_DESCOBERTA = 8;
 
-function renderGeneroTabs(generoAtivo) {
+function renderGeneroTabs(generos, generoAtivo) {
   return generos
     .map((genero) => `
       <button class="explorar_chip${genero === generoAtivo ? ' explorar_chip--active' : ''}" data-genero="${genero}">
@@ -49,7 +63,7 @@ function renderPagerMarkup(secao, totalItems, currentPage, itemsPerPage) {
   return `<div class="explorar_pager" data-pager="${secao}">${botoes}</div>`;
 }
 
-function buildShellMarkup(state) {
+function buildShellMarkup(state, generos) {
   const termoAtual = state.searchTerm ?? '';
   const categoriaAtiva = state.filters.category ?? 'all';
   const generoAtivo = state.filters.genero ?? generos[0];
@@ -74,7 +88,7 @@ function buildShellMarkup(state) {
       </div>
 
       <div class="explorar_genres">
-        ${renderGeneroTabs(generoAtivo)}
+        ${renderGeneroTabs(generos, generoAtivo)}
       </div>
     </div>
 
@@ -88,7 +102,7 @@ function buildShellMarkup(state) {
       <div class="album_grid"></div>
     </div>
 
-    <div class="explorar_section" data-section="artistas" hidden>
+    <div class="explorar_section" data-section="artistas">
       <h2>Artistas</h2>
       <div class="artist_grid"></div>
     </div>
@@ -103,13 +117,13 @@ export function initExplorarPage({ header } = {}) {
     return;
   }
 
-  // Marca "Explorar" como ativo na nav do header (ver components/Nav/Nav.js).
-  // `header` é o elemento já criado por renderHeader() em app.js — antes
-  // esse parâmetro chegava aqui e não era usado pra nada.
-  applyActiveNavLink(header, 'explorar');
+  // Gêneros: começa com o fallback estático (a tela não pode ficar sem
+  // chips nenhum enquanto a API responde) e é substituído por
+  // carregarGeneros() assim que (e se) a lista real chegar.
+  let generos = [...GENEROS_FALLBACK];
 
-  // Resultados completos desta página (antes do filtro de gênero e da pagirração).
-  // Ficam locais porque combinam três formatos diferentes (músicas/álbuns/artistas),
+  // Resultados completos desta página (antes do filtro de gênero e da paginação).
+  // Ficam locais porque combinam formatos diferentes (músicas/álbuns/artistas),
   // enquanto store/appState.js guarda o que é realmente compartilhado entre páginas:
   // termo de busca, categoria/gênero ativos, loading e erro.
   let resultadoMusicas = [];
@@ -120,21 +134,25 @@ export function initExplorarPage({ header } = {}) {
   let modoDescoberta = true; // true = mostrando a seleção curada (sem busca ativa)
 
   container.classList.add('explorar');
-  container.innerHTML = buildShellMarkup(getState());
+  container.innerHTML = buildShellMarkup(getState(), generos);
 
-  const el = {
-    tabs: container.querySelectorAll('.explorar_tab'),
-    chips: container.querySelectorAll('.explorar_chip'),
-    searchInput: container.querySelector('.explorar_search input'),
-    searchError: container.querySelector('.explorar_search_error'),
-    status: container.querySelector('.explorar_status'),
-    musicasSection: container.querySelector('[data-section="musicas"]'),
-    albunsSection: container.querySelector('[data-section="albuns"]'),
-    artistasSection: container.querySelector('[data-section="artistas"]'),
-    musicasGrid: container.querySelector('.track_grid'),
-    albunsGrid: container.querySelector('.album_grid'),
-    artistasGrid: container.querySelector('.artist_grid'),
-  };
+  const el = {};
+
+  function atualizarReferenciasDom() {
+    el.tabs = container.querySelectorAll('.explorar_tab');
+    el.chips = container.querySelectorAll('.explorar_chip');
+    el.searchInput = container.querySelector('.explorar_search input');
+    el.searchError = container.querySelector('.explorar_search_error');
+    el.status = container.querySelector('.explorar_status');
+    el.musicasSection = container.querySelector('[data-section="musicas"]');
+    el.albunsSection = container.querySelector('[data-section="albuns"]');
+    el.artistasSection = container.querySelector('[data-section="artistas"]');
+    el.musicasGrid = container.querySelector('.track_grid');
+    el.albunsGrid = container.querySelector('.album_grid');
+    el.artistasGrid = container.querySelector('.artist_grid');
+  }
+
+  atualizarReferenciasDom();
 
   function mostrarStatus(texto) {
     el.status.hidden = !texto;
@@ -152,30 +170,43 @@ export function initExplorarPage({ header } = {}) {
     return lista.filter((item) => item.genero === genero);
   }
 
+  // Em modo descoberta (sem busca ativa) não há requisição nova ao trocar
+  // de aba — só decide quais das três seções já carregadas ficam visíveis.
+  function aplicarVisibilidadeDescoberta() {
+    const categoria = getState().filters.category ?? 'all';
+    el.musicasSection.hidden = !(categoria === 'all' || categoria === 'song');
+    el.albunsSection.hidden = !(categoria === 'all' || categoria === 'album');
+    el.artistasSection.hidden = !(categoria === 'all' || categoria === 'artist');
+  }
+
   // --- Modo descoberta: sem busca ativa, mostra a seleção curada (Top charts + Surpresas) ---
   async function renderDescoberta() {
     modoDescoberta = true;
     mostrarStatus('Carregando sugestões...');
 
-    const musicas = await getMusicasParaDescoberta(ITENS_MUSICAS_DESCOBERTA);
-    const albuns = await getAlbunsParaDescoberta(ITENS_ALBUNS_DESCOBERTA);
+    const [musicas, albuns, artistas] = await Promise.all([
+      getMusicasParaDescoberta(ITENS_MUSICAS_DESCOBERTA),
+      getAlbunsParaDescoberta(ITENS_ALBUNS_DESCOBERTA),
+      getArtistasParaDescoberta(ITENS_ARTISTAS_DESCOBERTA),
+    ]);
     const savedIds = new Set(getState().savedItems.map((item) => String(item.id)));
 
     el.musicasSection.querySelector('h2').textContent = 'Músicas em Alta';
     el.albunsSection.querySelector('h2').textContent = 'Álbuns';
-    el.musicasSection.hidden = false;
-    el.albunsSection.hidden = false;
-    el.artistasSection.hidden = true;
+    el.artistasSection.querySelector('h2').textContent = 'Artistas';
 
     el.musicasGrid.innerHTML = musicas.map((m) => renderTrackCard(m, { saved: savedIds.has(String(m.id)) })).join('');
     el.albunsGrid.innerHTML = albuns.map((a) => renderAlbumCard(a, { saved: savedIds.has(String(a.id)) })).join('');
+    el.artistasGrid.innerHTML = artistas.map(renderArtistCard).join('');
 
     removerPager('musicas');
     removerPager('albuns');
 
     attachTrackCardEvents(el.musicasGrid, musicas, toggleSavedItem);
     attachAlbumCardEvents(el.albunsGrid, albuns, toggleSavedItem);
+    attachArtistCardEvents(el.artistasGrid, artistas);
 
+    aplicarVisibilidadeDescoberta();
     mostrarStatus(null);
   }
 
@@ -235,6 +266,7 @@ export function initExplorarPage({ header } = {}) {
 
     el.musicasSection.querySelector('h2').textContent = 'Músicas';
     el.albunsSection.querySelector('h2').textContent = 'Álbuns';
+    el.artistasSection.querySelector('h2').textContent = 'Artistas';
 
     el.musicasSection.hidden = !mostrarMusicas || resultadoMusicas.length === 0;
     el.albunsSection.hidden = !mostrarAlbuns || resultadoAlbuns.length === 0;
@@ -285,6 +317,7 @@ export function initExplorarPage({ header } = {}) {
 
   function renderArtistas() {
     el.artistasGrid.innerHTML = resultadoArtistas.map(renderArtistCard).join('');
+    attachArtistCardEvents(el.artistasGrid, resultadoArtistas);
   }
 
   // Liga os botões de página de cada grid (musicas/albuns) sem refazer a requisição
@@ -303,7 +336,7 @@ export function initExplorarPage({ header } = {}) {
     });
   }
 
-  function attachEvents() {
+  function attachTabEvents() {
     el.tabs.forEach((tab) => {
       tab.addEventListener('click', () => {
         el.tabs.forEach((t) => t.classList.remove('explorar_tab--active'));
@@ -311,10 +344,18 @@ export function initExplorarPage({ header } = {}) {
         setFilter('category', tab.dataset.tab);
 
         const termo = getState().searchTerm;
-        if (termo) executarBusca(termo);
+        if (termo) {
+          executarBusca(termo);
+        } else {
+          // Sem busca ativa: as três seções já foram carregadas pela
+          // descoberta, só muda o que fica visível — sem nova requisição.
+          aplicarVisibilidadeDescoberta();
+        }
       });
     });
+  }
 
+  function attachChipEvents() {
     el.chips.forEach((chip) => {
       chip.addEventListener('click', () => {
         el.chips.forEach((c) => c.classList.remove('explorar_chip--active'));
@@ -327,7 +368,9 @@ export function initExplorarPage({ header } = {}) {
         }
       });
     });
+  }
 
+  function attachSearchEvents() {
     el.searchInput.addEventListener('input', (event) => {
       const termo = event.target.value;
       if (termo.trim().length === 0) {
@@ -340,7 +383,32 @@ export function initExplorarPage({ header } = {}) {
     });
   }
 
-  attachEvents();
+  // Busca a lista real de gêneros na iTunes API (ver
+  // services/itunesApi.js) e substitui o fallback estático nos chips —
+  // sem perder o gênero já selecionado, se ele também existir na lista
+  // nova. Falha (rede, CORS do endpoint de gêneros) é silenciosa: o
+  // fallback estático continua funcionando normalmente.
+  async function carregarGeneros() {
+    try {
+      const lista = await buscarGenerosMusicais();
+      if (!lista.length) return;
+
+      generos = ['Todos os gêneros', ...lista];
+      const generoAtivo = getState().filters.genero ?? generos[0];
+      const genresContainer = container.querySelector('.explorar_genres');
+      genresContainer.innerHTML = renderGeneroTabs(generos, generos.includes(generoAtivo) ? generoAtivo : generos[0]);
+
+      el.chips = container.querySelectorAll('.explorar_chip');
+      attachChipEvents();
+    } catch {
+      // mantém GENEROS_FALLBACK — Explorar segue funcional sem a lista real.
+    }
+  }
+
+  attachTabEvents();
+  attachChipEvents();
+  attachSearchEvents();
+  carregarGeneros();
 
   // Se já existe um termo salvo no store (ex: veio do header do Início), busca de
   // imediato; caso contrário, mostra a seleção curada (Top charts + Surpresas).

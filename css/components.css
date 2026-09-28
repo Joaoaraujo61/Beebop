@@ -1,14 +1,15 @@
 /*--------- Header ---------*/
+/*--------- Header ---------*/
 
 header{
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
     width: 100%;
-    padding: 12px 32px;
+    flex-direction: row;
     background-color: rgba(15, 15, 15, 0.35);
+    gap: 10%;
+    justify-content: center;
     flex-wrap: wrap;
+    padding: auto;
 }
 a{
     color: #E5E7EB;
@@ -16,25 +17,17 @@ a{
 }
 .header__logo_nav{
     display: flex;
-    align-items: center;
-    gap: 32px;           /* espaço entre logo e nav */
-    flex-shrink: 0;
-}
-
-.header__nav{
-    display: flex;
-    gap: 8px;            /* links mais colados entre si */
-    margin: 0;           /* tira o `margin: auto` atual que centraliza */
-}
-
-.header_login{
-    display: flex;
-    gap: 10px;
-    margin: 0;
-    flex-shrink: 0;
+    flex-direction: row;
+    gap: 40px;
 }
 .header__logo_nav > a > img{
     width: 110%;
+}
+.header__nav{
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    margin: auto;
 }
 .header__nav > a{
     font-weight: 600;
@@ -46,36 +39,6 @@ a{
 .header__nav > a:hover{
     background-color: #dfd07824;
 }
-
-/*--------- Header: botão hambúrguer (mobile) ---------*/
-/*
-  Fica escondido no desktop. Abaixo de 900px (ver responsive.css)
-  aparece e a .header__nav vira um drawer full-width abaixo do header.
-  Nenhuma cor nova: mesma paleta das pílulas (.header__nav > a) —
-  #2a2a2a7a de fundo, #45464a6f de borda, #E5E7EB de ícone.
-*/
-.header__burger {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  margin: auto 0;
-  border-radius: 50%;
-  border: 0.5px solid #45464a6f;
-  background-color: #2a2a2a7a;
-  color: #E5E7EB;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease;
-}
-.header__burger:hover,
-.header__burger:focus-visible {
-  background-color: #dfd07824;
-  color: #F4CD50;
-  outline: none;
-}
-
 body[data-page="inicio"] #inicio_nav{
     background-color: #e0cd646e;
 }
@@ -90,30 +53,21 @@ body[data-page="noticias"] #news_nav{
 }
 .header__search_form{
     display: flex;
-    align-items: center;
-    gap: 8px;             /* faltava — sem isso o ícone fica colado/sobreposto ao texto */
     margin-top: auto;
     margin-bottom: auto;
-    margin-left: auto;   /* empurra pra direita, junto do nav */
     background: linear-gradient(rgb(33, 32, 32), rgb(22, 16, 16));
     padding: 10px;
-    flex: 1 1 20%;       /* flex-basis controla o tamanho — width sozinho
-                            era ignorado por causa da flex-basis de 240px
-                            que existia numa declaração duplicada acima */
-    max-width: 420px;
-    min-width: 160px;
+    width: 20%;
     border-radius: 20px;
 }
 .header__search_form>i{
     color: rgb(156, 163, 175);
-    flex-shrink: 0;       /* nunca deixa o ícone encolher/sumir por baixo do texto */
 }
 .header__search_form > input{
     font-size: 16px;
     background: transparent;
     border: none;
-    flex: 1 1 auto;       /* em vez de width:100%, que ignorava o espaço do ícone */
-    min-width: 0;
+    width: 100%;
     outline: none;
     color: white;
 }
@@ -196,7 +150,7 @@ body[data-page="noticias"] #news_nav{
   background-color: #0d0d0d;
   border-top: 1px solid #262626;
   padding: 48px 64px 32px;
-  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
   color: #9a9a9a;
 }
 .footer_up{
@@ -277,111 +231,16 @@ body[data-page="noticias"] #news_nav{
   color: #6b6b6b;
 }
 
-/*--------- Footer: mobile ---------*/
-/*
-  .footer_up tinha gap:150px fixo (cabia só em telas largas) e
-  .footer_links (uma <table>) tinha border-spacing:56px + white-space:
-  nowrap nas células — em telas pequenas isso ultrapassava a largura da
-  viewport. Aqui o gap vira vertical (marca em cima, tabela embaixo) e o
-  espaçamento da tabela encolhe, sem mudar a marcação (continua <table>).
-*/
-@media (max-width: 700px) {
-  .footer {
-    padding: 40px 24px 24px;
-    gap: 24px;
-  }
-  .footer_up {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 32px;
-  }
-  .footer_beebop {
-    align-items: center;
-    max-width: none;
-  }
-  .footer_links {
-    border-spacing: 24px 10px;
-    margin: -10px 0 0 -24px;
-  }
-}
-
 /* ---------- Responsive ---------- */
 
-/*--------- Header: estado mobile (drawer) ---------*/
-@media (max-width: 900px) {
-  /* Header deixa de tentar caber tudo em uma linha: vira
-     [logo | hambúrguer] em cima, e a nav abre como drawer abaixo
-     quando .is-menu-open. A busca e o login ficam em uma linha
-     própria (order alto) — assim não competem com o logo. */
-  .header {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 12px 16px;
-  }
-
-  .header__logo_nav {
-    flex: 1 1 auto;
-    flex-wrap: wrap;   /* a nav é filha DESTE container (não do .header) —
-                          sem wrap aqui, o flex-basis:100% dela não consegue
-                          empurrá-la pra uma linha nova */
-    align-items: center;
-    gap: 12px;
-    justify-content: space-between;
-    min-width: 0;
-  }
-
-  .header__logo_nav > a > img {
-    width: auto;
-    height: 40px;
-    display: block;
-  }
-
-  .header__burger {
-    display: inline-flex;
-  }
-
-  /* Nav vira drawer: some por padrão, ocupa a linha inteira quando
-     aberta. O "flex-basis: 100%" força a quebra de linha dentro do
-     header (que tem flex-wrap: wrap), então ela cai embaixo do logo
-     sem precisar de position: absolute. */
-  .header__nav {
-    display: none;
-    flex-basis: 100%;
+@media (max-width: 720px) {
+  .footer {
     flex-direction: column;
-    gap: 8px;
-    margin: 4px 0 0;
-    order: 10;
-  }
-  .header.is-menu-open .header__nav {
-    display: flex;
+    padding: 40px 24px 24px;
   }
 
-  .header__nav > a {
-    /* Pílula vira linha cheia: área de toque maior, alinhamento
-       à esquerda (mais legível em lista vertical que centralizado). */
-    text-align: left;
-    padding: 12px 16px;
-    border-radius: 12px;
-  }
-
-  /* Busca e login vão para baixo do logo/nav. search ocupa a linha
-     toda; login fica alinhado à direita. */
-  .header__search_form {
-    flex-basis: 100%;
-    width: 100%;
-    order: 20;
-    margin: 0;
-  }
-  .header_login {
-    flex-basis: 100%;
-    order: 30;
-    justify-content: flex-end;
-    gap: 10px;
-    margin: 0;
+  .footer_links {
+    gap: 32px;
   }
 }
 
@@ -814,275 +673,49 @@ body[data-page="noticias"] #news_nav{
   flex-wrap: wrap;
 }
 .feature__text {
-  max-width: 400px;
-  color: #FFF8E1;
-  font-size: 20px;
-  font-weight: 800;
-  line-height: 1.1;      /* entrelinha apertada, como no Figma */
-  letter-spacing: -0.01em;
+  max-width: 380px;
+  color: #E5E7EB;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.5;
 }
-/* sombra escura marcada atrás das letras (efeito do Figma) */
-.feature__text {
-  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.85), 0 0 8px rgba(0, 0, 0, 0.5);
-}
-/*
-  Destaques dourados com brilho: degradê no tom dos botões primários
-  (#F4CD50 -> #FEE9A5) recortado na letra, com uma faixa clara que
-  "passeia" por cima (animação de background-position). Como a cor da
-  letra fica transparente, o glow usa drop-shadow (text-shadow atravessaria
-  o texto). clone = o degradê recomeça em cada linha quando a frase quebra.
-*/
 .feature__text strong {
-  font-weight: 800;
-  color: #F4CD50; /* fallback se background-clip:text não for suportado */
-  text-shadow: none;
+  color: #F4CD50;
+  font-weight: 700;
 }
-@supports ((-webkit-background-clip: text) or (background-clip: text)) {
-  .feature__text strong {
-    background-image: linear-gradient(
-      100deg,
-      #F8D96A 0%,
-      #F4C630 38%,
-      #FFF7D6 50%,
-      #F4C630 62%,
-      #F8D96A 100%
-    );
-    background-size: 250% 100%;
-    background-position: 100% 0;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
-    -webkit-box-decoration-break: clone;
-    box-decoration-break: clone;
-    filter: drop-shadow(0 2px 1px rgba(0, 0, 0, 0.85))
-            drop-shadow(0 0 6px rgba(244, 205, 80, 0.4));
-  }
-}
-@keyframes feature-shine {
-  0%   { background-position: 100% 0; }
-  55%  { background-position: 0% 0; }
-  100% { background-position: 0% 0; }
-}
-@media (prefers-reduced-motion: no-preference) {
-  .feature__text strong {
-    animation: feature-shine 4s ease-in-out infinite;
-  }
-  /* desencontra o brilho entre as palavras para não piscar tudo junto */
-  .feature__text strong:nth-of-type(2) { animation-delay: 0.6s; }
-  .feature__text strong:nth-of-type(3) { animation-delay: 1.2s; }
-}
-/*
-  Mídia de cada linha (Figma): capa real do álbum na frente e um vinil
-  saindo por trás dela, para a esquerda. Tudo é dimensionado a partir de
-  --cover-size, então o mobile só precisa trocar essa variável.
-*/
-.feature__media {
-  --cover-size: 200px;
-  --vinyl-size: calc(var(--cover-size) * 1.1);
-  position: relative;
+.feature__vinyl {
   flex-shrink: 0;
-  width: calc(var(--cover-size) * 1.6);
-  height: var(--cover-size);
-}
-.feature__cover {
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 2;
-  width: var(--cover-size);
-  height: var(--cover-size);
-  border-radius: 4px;
-  overflow: hidden;
-  background: #1c1c1e;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
-}
-.feature__cover-img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity 400ms ease;
-}
-.feature__cover-img.is-loaded {
-  opacity: 1;
-}
-.feature__cover--placeholder {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: radial-gradient(circle at 35% 35%, #2c2c2c, #0b0b0b 70%);
+  border: 1px solid #2e2e2e;
   color: #45464a;
-  font-size: 40px;
-}
-/* Skeleton: mesmo shimmer dos cards do hero (keyframes skeleton-shimmer). */
-.feature__cover--skeleton {
-  background-color: #1c1c1e;
-  background-image: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.06) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  background-size: 160px 100%;
-  background-repeat: no-repeat;
-  animation: skeleton-shimmer 1.3s ease-in-out infinite;
-}
-.feature__vinyl {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  z-index: 1;
-  width: var(--vinyl-size);
-  height: var(--vinyl-size);
-  margin-top: calc(var(--vinyl-size) / -2);
-  border-radius: 50%;
-  /* sulcos do disco */
-  background: repeating-radial-gradient(
-    circle at center,
-    #050505 0,
-    #050505 2px,
-    #141414 3px,
-    #141414 4px
-  );
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
-}
-/* brilho do disco */
-.feature__vinyl::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: conic-gradient(
-    from 30deg,
-    transparent 0deg,
-    rgba(255, 255, 255, 0.09) 40deg,
-    transparent 90deg,
-    transparent 180deg,
-    rgba(255, 255, 255, 0.09) 220deg,
-    transparent 270deg
-  );
-}
-/* selo central */
-.feature__vinyl::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 30%;
-  height: 30%;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  background: radial-gradient(circle, #0b0b0b 0 10%, #d9d9d9 11%);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .feature__vinyl {
-    transition: transform 500ms ease;
-  }
-  .feature__row:hover .feature__vinyl {
-    transform: translateX(calc(var(--cover-size) * -0.08)) rotate(90deg);
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .feature__cover--skeleton {
-    animation: none;
-  }
-  .feature__cover-img {
-    transition: none;
-  }
-}
-
-@media (max-width: 700px) {
-  .features {
-    padding: 48px 24px 16px;
-  }
-  .feature__row {
-    justify-content: center;
-  }
-  .feature__media {
-    --cover-size: 150px;
-  }
+  font-size: 34px;
 }
 
 /*--------- Fechamento (Splash — "Ouviu. Sentiu. Avaliou.") ---------*/
 
 .closing {
-  max-width: 880px;
+  max-width: 720px;
   margin: 0 auto;
-  padding: 40px 64px 120px;
+  padding: 40px 64px 96px;
+  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 56px;
+  gap: 28px;
 }
-/* Três palavras em "escada" (Figma): esquerda -> meio -> direita. */
 .closing__title {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 44px;
   color: #F9FAFB;
-  font-size: clamp(40px, 7vw, 64px);
+  font-size: 30px;
   font-weight: 800;
-  line-height: 1;
-  letter-spacing: -0.01em;
 }
-.closing__word {
-  display: block;
-  align-self: flex-start;
-}
-.closing__word--1 { margin-left: 4%; }
-.closing__word--2 { margin-left: 32%; }
-.closing__word--3 { margin-left: 62%; }
-
-/* "Avaliou." em dourado, mesmo degradê/brilho dos destaques das features. */
-.closing__word--3 {
-  color: #F4CD50; /* fallback */
-}
-@supports ((-webkit-background-clip: text) or (background-clip: text)) {
-  .closing__word--3 {
-    background-image: linear-gradient(
-      100deg,
-      #F4CD50 0%,
-      #F4CD50 38%,
-      #FFF7D6 50%,
-      #F4CD50 62%,
-      #EBCB66 100%
-    );
-    background-size: 250% 100%;
-    background-position: 100% 0;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
-  }
-}
-@media (prefers-reduced-motion: no-preference) {
-  .closing__word--3 {
-    animation: feature-shine 4s ease-in-out infinite;
-  }
-}
-
-/* Botão "Começar": pill dourado, degradê horizontal (escuro -> claro). */
 .closing__cta {
-  padding: 16px 48px;
-  border-radius: 999px;
-  font-size: 17px;
-  font-weight: 800;
-  background: linear-gradient(90deg, #F4CD50, #FEE9A5);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
-}
-
-@media (max-width: 700px) {
-  .closing {
-    padding: 32px 24px 88px;
-    gap: 40px;
-  }
-  .closing__title { gap: 28px; }
-  .closing__word--1 { margin-left: 0; }
-  .closing__word--2 { margin-left: 18%; }
-  .closing__word--3 { margin-left: 36%; }
+  padding: 12px 32px;
 }
 
 /*--------- Revelação por scroll (features / fechamento) ---------*/
@@ -1209,7 +842,7 @@ body[data-page="noticias"] #news_nav{
   background: transparent;
   font-size: 15px;
   color: #111827;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 .auth-form__input::placeholder {
@@ -1977,7 +1610,7 @@ body[data-page="noticias"] #news_nav{
 .dna-radar__label {
   fill: #9CA3AF;
   font-size: 10px;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 .dna-bars {
@@ -2401,59 +2034,8 @@ body[data-page="noticias"] #news_nav{
 }
 .musica-letra__body {
   color: #E5E7EB;
-  font-size: 17px;
-  line-height: 1.9;
-}
-
-/* Letra recolhida por padrão: altura máxima + fade no final, com botão
-   de seta para expandir. Só aparece quando o texto realmente ultrapassa
-   a altura recolhida (JS decide isso — ver attachEventosLetraToggle). */
-.musica-letra__collapse {
-  position: relative;
-  overflow: hidden;
-}
-.musica-letra__collapse.is-collapsed {
-  max-height: 340px;
-}
-.musica-letra__collapse.is-collapsed::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 84px;
-  background: linear-gradient(180deg, rgba(10, 10, 9, 0) 0%, rgba(10, 10, 9, 0.92) 85%);
-  pointer-events: none;
-}
-
-.musica-letra__toggle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  margin-top: 8px;
-  padding: 10px;
-  border: none;
-  background: transparent;
-  color: #9CA3AF;
-  font-size: 16px;
-  cursor: pointer;
-  transition: color 0.15s ease;
-}
-.musica-letra__toggle:hover {
-  color: #F4CD50;
-}
-.musica-letra__toggle i {
-  transition: transform 0.2s ease;
-}
-.musica-letra__toggle.is-expanded i {
-  transform: rotate(180deg);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .musica-letra__toggle i {
-    transition: none;
-  }
+  font-size: 15px;
+  line-height: 1.8;
 }
 .musica-letra__indisponivel {
   color: #9CA3AF;
@@ -2575,7 +2157,7 @@ body[data-page="noticias"] #news_nav{
    Reaproveita os mesmos tokens já usados no resto do projeto
    (#F4CD50 dourado, cards em gradiente escuro, texto #E5E7EB/#9CA3AF).
 ========================================================= */
- 
+
 .comentarios {
   margin-top: 40px;
   background: linear-gradient(180deg, rgba(28, 28, 30, 0.8), rgba(20, 20, 20, 0.9));
@@ -2589,7 +2171,7 @@ body[data-page="noticias"] #news_nav{
   font-weight: 800;
   margin-bottom: 20px;
 }
- 
+
 .comentarios_composer {
   margin-bottom: 24px;
 }
@@ -2652,7 +2234,7 @@ body[data-page="noticias"] #news_nav{
   border-radius: 14px;
   padding: 16px;
 }
- 
+
 .comentarios_lista {
   display: flex;
   flex-direction: column;
@@ -2753,7 +2335,7 @@ body[data-page="noticias"] #news_nav{
 .comentarios_curtir.is-active {
   color: #F4CD50;
 }
- 
+
 .comentarios_respostas {
   margin-top: 14px;
   padding-left: 8px;
@@ -2800,7 +2382,7 @@ body[data-page="noticias"] #news_nav{
 .comentarios_resposta_enviar:hover {
   color: #F4CD50;
 }
- 
+
 @media (max-width: 600px) {
   .comentarios {
     padding: 20px;
@@ -2813,6 +2395,884 @@ body[data-page="noticias"] #news_nav{
     width: 100%;
   }
 }
+
+/* =========================================================
+   Álbum — complementos (tracklist em largura total, avaliação,
+   estados). Reaproveita .album-*, .track-row e .comentarios acima.
+========================================================= */
+
+.album-hero__rating[hidden] {
+  display: none;
+}
+.album-tracks {
+  margin-bottom: 48px;
+}
+.track-row--link {
+  cursor: pointer;
+}
+.track-row__rating i {
+  font-size: 10px;
+}
+.album-tracklist > .comentarios {
+  margin-top: 0;
+}
+.album-sidebar__card + .album-sidebar__card {
+  margin-top: 20px;
+}
+
+.album-avalie {
+  display: flex;
+  gap: 6px;
+}
+.album-avalie__star {
+  border: none;
+  background: transparent;
+  color: #F4CD50;
+  font-size: 22px;
+  cursor: pointer;
+  padding: 0;
+}
+.album-avalie__status {
+  color: #E5E7EB;
+  font-size: 12.5px;
+  margin-top: 10px;
+  min-height: 16px;
+}
+.album-avalie__media {
+  color: #9CA3AF;
+  font-size: 11.5px;
+  margin-top: 6px;
+}
+
+/* =========================================================
+   Artist card (grid do Explorar — aba "Artistas" e descoberta)
+   Avatar com iniciais em vez de foto: a iTunes API não devolve foto de
+   artista (ver comentário em js/components/artistCard.js). Mesmo
+   gradiente dourado já usado em .comentarios_avatar/.profile-header__avatar.
+========================================================= */
+
+.artist_grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+.artist_card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  cursor: pointer;
+}
+.artist_avatar {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: linear-gradient(rgb(244, 205, 80), rgb(254, 233, 165));
+  color: #111827;
+  font-size: 32px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+.artist_card:hover .artist_avatar {
+  transform: translateY(-4px) scale(1.03);
+}
+.artist_info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.artist_nome {
+  color: #F9FAFB;
+  font-size: 15px;
+  font-weight: 700;
+}
+.artist_label {
+  color: #9CA3AF;
+  font-size: 12px;
+}
+
+@media (max-width: 900px) {
+  .artist_grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 600px) {
+  .artist_grid { grid-template-columns: repeat(2, 1fr); }
+  .artist_avatar { width: 88px; height: 88px; font-size: 26px; }
+}
+
+/* =========================================================
+   Página de Artista
+   Reaproveita a mesma linguagem visual de Música/Álbum: dourado
+   #F4CD50, cards em gradiente escuro, texto #E5E7EB/#9CA3AF. Nenhuma
+   cor nova.
+========================================================= */
+
+.artista-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 32px 80px;
+  color: #E5E7EB;
+}
+.artista-page__status,
+.artista-page__error {
+  color: #9CA3AF;
+  font-size: 14px;
+  padding: 24px 0;
+}
+.artista-page__error a {
+  color: #F4CD50;
+  font-weight: 600;
+}
+
+.artista-hero {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 48px;
+}
+.artista-hero__avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(rgb(244, 205, 80), rgb(254, 233, 165));
+  color: #111827;
+  font-size: 40px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.artista-hero__eyebrow {
+  color: #F4CD50;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.artista-hero__nome {
+  color: #F9FAFB;
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1.15;
+  margin-top: 6px;
+}
+.artista-hero__genero {
+  color: #9CA3AF;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.artista-secao {
+  margin-bottom: 44px;
+}
+.artista-secao__titulo {
+  color: #F9FAFB;
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 18px;
+}
+.artista-secao__vazio {
+  color: #9CA3AF;
+  font-size: 13px;
+  padding: 12px 0;
+}
+
+.artista-vermais {
+  display: block;
+  margin: 20px auto 0;
+  padding: 9px 22px;
+  border-radius: 999px;
+  border: 0.5px solid #45464a6f;
+  background-color: #2a2a2a7a;
+  color: #E5E7EB;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.artista-vermais:hover {
+  background-color: #2a2a2a47;
+  color: #F4CD50;
+}
+
+@media (max-width: 600px) {
+  .artista-page {
+    padding: 24px 16px 56px;
+  }
+  .artista-hero {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    width: 100%;
+    padding: 12px 32px;
+    background-color: rgba(15, 15, 15, 0.35);
+    flex-wrap: wrap;
+}
+
+.header__logo_nav{
+    display: flex;
+    align-items: center;
+    gap: 32px;           /* espaço entre logo e nav */
+    flex-shrink: 0;
+}
+
+.header__nav{
+    display: flex;
+    gap: 8px;            /* links mais colados entre si */
+    margin: 0;           /* tira o `margin: auto` atual que centraliza */
+}
+
+.header_login{
+    display: flex;
+    gap: 10px;
+    margin: 0;
+    flex-shrink: 0;
+}
+
+/*--------- Header: botão hambúrguer (mobile) ---------*/
+/*
+  Fica escondido no desktop. Abaixo de 900px (ver responsive.css)
+  aparece e a .header__nav vira um drawer full-width abaixo do header.
+  Nenhuma cor nova: mesma paleta das pílulas (.header__nav > a) —
+  #2a2a2a7a de fundo, #45464a6f de borda, #E5E7EB de ícone.
+*/
+.header__burger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin: auto 0;
+  border-radius: 50%;
+  border: 0.5px solid #45464a6f;
+  background-color: #2a2a2a7a;
+  color: #E5E7EB;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.header__burger:hover,
+.header__burger:focus-visible {
+  background-color: #dfd07824;
+  color: #F4CD50;
+  outline: none;
+}
+
+.header__search_form{
+    display: flex;
+    align-items: center;
+    gap: 8px;             /* faltava — sem isso o ícone fica colado/sobreposto ao texto */
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;   /* empurra pra direita, junto do nav */
+    background: linear-gradient(rgb(33, 32, 32), rgb(22, 16, 16));
+    padding: 10px;
+    flex: 1 1 20%;       /* flex-basis controla o tamanho — width sozinho
+                            era ignorado por causa da flex-basis de 240px
+                            que existia numa declaração duplicada acima */
+    max-width: 420px;
+    min-width: 160px;
+    border-radius: 20px;
+}
+.header__search_form>i{
+    color: rgb(156, 163, 175);
+    flex-shrink: 0;       /* nunca deixa o ícone encolher/sumir por baixo do texto */
+}
+.header__search_form > input{
+    font-size: 16px;
+    background: transparent;
+    border: none;
+    flex: 1 1 auto;       /* em vez de width:100%, que ignorava o espaço do ícone */
+    min-width: 0;
+    outline: none;
+    color: white;
+}
+
+/*--------- Header: avatar de perfil (logado) ---------*/
+/*
+  Adicionar ao final de css/components.css, dentro (ou logo após) do
+  bloco "Header".
+
+  .header_login > a já estiliza qualquer link direto ali dentro como
+  pílula escura (mesmo efeito de "Entrar"). Isso é ótimo para o link
+  "Sair" (fica igual ao "Entrar", sem CSS extra) — mas precisa ser
+  desligado no link do avatar (.header_profile), senão ele também vira
+  uma pílula retangular em vez de um círculo.
+
+  Cor do avatar: mesmo gradiente dourado + #111827 já usados em
+  .profile-header__avatar e .comment-row__avatar. Nenhuma cor nova.
+*/
+
+/*--------- Footer ---------*/
+
+/*--------- Footer: mobile ---------*/
+/*
+  .footer_up tinha gap:150px fixo (cabia só em telas largas) e
+  .footer_links (uma <table>) tinha border-spacing:56px + white-space:
+  nowrap nas células — em telas pequenas isso ultrapassava a largura da
+  viewport. Aqui o gap vira vertical (marca em cima, tabela embaixo) e o
+  espaçamento da tabela encolhe, sem mudar a marcação (continua <table>).
+*/
+@media (max-width: 700px) {
+  .footer {
+    padding: 40px 24px 24px;
+    gap: 24px;
+  }
+  .footer_up {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 32px;
+  }
+  .footer_beebop {
+    align-items: center;
+    max-width: none;
+  }
+  .footer_links {
+    border-spacing: 24px 10px;
+    margin: -10px 0 0 -24px;
+  }
+}
+
+/* ---------- Responsive ---------- */
+
+/*--------- Header: estado mobile (drawer) ---------*/
+@media (max-width: 900px) {
+  /* Header deixa de tentar caber tudo em uma linha: vira
+     [logo | hambúrguer] em cima, e a nav abre como drawer abaixo
+     quando .is-menu-open. A busca e o login ficam em uma linha
+     própria (order alto) — assim não competem com o logo. */
+  .header {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px;
+  }
+
+  .header__logo_nav {
+    flex: 1 1 auto;
+    flex-wrap: wrap;   /* a nav é filha DESTE container (não do .header) —
+                          sem wrap aqui, o flex-basis:100% dela não consegue
+                          empurrá-la pra uma linha nova */
+    align-items: center;
+    gap: 12px;
+    justify-content: space-between;
+    min-width: 0;
+  }
+
+  .header__logo_nav > a > img {
+    width: auto;
+    height: 40px;
+    display: block;
+  }
+
+  .header__burger {
+    display: inline-flex;
+  }
+
+  /* Nav vira drawer: some por padrão, ocupa a linha inteira quando
+     aberta. O "flex-basis: 100%" força a quebra de linha dentro do
+     header (que tem flex-wrap: wrap), então ela cai embaixo do logo
+     sem precisar de position: absolute. */
+  .header__nav {
+    display: none;
+    flex-basis: 100%;
+    flex-direction: column;
+    gap: 8px;
+    margin: 4px 0 0;
+    order: 10;
+  }
+  .header.is-menu-open .header__nav {
+    display: flex;
+  }
+
+  .header__nav > a {
+    /* Pílula vira linha cheia: área de toque maior, alinhamento
+       à esquerda (mais legível em lista vertical que centralizado). */
+    text-align: left;
+    padding: 12px 16px;
+    border-radius: 12px;
+  }
+
+  /* Busca e login vão para baixo do logo/nav. search ocupa a linha
+     toda; login fica alinhado à direita. */
+  .header__search_form {
+    flex-basis: 100%;
+    width: 100%;
+    order: 20;
+    margin: 0;
+  }
+  .header_login {
+    flex-basis: 100%;
+    order: 30;
+    justify-content: flex-end;
+    gap: 10px;
+    margin: 0;
+  }
+}
+
+/*--------- Hero ---------*/
+
+/*--------- Music Card ---------*/
+
+/* Ao pausar: deixa a barra terminar o ciclo atual (1 iteração) e parar
+   na altura de repouso do próprio keyframe (4px), em vez de congelar
+   no meio do movimento. "animation-fill-mode: forwards" mantém a
+   barra nessa altura de repouso até a classe ser removida pelo JS. */
+
+/*--------- Skeleton Loading (hero cards, enquanto a API responde) ---------*/
+/*
+  Reaproveita o tamanho/raio/borda de .music-card (a classe continua
+  aplicada no elemento) — aqui só entram o efeito de shimmer e os
+  "ossos" no lugar de capa/título/artista, para o card real (quando
+  chegar) encaixar exatamente no mesmo espaço, sem pulo de layout.
+*/
+
+/*--------- Fallback de erro (hero cards) ---------*/
+
+/*--------- Splash Intro (página inicial) ---------*/
+/*
+  A colmeia/fundo não existe como elementos separados no projeto (é uma
+  única imagem, assets/fundoBeebop.png, aplicada globalmente no <body>).
+  Por isso os passos BACKGROUND + HEXAGONS da sequência viram uma única
+  "cortina" escura, só nesta página, que desaparece suavemente revelando
+  o fundo que já existe — sem duplicar ou recriar o sistema visual.
+*/
+
+/* Estado inicial (oculto) do título, cards e CTA, só quando a intro
+   está ativa — se o JS não adicionar "splash-ready", nada fica preso
+   invisível, porque o resto da página já depende de JS para existir. */
+
+/*--------- Features (Splash — "Qual foi sua última música favorita?") ---------*/
+
+.feature__text {
+  max-width: 400px;
+  color: #FFF8E1;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.1;      /* entrelinha apertada, como no Figma */
+  letter-spacing: -0.01em;
+}
+/* sombra escura marcada atrás das letras (efeito do Figma) */
+.feature__text {
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.85), 0 0 8px rgba(0, 0, 0, 0.5);
+}
+/*
+  Destaques dourados com brilho: degradê no tom dos botões primários
+  (#F4CD50 -> #FEE9A5) recortado na letra, com uma faixa clara que
+  "passeia" por cima (animação de background-position). Como a cor da
+  letra fica transparente, o glow usa drop-shadow (text-shadow atravessaria
+  o texto). clone = o degradê recomeça em cada linha quando a frase quebra.
+*/
+.feature__text strong {
+  font-weight: 800;
+  color: #F4CD50; /* fallback se background-clip:text não for suportado */
+  text-shadow: none;
+}
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .feature__text strong {
+    background-image: linear-gradient(
+      100deg,
+      #F8D96A 0%,
+      #F4C630 38%,
+      #FFF7D6 50%,
+      #F4C630 62%,
+      #F8D96A 100%
+    );
+    background-size: 250% 100%;
+    background-position: 100% 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    filter: drop-shadow(0 2px 1px rgba(0, 0, 0, 0.85))
+            drop-shadow(0 0 6px rgba(244, 205, 80, 0.4));
+  }
+}
+@keyframes feature-shine {
+  0%   { background-position: 100% 0; }
+  55%  { background-position: 0% 0; }
+  100% { background-position: 0% 0; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .feature__text strong {
+    animation: feature-shine 4s ease-in-out infinite;
+  }
+  /* desencontra o brilho entre as palavras para não piscar tudo junto */
+  .feature__text strong:nth-of-type(2) { animation-delay: 0.6s; }
+  .feature__text strong:nth-of-type(3) { animation-delay: 1.2s; }
+}
+/*
+  Mídia de cada linha (Figma): capa real do álbum na frente e um vinil
+  saindo por trás dela, para a esquerda. Tudo é dimensionado a partir de
+  --cover-size, então o mobile só precisa trocar essa variável.
+*/
+.feature__media {
+  --cover-size: 200px;
+  --vinyl-size: calc(var(--cover-size) * 1.1);
+  position: relative;
+  flex-shrink: 0;
+  width: calc(var(--cover-size) * 1.6);
+  height: var(--cover-size);
+}
+.feature__cover {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  width: var(--cover-size);
+  height: var(--cover-size);
+  border-radius: 4px;
+  overflow: hidden;
+  background: #1c1c1e;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
+}
+.feature__cover-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 400ms ease;
+}
+.feature__cover-img.is-loaded {
+  opacity: 1;
+}
+.feature__cover--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #45464a;
+  font-size: 40px;
+}
+/* Skeleton: mesmo shimmer dos cards do hero (keyframes skeleton-shimmer). */
+.feature__cover--skeleton {
+  background-color: #1c1c1e;
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.06) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 160px 100%;
+  background-repeat: no-repeat;
+  animation: skeleton-shimmer 1.3s ease-in-out infinite;
+}
+.feature__vinyl {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  z-index: 1;
+  width: var(--vinyl-size);
+  height: var(--vinyl-size);
+  margin-top: calc(var(--vinyl-size) / -2);
+  border-radius: 50%;
+  /* sulcos do disco */
+  background: repeating-radial-gradient(
+    circle at center,
+    #050505 0,
+    #050505 2px,
+    #141414 3px,
+    #141414 4px
+  );
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+}
+/* brilho do disco */
+.feature__vinyl::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 30deg,
+    transparent 0deg,
+    rgba(255, 255, 255, 0.09) 40deg,
+    transparent 90deg,
+    transparent 180deg,
+    rgba(255, 255, 255, 0.09) 220deg,
+    transparent 270deg
+  );
+}
+/* selo central */
+.feature__vinyl::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30%;
+  height: 30%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, #0b0b0b 0 10%, #d9d9d9 11%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .feature__vinyl {
+    transition: transform 500ms ease;
+  }
+  .feature__row:hover .feature__vinyl {
+    transform: translateX(calc(var(--cover-size) * -0.08)) rotate(90deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .feature__cover--skeleton {
+    animation: none;
+  }
+  .feature__cover-img {
+    transition: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .features {
+    padding: 48px 24px 16px;
+  }
+  .feature__row {
+    justify-content: center;
+  }
+  .feature__media {
+    --cover-size: 150px;
+  }
+}
+
+/*--------- Fechamento (Splash — "Ouviu. Sentiu. Avaliou.") ---------*/
+
+.closing {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 40px 64px 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 56px;
+}
+/* Três palavras em "escada" (Figma): esquerda -> meio -> direita. */
+.closing__title {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
+  color: #F9FAFB;
+  font-size: clamp(40px, 7vw, 64px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+.closing__word {
+  display: block;
+  align-self: flex-start;
+}
+.closing__word--1 { margin-left: 4%; }
+.closing__word--2 { margin-left: 32%; }
+.closing__word--3 { margin-left: 62%; }
+
+/* "Avaliou." em dourado, mesmo degradê/brilho dos destaques das features. */
+.closing__word--3 {
+  color: #F4CD50; /* fallback */
+}
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .closing__word--3 {
+    background-image: linear-gradient(
+      100deg,
+      #F4CD50 0%,
+      #F4CD50 38%,
+      #FFF7D6 50%,
+      #F4CD50 62%,
+      #EBCB66 100%
+    );
+    background-size: 250% 100%;
+    background-position: 100% 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .closing__word--3 {
+    animation: feature-shine 4s ease-in-out infinite;
+  }
+}
+
+/* Botão "Começar": pill dourado, degradê horizontal (escuro -> claro). */
+.closing__cta {
+  padding: 16px 48px;
+  border-radius: 999px;
+  font-size: 17px;
+  font-weight: 800;
+  background: linear-gradient(90deg, #F4CD50, #FEE9A5);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
+}
+
+@media (max-width: 700px) {
+  .closing {
+    padding: 32px 24px 88px;
+    gap: 40px;
+  }
+  .closing__title { gap: 28px; }
+  .closing__word--1 { margin-left: 0; }
+  .closing__word--2 { margin-left: 18%; }
+  .closing__word--3 { margin-left: 36%; }
+}
+
+/*--------- Revelação por scroll (features / fechamento) ---------*/
+
+/*--------- Auth (Login / Criar Conta) ---------*/
+/*
+  Paleta e tipografia reaproveitadas do resto do projeto: dourado =
+  linear-gradient(rgb(244,205,80), rgb(254,233,165)) (igual
+  .hero__btn--primary / .header_account); claro = #F9FAFB e escuro de
+  texto sobre dourado = #111827 (já usados em .hero__title e nos botões
+  primários); cinza de texto secundário = #6b6b6b (já usado em
+  .footer_copyright p); fundo do painel de marca = assets/fundoBeebop.png
+  com o MESMO overlay já usado no <body> (style.css) — mesma imagem,
+  mesmos valores de opacidade. O traço sob os inputs é o próprio #111827
+  em baixa opacidade (rgba), seguindo o padrão que o projeto já usa para
+  variantes translúcidas (ex.: #2a2a2a7a, #45464a6f).
+
+  ÚNICA coisa genuinamente nova: vermelho de erro (#d64545) e verde de
+  sucesso (#1a7f37) no feedback do formulário. Não existe nenhum estado
+  de erro/validação em nenhum outro lugar do projeto para reaproveitar
+  — sem essas duas cores, não dá para diferenciar "campo inválido" de
+  "campo comum" nem "sucesso" de "erro" no aviso de status.
+*/
+
+/*--------- Album / Favorite additions to music-card ---------*/
+/*
+  Reaproveita 100% a paleta já em uso (dourado #F4CD50, texto #F9FAFB/
+  #9CA3AF, fundo escuro translúcido rgba(15,15,15,*)) — nenhuma cor
+  nova nesta seção.
+*/
+
+/*--------- Shared status/empty/error states (Album + Perfil) ---------*/
+
+/*--------- Album hero ---------*/
+
+/*--------- Album content: track list + sidebar ---------*/
+
+/*--------- Album comments ---------*/
+
+/*--------- Profile header ---------*/
+
+/*--------- Profile content layout ---------*/
+
+/*--------- DNA Musical card ---------*/
+/*
+  --dna-mood-* são as únicas cores genuinamente novas desta seção: o
+  donut de "Humor predominante" precisa de 4 tons distinguíveis entre
+  si, e o projeto não tinha nenhuma paleta categórica antes (só um
+  dourado). Uma das 4 já é o próprio #F4CD50 existente (Eufórico); as
+  outras 3 são novas, indispensáveis para diferenciar as fatias.
+*/
+
+/* =========================================================
+   Charts: badge de posição no music-card (pódio)
+   Reaproveita o mesmo cartão/posicionamento de .music-card__favorite
+   (top-right) espelhado para o canto oposto (top-left).
+========================================================= */
+
+/* =========================================================
+   Charts: chart-row (linha de ranking)
+   Mesma linguagem visual de .track-row (numeração de faixas do Álbum),
+   mas em bloco próprio: aqui a posição é de um ranking GLOBAL (não as
+   faixas de um único álbum) e a linha também tem capa e variação.
+========================================================= */
+
+/* =========================================================
+   Música (página de detalhe da faixa)
+   Reaproveita a mesma linguagem visual do Álbum (.album-hero,
+   .album-sidebar) — aqui como .musica-hero/.musica-sidebar, com o
+   mesmo dourado (#F4CD50), fundo translúcido (#2a2a2a7a) e cards em
+   gradiente escuro (rgba(28,28,30,.8) -> rgba(20,20,20,.9)) já usados
+   em .music-card e .album-sidebar__card. Nenhuma cor nova nesta seção.
+========================================================= */
+
+.musica-letra__body {
+  color: #E5E7EB;
+  font-size: 17px;
+  line-height: 1.9;
+}
+
+/* Letra recolhida por padrão: altura máxima + fade no final, com botão
+   de seta para expandir. Só aparece quando o texto realmente ultrapassa
+   a altura recolhida (JS decide isso — ver attachEventosLetraToggle). */
+.musica-letra__collapse {
+  position: relative;
+  overflow: hidden;
+}
+.musica-letra__collapse.is-collapsed {
+  max-height: 340px;
+}
+.musica-letra__collapse.is-collapsed::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 84px;
+  background: linear-gradient(180deg, rgba(10, 10, 9, 0) 0%, rgba(10, 10, 9, 0.92) 85%);
+  pointer-events: none;
+}
+
+.musica-letra__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 8px;
+  padding: 10px;
+  border: none;
+  background: transparent;
+  color: #9CA3AF;
+  font-size: 16px;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+.musica-letra__toggle:hover {
+  color: #F4CD50;
+}
+.musica-letra__toggle i {
+  transition: transform 0.2s ease;
+}
+.musica-letra__toggle.is-expanded i {
+  transform: rotate(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .musica-letra__toggle i {
+    transition: none;
+  }
+}
+
+/* Cards clicáveis: navegam para a página de Música (ver musicCard.js/trackCard.js) */
+
+/* =========================================================
+   Comentários (componente reutilizável — Música e Álbum)
+   Reaproveita os mesmos tokens já usados no resto do projeto
+   (#F4CD50 dourado, cards em gradiente escuro, texto #E5E7EB/#9CA3AF).
+========================================================= */
+
+ 
+
+ 
+
+ 
+
+ 
 
 /*--------- Perfil: novos elementos (abas, atividade, CTA do DNA, modal) ---------*/
 
@@ -3119,48 +3579,18 @@ body.modal-open {
    estados). Reaproveita .album-*, .track-row e .comentarios acima.
 ========================================================= */
 
-.album-hero__rating[hidden] {
-  display: none;
-}
 .album-card{
   cursor: pointer;
 }
-.album-tracks {
-  margin-bottom: 48px;
-}
-.track-row--link {
-  cursor: pointer;
-}
-.track-row__rating i {
-  font-size: 10px;
-}
-.album-tracklist > .comentarios {
-  margin-top: 0;
-}
-.album-sidebar__card + .album-sidebar__card {
-  margin-top: 20px;
+
+.artist_avatar {
+  overflow: hidden;   /* corta a imagem no formato do círculo */
 }
 
-.album-avalie {
-  display: flex;
-  gap: 6px;
-}
-.album-avalie__star {
-  border: none;
-  background: transparent;
-  color: #F4CD50;
-  font-size: 22px;
-  cursor: pointer;
-  padding: 0;
-}
-.album-avalie__status {
-  color: #E5E7EB;
-  font-size: 12.5px;
-  margin-top: 10px;
-  min-height: 16px;
-}
-.album-avalie__media {
-  color: #9CA3AF;
-  font-size: 11.5px;
-  margin-top: 6px;
+.artist_avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;          /* preenche o círculo sem distorcer */
+  object-position: center 20%; /* favorece o topo, onde ficam os rostos */
 }
