@@ -2887,3 +2887,51 @@ body.modal-open {
     margin-left: auto;
   }
 }
+
+/* =========================================================
+   Álbum — complementos (tracklist em largura total, avaliação,
+   estados). Reaproveita .album-*, .track-row e .comentarios acima.
+========================================================= */
+
+.album-hero__rating[hidden] {
+  display: none;
+}
+.album-tracks {
+  margin-bottom: 48px;
+}
+.track-row--link {
+  cursor: pointer;
+}
+.track-row__rating i {
+  font-size: 10px;
+}
+.album-tracklist > .comentarios {
+  margin-top: 0;
+}
+.album-sidebar__card + .album-sidebar__card {
+  margin-top: 20px;
+}
+
+.album-avalie {
+  display: flex;
+  gap: 6px;
+}
+.album-avalie__star {
+  border: none;
+  background: transparent;
+  color: #F4CD50;
+  font-size: 22px;
+  cursor: pointer;
+  padding: 0;
+}
+.album-avalie__status {
+  color: #E5E7EB;
+  font-size: 12.5px;
+  margin-top: 10px;
+  min-height: 16px;
+}
+.album-avalie__media {
+  color: #9CA3AF;
+  font-size: 11.5px;
+  margin-top: 6px;
+}

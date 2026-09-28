@@ -259,3 +259,29 @@ export function getNotaCurada(artista, titulo) {
 
   return encontrada ? { nota: encontrada.nota } : null;
 }
+
+/**
+ * Equivalente de getNotaCurada() para álbuns: casa artista + título (vindos
+ * da iTunes API) com TOP_ALBUNS e devolve a nota real (agregadores de
+ * crítica) e a fonte. A comparação é mais tolerante que a de músicas
+ * porque a iTunes costuma acrescentar sufixos ao título do álbum (ex.:
+ * "OK Computer (Remastered)"): basta um título começar com o outro.
+ * @param {string} artista
+ * @param {string} titulo
+ * @returns {{nota: number, fonte: string|null}|null}
+ */
+export function getNotaAlbumCurada(artista, titulo) {
+  const normalizar = (texto) => (texto ?? '').trim().toLowerCase();
+  const art = normalizar(artista);
+  const tit = normalizar(titulo);
+
+  const encontrado = ALBUNS_CURADOS.find((item) => {
+    const itemArt = normalizar(item.artista);
+    const itemTit = normalizar(item.titulo);
+    const mesmoArtista = art.includes(itemArt) || itemArt.includes(art);
+    const mesmoTitulo = tit.startsWith(itemTit) || itemTit.startsWith(tit);
+    return mesmoArtista && mesmoTitulo;
+  });
+
+  return encontrado ? { nota: encontrado.nota, fonte: encontrado.fonte ?? null } : null;
+}
