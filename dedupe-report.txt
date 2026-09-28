@@ -1,0 +1,154 @@
+components lines=6299
+responsive lines=541
+responsive second header at line=272 text="/* css/responsive.css */"
+--- responsive 1-30 ---
+1:/* css/responsive.css */
+2:
+3:/* ==========================================================================
+4:   Breakpoints:
+5:     1024px — tablet paisagem / notebook pequeno
+6:      900px — tablet retrato   (header vira drawer em components.css)
+7:      768px — tablet estreito
+8:      600px — celular grande
+9:      380px — celular pequeno (iPhone SE, Galaxy A0x)
+10:   ========================================================================== */
+11:
+12:@media (min-width: 901px) and (max-width: 1024px) {
+13:  .header__search_form {
+14:    flex-basis: 30%;
+15:  }
+16:}
+17:
+18:@media (max-width: 900px) {
+19:  /* Header mobile é tratado em components.css (junto do componente).
+20:     Aqui só o que é layout de PÁGINA. */
+21:
+22:  .hero {
+23:    justify-content: center;
+24:    text-align: center;
+25:    padding: 56px 24px;
+26:  }
+27:  .hero__actions {
+28:    justify-content: center;
+29:  }
+30:
+--- responsive 272-300 ---
+272:/* css/responsive.css */
+273:
+274:/* ==========================================================================
+275:   Breakpoints:
+276:     1024px — tablet paisagem / notebook pequeno
+277:      900px — tablet retrato   (header vira drawer em components.css)
+278:      768px — tablet estreito
+279:      600px — celular grande
+280:      380px — celular pequeno (iPhone SE, Galaxy A0x)
+281:   ========================================================================== */
+282:
+283:@media (min-width: 901px) and (max-width: 1024px) {
+284:  .header__search_wrap {
+285:    flex-basis: 30%;
+286:  }
+287:}
+288:
+289:@media (max-width: 900px) {
+290:  /* Header mobile é tratado em components.css (junto do componente).
+291:     Aqui só o que é layout de PÁGINA. */
+292:
+293:  .hero {
+294:    justify-content: center;
+295:    text-align: center;
+296:    padding: 56px 24px;
+297:  }
+298:  .hero__actions {
+299:    justify-content: center;
+300:  }
+header{ at 4
+header{ at 2611
+header{ at 3599
+Header comment at 1
+Header comment at 2
+Header comment at 3597
+Footer comment at 143
+Footer comment at 2716
+Footer comment at 3898
+Hero comment at 247
+Hero comment at 2826
+Hero comment at 4098
+MusicCard comment at 308
+MusicCard comment at 2828
+MusicCard comment at 4159
+--- comp 2611-2630 ---
+2611:header{
+2612:    display: flex;
+2613:    align-items: center;
+2614:    justify-content: space-between;
+2615:    gap: 24px;
+2616:    width: 100%;
+2617:    padding: 12px 32px;
+2618:    background-color: rgba(15, 15, 15, 0.35);
+2619:    flex-wrap: wrap;
+2620:}
+2621:
+2622:.header__logo_nav{
+2623:    display: flex;
+2624:    align-items: center;
+2625:    gap: 32px;           /* espaço entre logo e nav */
+2626:    flex-shrink: 0;
+2627:}
+2628:
+2629:.header__nav{
+2630:    display: flex;
+--- comp 3599-3618 ---
+3599:header{
+3600:    display: flex;
+3601:    align-items: center;
+3602:    justify-content: space-between;
+3603:    gap: 24px;
+3604:    width: 100%;
+3605:    padding: 12px 32px;
+3606:    background-color: rgba(15, 15, 15, 0.35);
+3607:    flex-wrap: wrap;
+3608:}
+3609:a{
+3610:    color: #E5E7EB;
+3611:    text-decoration: none;
+3612:}
+3613:.header__logo_nav{
+3614:    display: flex;
+3615:    align-items: center;
+3616:    gap: 32px;           /* espaço entre logo e nav */
+3617:    flex-shrink: 0;
+3618:}
+--- comp last 30 ---
+6270:  font-family: inherit;
+6271:  font-size: 12.5px;
+6272:  outline: none;
+6273:}
+6274:.comentarios_resposta_enviar {
+6275:  border: 0.5px solid #45464a6f;
+6276:  border-radius: 999px;
+6277:  padding: 8px 16px;
+6278:  font-weight: 700;
+6279:  font-size: 12px;
+6280:  background: #2a2a2a7a;
+6281:  color: #E5E7EB;
+6282:  cursor: pointer;
+6283:}
+6284:.comentarios_resposta_enviar:hover {
+6285:  color: #F4CD50;
+6286:}
+6287: 
+6288:@media (max-width: 600px) {
+6289:  .comentarios {
+6290:    padding: 20px;
+6291:  }
+6292:  .comentarios_composer_footer {
+6293:    flex-direction: column;
+6294:    align-items: stretch;
+6295:  }
+6296:  .comentarios_publicar {
+6297:    width: 100%;
+6298:  }
+6299:}
+first200 vs second-half-start200 normalized equal=5/200
+2611-2800 vs 3599-3788 normalized equal=10/190

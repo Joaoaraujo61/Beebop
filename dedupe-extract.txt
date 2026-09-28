@@ -1,0 +1,657 @@
+===== LINES 2420-2610 =====
+2420:  margin-top: 20px;
+2421:}
+2422:
+2423:.album-avalie {
+2424:  display: flex;
+2425:  gap: 6px;
+2426:}
+2427:.album-avalie__star {
+2428:  border: none;
+2429:  background: transparent;
+2430:  color: #F4CD50;
+2431:  font-size: 22px;
+2432:  cursor: pointer;
+2433:  padding: 0;
+2434:}
+2435:.album-avalie__status {
+2436:  color: #E5E7EB;
+2437:  font-size: 12.5px;
+2438:  margin-top: 10px;
+2439:  min-height: 16px;
+2440:}
+2441:.album-avalie__media {
+2442:  color: #9CA3AF;
+2443:  font-size: 11.5px;
+2444:  margin-top: 6px;
+2445:}
+2446:
+2447:/* =========================================================
+2448:   Artist card (grid do Explorar — aba "Artistas" e descoberta)
+2449:   Avatar com iniciais em vez de foto: a iTunes API não devolve foto de
+2450:   artista (ver comentário em js/components/artistCard.js). Mesmo
+2451:   gradiente dourado já usado em .comentarios_avatar/.profile-header__avatar.
+2452:========================================================= */
+2453:
+2454:.artist_grid {
+2455:  display: grid;
+2456:  grid-template-columns: repeat(4, 1fr);
+2457:  gap: 20px;
+2458:}
+2459:.artist_card {
+2460:  display: flex;
+2461:  flex-direction: column;
+2462:  align-items: center;
+2463:  text-align: center;
+2464:  gap: 12px;
+2465:  cursor: pointer;
+2466:}
+2467:.artist_avatar {
+2468:  width: 110px;
+2469:  height: 110px;
+2470:  border-radius: 50%;
+2471:  background: linear-gradient(rgb(244, 205, 80), rgb(254, 233, 165));
+2472:  color: #111827;
+2473:  font-size: 32px;
+2474:  font-weight: 800;
+2475:  display: flex;
+2476:  align-items: center;
+2477:  justify-content: center;
+2478:  transition: transform 0.2s ease;
+2479:}
+2480:.artist_card:hover .artist_avatar {
+2481:  transform: translateY(-4px) scale(1.03);
+2482:}
+2483:.artist_info {
+2484:  display: flex;
+2485:  flex-direction: column;
+2486:  gap: 2px;
+2487:}
+2488:.artist_nome {
+2489:  color: #F9FAFB;
+2490:  font-size: 15px;
+2491:  font-weight: 700;
+2492:}
+2493:.artist_label {
+2494:  color: #9CA3AF;
+2495:  font-size: 12px;
+2496:}
+2497:
+2498:@media (max-width: 900px) {
+2499:  .artist_grid { grid-template-columns: repeat(3, 1fr); }
+2500:}
+2501:@media (max-width: 600px) {
+2502:  .artist_grid { grid-template-columns: repeat(2, 1fr); }
+2503:  .artist_avatar { width: 88px; height: 88px; font-size: 26px; }
+2504:}
+2505:
+2506:/* =========================================================
+2507:   Página de Artista
+2508:   Reaproveita a mesma linguagem visual de Música/Álbum: dourado
+2509:   #F4CD50, cards em gradiente escuro, texto #E5E7EB/#9CA3AF. Nenhuma
+2510:   cor nova.
+2511:========================================================= */
+2512:
+2513:.artista-page {
+2514:  max-width: 1100px;
+2515:  margin: 0 auto;
+2516:  padding: 40px 32px 80px;
+2517:  color: #E5E7EB;
+2518:}
+2519:.artista-page__status,
+2520:.artista-page__error {
+2521:  color: #9CA3AF;
+2522:  font-size: 14px;
+2523:  padding: 24px 0;
+2524:}
+2525:.artista-page__error a {
+2526:  color: #F4CD50;
+2527:  font-weight: 600;
+2528:}
+2529:
+2530:.artista-hero {
+2531:  display: flex;
+2532:  align-items: center;
+2533:  gap: 24px;
+2534:  margin-bottom: 48px;
+2535:}
+2536:.artista-hero__avatar {
+2537:  width: 120px;
+2538:  height: 120px;
+2539:  border-radius: 50%;
+2540:  background: linear-gradient(rgb(244, 205, 80), rgb(254, 233, 165));
+2541:  color: #111827;
+2542:  font-size: 40px;
+2543:  font-weight: 800;
+2544:  display: flex;
+2545:  align-items: center;
+2546:  justify-content: center;
+2547:  flex-shrink: 0;
+2548:}
+2549:.artista-hero__eyebrow {
+2550:  color: #F4CD50;
+2551:  font-size: 12px;
+2552:  font-weight: 700;
+2553:  letter-spacing: 0.08em;
+2554:  text-transform: uppercase;
+2555:}
+2556:.artista-hero__nome {
+2557:  color: #F9FAFB;
+2558:  font-size: 34px;
+2559:  font-weight: 800;
+2560:  line-height: 1.15;
+2561:  margin-top: 6px;
+2562:}
+2563:.artista-hero__genero {
+2564:  color: #9CA3AF;
+2565:  font-size: 14px;
+2566:  margin-top: 4px;
+2567:}
+2568:
+2569:.artista-secao {
+2570:  margin-bottom: 44px;
+2571:}
+2572:.artista-secao__titulo {
+2573:  color: #F9FAFB;
+2574:  font-size: 20px;
+2575:  font-weight: 800;
+2576:  margin-bottom: 18px;
+2577:}
+2578:.artista-secao__vazio {
+2579:  color: #9CA3AF;
+2580:  font-size: 13px;
+2581:  padding: 12px 0;
+2582:}
+2583:
+2584:.artista-vermais {
+2585:  display: block;
+2586:  margin: 20px auto 0;
+2587:  padding: 9px 22px;
+2588:  border-radius: 999px;
+2589:  border: 0.5px solid #45464a6f;
+2590:  background-color: #2a2a2a7a;
+2591:  color: #E5E7EB;
+2592:  font-weight: 600;
+2593:  font-size: 13px;
+2594:  cursor: pointer;
+2595:  transition: background-color 0.15s ease, color 0.15s ease;
+2596:}
+2597:.artista-vermais:hover {
+2598:  background-color: #2a2a2a47;
+2599:  color: #F4CD50;
+2600:}
+2601:
+2602:@media (max-width: 600px) {
+2603:  .artista-page {
+2604:    padding: 24px 16px 56px;
+2605:  }
+2606:  .artista-hero {
+2607:    flex-direction: column;
+2608:    text-align: center;
+2609:  }
+2610:}
+===== LINES 2860-2960 =====
+2860:.feature__text {
+2861:  max-width: 400px;
+2862:  color: #FFF8E1;
+2863:  font-size: 20px;
+2864:  font-weight: 800;
+2865:  line-height: 1.1;      /* entrelinha apertada, como no Figma */
+2866:  letter-spacing: -0.01em;
+2867:}
+2868:/* sombra escura marcada atrás das letras (efeito do Figma) */
+2869:.feature__text {
+2870:  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.85), 0 0 8px rgba(0, 0, 0, 0.5);
+2871:}
+2872:/*
+2873:  Destaques dourados com brilho: degradê no tom dos botões primários
+2874:  (#F4CD50 -> #FEE9A5) recortado na letra, com uma faixa clara que
+2875:  "passeia" por cima (animação de background-position). Como a cor da
+2876:  letra fica transparente, o glow usa drop-shadow (text-shadow atravessaria
+2877:  o texto). clone = o degradê recomeça em cada linha quando a frase quebra.
+2878:*/
+2879:.feature__text strong {
+2880:  font-weight: 800;
+2881:  color: #F4CD50; /* fallback se background-clip:text não for suportado */
+2882:  text-shadow: none;
+2883:}
+2884:@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+2885:  .feature__text strong {
+2886:    background-image: linear-gradient(
+2887:      100deg,
+2888:      #F8D96A 0%,
+2889:      #F4C630 38%,
+2890:      #FFF7D6 50%,
+2891:      #F4C630 62%,
+2892:      #F8D96A 100%
+2893:    );
+2894:    background-size: 250% 100%;
+2895:    background-position: 100% 0;
+2896:    -webkit-background-clip: text;
+2897:    background-clip: text;
+2898:    -webkit-text-fill-color: transparent;
+2899:    color: transparent;
+2900:    -webkit-box-decoration-break: clone;
+2901:    box-decoration-break: clone;
+2902:    filter: drop-shadow(0 2px 1px rgba(0, 0, 0, 0.85))
+2903:            drop-shadow(0 0 6px rgba(244, 205, 80, 0.4));
+2904:  }
+2905:}
+2906:@keyframes feature-shine {
+2907:  0%   { background-position: 100% 0; }
+2908:  55%  { background-position: 0% 0; }
+2909:  100% { background-position: 0% 0; }
+2910:}
+2911:@media (prefers-reduced-motion: no-preference) {
+2912:  .feature__text strong {
+2913:    animation: feature-shine 4s ease-in-out infinite;
+2914:  }
+2915:  /* desencontra o brilho entre as palavras para não piscar tudo junto */
+2916:  .feature__text strong:nth-of-type(2) { animation-delay: 0.6s; }
+2917:  .feature__text strong:nth-of-type(3) { animation-delay: 1.2s; }
+2918:}
+2919:/*
+2920:  Mídia de cada linha (Figma): capa real do álbum na frente e um vinil
+2921:  saindo por trás dela, para a esquerda. Tudo é dimensionado a partir de
+2922:  --cover-size, então o mobile só precisa trocar essa variável.
+2923:*/
+2924:.feature__media {
+2925:  --cover-size: 200px;
+2926:  --vinyl-size: calc(var(--cover-size) * 1.1);
+2927:  position: relative;
+2928:  flex-shrink: 0;
+2929:  width: calc(var(--cover-size) * 1.6);
+2930:  height: var(--cover-size);
+2931:}
+2932:.feature__cover {
+2933:  position: absolute;
+2934:  top: 0;
+2935:  right: 0;
+2936:  z-index: 2;
+2937:  width: var(--cover-size);
+2938:  height: var(--cover-size);
+2939:  border-radius: 4px;
+2940:  overflow: hidden;
+2941:  background: #1c1c1e;
+2942:  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
+2943:}
+2944:.feature__cover-img {
+2945:  display: block;
+2946:  width: 100%;
+2947:  height: 100%;
+2948:  object-fit: cover;
+2949:  opacity: 0;
+2950:  transition: opacity 400ms ease;
+2951:}
+2952:.feature__cover-img.is-loaded {
+2953:  opacity: 1;
+2954:}
+2955:.feature__cover--placeholder {
+2956:  display: flex;
+2957:  align-items: center;
+2958:  justify-content: center;
+2959:  color: #45464a;
+2960:  font-size: 40px;
+===== LINES 3040-3080 =====
+3040:@media (max-width: 700px) {
+3041:  .features {
+3042:    padding: 48px 24px 16px;
+3043:  }
+3044:  .feature__row {
+3045:    justify-content: center;
+3046:  }
+3047:  .feature__media {
+3048:    --cover-size: 150px;
+3049:  }
+3050:}
+3051:
+3052:/*--------- Fechamento (Splash — "Ouviu. Sentiu. Avaliou.") ---------*/
+3053:
+3054:.closing {
+3055:  max-width: 880px;
+3056:  margin: 0 auto;
+3057:  padding: 40px 64px 120px;
+3058:  display: flex;
+3059:  flex-direction: column;
+3060:  align-items: center;
+3061:  gap: 56px;
+3062:}
+3063:/* Três palavras em "escada" (Figma): esquerda -> meio -> direita. */
+3064:.closing__title {
+3065:  width: 100%;
+3066:  display: flex;
+3067:  flex-direction: column;
+3068:  gap: 44px;
+3069:  color: #F9FAFB;
+3070:  font-size: clamp(40px, 7vw, 64px);
+3071:  font-weight: 800;
+3072:  line-height: 1;
+3073:  letter-spacing: -0.01em;
+3074:}
+3075:.closing__word {
+3076:  display: block;
+3077:  align-self: flex-start;
+3078:}
+3079:.closing__word--1 { margin-left: 4%; }
+3080:.closing__word--2 { margin-left: 32%; }
+===== LINES 3277-3596 =====
+3277:/*--------- Perfil: novos elementos (abas, atividade, CTA do DNA, modal) ---------*/
+3278:
+3279:.profile-header__streaming {
+3280:  display: flex;
+3281:  gap: 10px;
+3282:  margin-top: 12px;
+3283:}
+3284:.profile-header__stream-btn {
+3285:  width: 32px;
+3286:  height: 32px;
+3287:  border-radius: 50%;
+3288:  border: 0.5px solid #45464a6f;
+3289:  background-color: #2a2a2a7a;
+3290:  color: #E5E7EB;
+3291:  font-size: 15px;
+3292:  cursor: not-allowed;
+3293:  opacity: 0.55;
+3294:}
+3295:.profile-header__stats {
+3296:  background: #2a2a2a7a;
+3297:  border: 0.5px solid #45464a6f;
+3298:  border-radius: 12px;
+3299:  padding: 12px 20px;
+3300:}
+3301:.profile-header .hero__btn:disabled {
+3302:  opacity: 0.55;
+3303:  cursor: not-allowed;
+3304:}
+3305:
+3306:.profile-tabs {
+3307:  display: flex;
+3308:  gap: 8px;
+3309:  margin-bottom: 28px;
+3310:  border-bottom: 1px solid #262626;
+3311:}
+3312:.profile-tabs__tab {
+3313:  background: none;
+3314:  border: none;
+3315:  color: #9CA3AF;
+3316:  font-size: 13px;
+3317:  font-weight: 600;
+3318:  padding: 10px 14px;
+3319:  cursor: pointer;
+3320:  border-bottom: 2px solid transparent;
+3321:  transition: color 0.15s ease, border-color 0.15s ease;
+3322:}
+3323:.profile-tabs__tab:hover {
+3324:  color: #F9FAFB;
+3325:}
+3326:.profile-tabs__tab.is-active {
+3327:  color: #F4CD50;
+3328:  border-bottom-color: #F4CD50;
+3329:}
+3330:.profile-tabs__tab:focus-visible {
+3331:  outline: 2px solid #F4CD50;
+3332:  outline-offset: 2px;
+3333:}
+3334:
+3335:.profile-link {
+3336:  color: #F4CD50;
+3337:  font-weight: 700;
+3338:  text-decoration: underline;
+3339:}
+3340:
+3341:.activity-grid {
+3342:  display: flex;
+3343:  flex-wrap: wrap;
+3344:  gap: 16px;
+3345:}
+3346:.activity-item {
+3347:  width: 110px;
+3348:}
+3349:.activity-item__cover {
+3350:  aspect-ratio: 1 / 1;
+3351:  border-radius: 12px;
+3352:  overflow: hidden;
+3353:  background-color: #17171a;
+3354:  border: 1px solid #2e2e2e;
+3355:  display: flex;
+3356:  align-items: center;
+3357:  justify-content: center;
+3358:  color: #45464a;
+3359:  font-size: 28px;
+3360:}
+3361:.activity-item__cover img {
+3362:  width: 100%;
+3363:  height: 100%;
+3364:  object-fit: cover;
+3365:  display: block;
+3366:}
+3367:.activity-item__title {
+3368:  color: #E5E7EB;
+3369:  font-size: 12px;
+3370:  margin-top: 6px;
+3371:  white-space: nowrap;
+3372:  overflow: hidden;
+3373:  text-overflow: ellipsis;
+3374:}
+3375:
+3376:.profile-playlists {
+3377:  list-style: none;
+3378:  display: flex;
+3379:  flex-direction: column;
+3380:}
+3381:.profile-playlists__item {
+3382:  display: flex;
+3383:  align-items: center;
+3384:  gap: 12px;
+3385:  padding: 12px 8px;
+3386:  border-bottom: 1px solid #262626;
+3387:  color: #F9FAFB;
+3388:  font-size: 14px;
+3389:  font-weight: 600;
+3390:}
+3391:.profile-playlists__item > i {
+3392:  color: #F4CD50;
+3393:}
+3394:.profile-playlists__count {
+3395:  margin-left: auto;
+3396:  color: #9CA3AF;
+3397:  font-size: 12px;
+3398:  font-weight: 400;
+3399:}
+3400:
+3401:.dna-card__cta {
+3402:  width: 100%;
+3403:  margin-top: 24px;
+3404:  font-weight: 700;
+3405:  font-size: 13px;
+3406:  padding: 11px 16px;
+3407:  border: none;
+3408:  border-radius: 20px;
+3409:  background: linear-gradient(rgb(244, 205, 80), rgb(254, 233, 165));
+3410:  color: #111827;
+3411:  cursor: pointer;
+3412:  transition: transform 0.15s ease, filter 0.15s ease;
+3413:}
+3414:.dna-card__cta i {
+3415:  margin-right: 6px;
+3416:}
+3417:.dna-card__cta:hover {
+3418:  transform: translateY(-2px);
+3419:  filter: brightness(1.05);
+3420:}
+3421:.dna-card__cta:focus-visible {
+3422:  outline: 2px solid #F9FAFB;
+3423:  outline-offset: 2px;
+3424:}
+3425:
+3426:/* Modal */
+3427:body.modal-open {
+3428:  overflow: hidden;
+3429:}
+3430:.modal-overlay {
+3431:  position: fixed;
+3432:  inset: 0;
+3433:  z-index: 10000;
+3434:  background: rgba(10, 10, 9, 0.7);
+3435:  display: flex;
+3436:  align-items: center;
+3437:  justify-content: center;
+3438:  padding: 24px;
+3439:}
+3440:.modal {
+3441:  width: 100%;
+3442:  max-width: 560px;
+3443:  max-height: 85vh;
+3444:  overflow-y: auto;
+3445:  background: linear-gradient(180deg, rgba(28, 28, 30, 0.98), rgba(20, 20, 20, 0.98));
+3446:  border: 1px solid #2e2e2e;
+3447:  border-radius: 20px;
+3448:  padding: 24px;
+3449:}
+3450:.modal__header {
+3451:  display: flex;
+3452:  align-items: flex-start;
+3453:  justify-content: space-between;
+3454:  gap: 16px;
+3455:  margin-bottom: 8px;
+3456:}
+3457:.modal__title {
+3458:  color: #F9FAFB;
+3459:  font-size: 20px;
+3460:  font-weight: 800;
+3461:}
+3462:.modal__subtitle {
+3463:  color: #9CA3AF;
+3464:  font-size: 12px;
+3465:  margin-top: 4px;
+3466:}
+3467:.modal__close {
+3468:  width: 32px;
+3469:  height: 32px;
+3470:  flex-shrink: 0;
+3471:  border-radius: 50%;
+3472:  border: 0.5px solid #45464a6f;
+3473:  background-color: #2a2a2a7a;
+3474:  color: #E5E7EB;
+3475:  cursor: pointer;
+3476:}
+3477:.modal__close:hover {
+3478:  background-color: #2a2a2a47;
+3479:}
+3480:
+3481:.similar-list {
+3482:  list-style: none;
+3483:  display: flex;
+3484:  flex-direction: column;
+3485:}
+3486:.similar-user {
+3487:  display: flex;
+3488:  gap: 14px;
+3489:  padding: 16px 0;
+3490:  border-bottom: 1px solid #262626;
+3491:}
+3492:.similar-user:last-child {
+3493:  border-bottom: none;
+3494:}
+3495:.similar-user__avatar {
+3496:  width: 44px;
+3497:  height: 44px;
+3498:  border-radius: 50%;
+3499:  background: linear-gradient(rgb(244, 205, 80), rgb(254, 233, 165));
+3500:  color: #111827;
+3501:  font-weight: 800;
+3502:  font-size: 16px;
+3503:  display: flex;
+3504:  align-items: center;
+3505:  justify-content: center;
+3506:  flex-shrink: 0;
+3507:}
+3508:.similar-user__body {
+3509:  flex: 1;
+3510:  min-width: 0;
+3511:}
+3512:.similar-user__name {
+3513:  color: #F9FAFB;
+3514:  font-weight: 700;
+3515:  font-size: 14px;
+3516:}
+3517:.similar-user__handle {
+3518:  color: #9CA3AF;
+3519:  font-weight: 400;
+3520:  font-size: 12px;
+3521:  margin-left: 4px;
+3522:}
+3523:.similar-user__bio {
+3524:  color: #E5E7EB;
+3525:  font-size: 13px;
+3526:  margin: 4px 0 8px;
+3527:}
+3528:.similar-user__side {
+3529:  display: flex;
+3530:  flex-direction: column;
+3531:  align-items: flex-end;
+3532:  gap: 2px;
+3533:  flex-shrink: 0;
+3534:}
+3535:.similar-user__match {
+3536:  color: #F4CD50;
+3537:  font-size: 18px;
+3538:  font-weight: 800;
+3539:}
+3540:.similar-user__match-label {
+3541:  color: #6b6b6b;
+3542:  font-size: 11px;
+3543:}
+3544:.similar-user__follow {
+3545:  margin-top: 8px;
+3546:  font-size: 12px;
+3547:  font-weight: 700;
+3548:  padding: 6px 14px;
+3549:  border-radius: 20px;
+3550:  border: none;
+3551:  background: linear-gradient(rgb(244, 205, 80), rgb(254, 233, 165));
+3552:  color: #111827;
+3553:  cursor: pointer;
+3554:}
+3555:.similar-user__follow.is-following {
+3556:  background: #2a2a2a7a;
+3557:  border: 0.5px solid #45464a6f;
+3558:  color: #E5E7EB;
+3559:}
+3560:
+3561:@media (max-width: 520px) {
+3562:  .similar-user {
+3563:    flex-wrap: wrap;
+3564:  }
+3565:  .similar-user__side {
+3566:    flex-direction: row;
+3567:    align-items: center;
+3568:    gap: 8px;
+3569:    margin-left: 58px;
+3570:  }
+3571:  .similar-user__follow {
+3572:    margin-top: 0;
+3573:    margin-left: auto;
+3574:  }
+3575:}
+3576:
+3577:/* =========================================================
+3578:   Álbum — complementos (tracklist em largura total, avaliação,
+3579:   estados). Reaproveita .album-*, .track-row e .comentarios acima.
+3580:========================================================= */
+3581:
+3582:.album-card{
+3583:  cursor: pointer;
+3584:}
+3585:
+3586:.artist_avatar {
+3587:  overflow: hidden;   /* corta a imagem no formato do círculo */
+3588:}
+3589:
+3590:.artist_avatar img {
+3591:  display: block;
+3592:  width: 100%;
+3593:  height: 100%;
+3594:  object-fit: cover;          /* preenche o círculo sem distorcer */
+3595:  object-position: center 20%; /* favorece o topo, onde ficam os rostos */
+3596:}

@@ -1,34 +1,41 @@
 /*--------- Header ---------*/
-/*--------- Header ---------*/
 
 header{
-    display: flex;
-    width: 100%;
-    flex-direction: row;
-    background-color: rgba(15, 15, 15, 0.35);
-    gap: 10%;
-    justify-content: center;
-    flex-wrap: wrap;
-    padding: auto;
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  background-color: rgba(15, 15, 15, 0.35);
+  gap: 24px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 12px 32px;
+  align-items: center;
 }
+
 a{
     color: #E5E7EB;
     text-decoration: none;
 }
+
 .header__logo_nav{
-    display: flex;
-    flex-direction: row;
-    gap: 40px;
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  align-items: center;
+  flex-shrink: 0;
 }
+
 .header__logo_nav > a > img{
     width: 110%;
 }
+
 .header__nav{
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
-    margin: auto;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  margin: 0;
 }
+
 .header__nav > a{
     font-weight: 600;
     background-color: #2a2a2a7a;
@@ -36,51 +43,69 @@ a{
     border: 0.5px solid #45464a6f;
     border-radius: 20px;
 }
+
 .header__nav > a:hover{
     background-color: #dfd07824;
 }
+
 body[data-page="inicio"] #inicio_nav{
     background-color: #e0cd646e;
 }
+
 body[data-page="explorar"] #explorar_nav{
     background-color: #e0cd646e;
 }
+
 body[data-page="charts"] #charts_nav{
     background-color: #e0cd646e;
 }
+
 body[data-page="noticias"] #news_nav{
     background-color: #e0cd646e;
 }
-.header__search_form{
-    display: flex;
-    margin-top: auto;
-    margin-bottom: auto;
-    background: linear-gradient(rgb(33, 32, 32), rgb(22, 16, 16));
-    padding: 10px;
-    width: 20%;
-    border-radius: 20px;
-}
-.header__search_form>i{
-    color: rgb(156, 163, 175);
-}
-.header__search_form > input{
-    font-size: 16px;
-    background: transparent;
-    border: none;
-    width: 100%;
-    outline: none;
-    color: white;
-}
-.header__search_form > input:focus{
 
+.header__search_form{
+  display: flex;
+  margin-top: auto;
+  margin-bottom: auto;
+  background: linear-gradient(rgb(33, 32, 32), rgb(22, 16, 16));
+  padding: 10px;
+  width: 100%;
+  border-radius: 20px;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  flex: 1 1 20%;
+  max-width: 420px;
+  min-width: 160px;
 }
+
+.header__search_form>i{
+  color: rgb(156, 163, 175);
+  flex-shrink: 0;
+}
+
+.header__search_form > input{
+  font-size: 16px;
+  background: transparent;
+  border: none;
+  width: 100%;
+  outline: none;
+  color: white;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
 .header_login{
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
-    margin-top: auto;
-    margin-bottom: auto;
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin: 0;
+  flex-shrink: 0;
 }
+
 .header_login > a{
     font-weight: 600;
     background-color: #2a2a2a7a;
@@ -88,9 +113,11 @@ body[data-page="noticias"] #news_nav{
     border: 0.5px solid #45464a6f;
     border-radius: 20px;
 }
+
 .header_login > a:hover{
     background-color: #2a2a2a47;
 }
+
 .header_account{
     font-weight: 600;
     background: linear-gradient( rgb(244, 205, 80), rgb(254, 233, 165));
@@ -99,6 +126,7 @@ body[data-page="noticias"] #news_nav{
     border: 0.5px solid #45464a6f;
     border-radius: 20px;
 }
+
 
 /*--------- Header: avatar de perfil (logado) ---------*/
 /*
@@ -123,10 +151,12 @@ body[data-page="noticias"] #news_nav{
   align-items: center;
   justify-content: center;
 }
+
 .header_login > a.header_profile:hover {
   background: none;
   opacity: 0.85;
 }
+
 .header_profile__avatar {
   width: 36px;
   height: 36px;
@@ -140,6 +170,7 @@ body[data-page="noticias"] #news_nav{
   justify-content: center;
 }
 
+
 /*--------- Footer ---------*/
 
 .footer {
@@ -150,15 +181,17 @@ body[data-page="noticias"] #news_nav{
   background-color: #0d0d0d;
   border-top: 1px solid #262626;
   padding: 48px 64px 32px;
-  font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
   color: #9a9a9a;
 }
+
 .footer_up{
     display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 150px;
 }
+
 .footer_beebop {
   max-width: 320px;
   display: flex;
@@ -166,11 +199,13 @@ body[data-page="noticias"] #news_nav{
   gap: 12px;
 }
 
+
 .footer_beebop img {
   height: 45px;
   width: auto;
   object-fit: contain;
 }
+
 
 .footer_beebop p {
   margin: 0;
@@ -179,16 +214,19 @@ body[data-page="noticias"] #news_nav{
   color: #8a8a8a;
 }
 
+
 .footer_beebop p:first-of-type {
   color: #cfcfcf;
   font-size: 14px;
 }
+
 
 .footer_links {
   border-collapse: separate;
   border-spacing: 56px 12px;
   margin: -12px 0 0 -56px; 
 }
+
 
 .footer_links th,
 .footer_links td {
@@ -197,7 +235,12 @@ body[data-page="noticias"] #news_nav{
   border: none;
   font-weight: 400;
   white-space: nowrap;
+  font-size: 13px;
+  color: #9a9a9a;
+  cursor: pointer;
+  transition: color 0.15s ease;
 }
+
 
 .footer_links th {
   color: #ffffff;
@@ -206,16 +249,11 @@ body[data-page="noticias"] #news_nav{
   padding-bottom: 6px;
 }
 
-.footer_links td {
-  font-size: 13px;
-  color: #9a9a9a;
-  cursor: pointer;
-  transition: color 0.15s ease;
-}
 
 .footer_links td:hover {
   color: #f5c400;
 }
+
 
 .footer_copyright {
   flex-basis: 100%;
@@ -225,24 +263,28 @@ body[data-page="noticias"] #news_nav{
   text-align: center;
 }
 
+
 .footer_copyright p {
   margin: 0;
   font-size: 12px;
   color: #6b6b6b;
 }
-
 /* ---------- Responsive ---------- */
 
 @media (max-width: 720px) {
+
   .footer {
     flex-direction: column;
     padding: 40px 24px 24px;
   }
 
+
   .footer_links {
     gap: 32px;
   }
 }
+
+
 
 /*--------- Hero ---------*/
 
@@ -256,24 +298,29 @@ body[data-page="noticias"] #news_nav{
   margin: 0 auto;
   padding: 90px 64px;
 }
+
 .hero__content {
   max-width: 480px;
 }
+
 .hero__title {
   color: #F9FAFB;
   font-size: 48px;
   font-weight: 800;
   line-height: 1.15;
 }
+
 .hero__highlight {
   color: #F4CD50;
 }
+
 .hero__actions {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
   margin-top: 32px;
 }
+
 .hero__btn {
   font-weight: 600;
   padding: 10px 22px;
@@ -282,28 +329,34 @@ body[data-page="noticias"] #news_nav{
   cursor: pointer;
   transition: transform 0.15s ease, filter 0.15s ease;
 }
+
 .hero__btn--primary {
   background: linear-gradient(rgb(244, 205, 80), rgb(254, 233, 165));
   color: #111827;
 }
+
 .hero__btn--ghost {
   background-color: #2a2a2a7a;
   color: #E5E7EB;
 }
+
 .hero__btn:hover {
   transform: translateY(-2px);
   filter: brightness(1.05);
 }
+
 .hero__btn:focus-visible {
   outline: 2px solid #F4CD50;
   outline-offset: 2px;
 }
+
 .hero__cards {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
   justify-content: center;
 }
+
 
 /*--------- Music Card ---------*/
 
@@ -316,27 +369,32 @@ body[data-page="noticias"] #news_nav{
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
+
 .music-card:hover {
   transform: translateY(-4px) scale(1.02);
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.45);
   border-color: #45464a;
 }
+
 .music-card.is-playing,
 .music-card.is-stopping {
   border-color: #F4CD50;
   box-shadow: 0 0 0 1px rgba(244, 205, 80, 0.35), 0 14px 30px rgba(0, 0, 0, 0.45);
 }
+
 .music-card__cover-wrap {
   position: relative;
   aspect-ratio: 1 / 1;
   background-color: #0f0f0f;
 }
+
 .music-card__cover {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
+
 .music-card__cover--placeholder {
   width: 100%;
   height: 100%;
@@ -346,6 +404,7 @@ body[data-page="noticias"] #news_nav{
   color: #45464a;
   font-size: 40px;
 }
+
 .music-card__play {
   position: absolute;
   right: 10px;
@@ -364,17 +423,17 @@ body[data-page="noticias"] #news_nav{
   transform: translateY(6px);
   transition: opacity 0.2s ease, transform 0.2s ease;
 }
+
 .music-card:hover .music-card__play,
 .music-card.is-playing .music-card__play,
 .music-card.is-stopping .music-card__play,
 .music-card__play:focus-visible {
   opacity: 1;
   transform: translateY(0);
-}
-.music-card__play:focus-visible {
   outline: 2px solid #F9FAFB;
   outline-offset: 2px;
 }
+
 .music-card__eq {
   position: absolute;
   left: 10px;
@@ -386,10 +445,12 @@ body[data-page="noticias"] #news_nav{
   opacity: 0;
   transition: opacity 0.2s ease;
 }
+
 .music-card.is-playing .music-card__eq,
 .music-card.is-stopping .music-card__eq {
   opacity: 1;
 }
+
 .music-card__eq span {
   width: 3px;
   height: 4px;
@@ -398,10 +459,12 @@ body[data-page="noticias"] #news_nav{
   animation: eq-bounce 900ms ease-in-out infinite;
   animation-play-state: paused;
 }
+
 .music-card.is-playing .music-card__eq span {
   animation-play-state: running;
   animation-iteration-count: infinite;
 }
+
 /* Ao pausar: deixa a barra terminar o ciclo atual (1 iteração) e parar
    na altura de repouso do próprio keyframe (4px), em vez de congelar
    no meio do movimento. "animation-fill-mode: forwards" mantém a
@@ -411,20 +474,28 @@ body[data-page="noticias"] #news_nav{
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
 }
+
 .music-card__eq span:nth-child(1) { animation-duration: 780ms; animation-delay: 0ms; }
+
 .music-card__eq span:nth-child(2) { animation-duration: 900ms; animation-delay: 90ms; }
+
 .music-card__eq span:nth-child(3) { animation-duration: 640ms; animation-delay: 160ms; }
+
 .music-card__eq span:nth-child(4) { animation-duration: 860ms; animation-delay: 40ms; }
+
 .music-card__eq span:nth-child(5) { animation-duration: 720ms; animation-delay: 200ms; }
+
 
 @keyframes eq-bounce {
   0%, 100% { height: 4px; }
   50% { height: 16px; }
 }
 
+
 .music-card__info {
   padding: 12px 14px 16px;
 }
+
 .music-card__title {
   color: #F9FAFB;
   font-size: 14px;
@@ -433,11 +504,13 @@ body[data-page="noticias"] #news_nav{
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .music-card__artist {
   color: #9CA3AF;
   font-size: 12px;
   margin-top: 2px;
 }
+
 .music-card__subtitle {
   color: #F4CD50;
   font-size: 11px;
@@ -446,6 +519,7 @@ body[data-page="noticias"] #news_nav{
   text-transform: uppercase;
   margin-top: 6px;
 }
+
 
 /*--------- Skeleton Loading (hero cards, enquanto a API responde) ---------*/
 /*
@@ -458,9 +532,11 @@ body[data-page="noticias"] #news_nav{
   0% { background-position: -160px 0; }
   100% { background-position: 160px 0; }
 }
+
 .music-card--skeleton {
   cursor: default;
 }
+
 .music-card__cover--skeleton {
   aspect-ratio: 1 / 1;
   background-color: #1c1c1e;
@@ -474,10 +550,11 @@ body[data-page="noticias"] #news_nav{
   background-repeat: no-repeat;
   animation: skeleton-shimmer 1.3s ease-in-out infinite;
 }
+
 .music-card__title-skeleton,
 .music-card__artist-skeleton {
   display: block;
-  height: 10px;
+  height: 8px;
   border-radius: 4px;
   background-color: #2a2a2c;
   background-image: linear-gradient(
@@ -489,15 +566,14 @@ body[data-page="noticias"] #news_nav{
   background-size: 160px 100%;
   background-repeat: no-repeat;
   animation: skeleton-shimmer 1.3s ease-in-out infinite;
+  width: 45%;
 }
+
 .music-card__title-skeleton {
   width: 70%;
   margin-bottom: 8px;
 }
-.music-card__artist-skeleton {
-  width: 45%;
-  height: 8px;
-}
+
 
 /*--------- Fallback de erro (hero cards) ---------*/
 .hero-cards-error {
@@ -509,10 +585,12 @@ body[data-page="noticias"] #news_nav{
   padding: 24px 16px;
   text-align: center;
 }
+
 .hero-cards-error__text {
   color: #9CA3AF;
   font-size: 13px;
 }
+
 .hero-cards-error__retry {
   border: 1px solid #45464a;
   background: transparent;
@@ -524,19 +602,89 @@ body[data-page="noticias"] #news_nav{
   cursor: pointer;
   transition: border-color 0.2s ease, background-color 0.2s ease;
 }
+
 .hero-cards-error__retry:hover,
 .hero-cards-error__retry:focus-visible {
   border-color: #F4CD50;
   background-color: rgba(244, 205, 80, 0.08);
 }
-
 @media (prefers-reduced-motion: reduce) {
+
   .music-card__cover--skeleton,
   .music-card__title-skeleton,
   .music-card__artist-skeleton {
     animation: none;
   }
+
+  .music-card,
+  .music-card__play,
+  .music-card__eq,
+  .hero__btn {
+    transition: none;
+  }
+
+  .music-card:hover {
+    transform: none;
+  }
+
+  .music-card__eq span {
+    animation: none !important;
+    height: 10px;
+  }
+
+
+  /* Splash sem movimento: cortina não anima e tudo aparece de uma vez. */
+  .splash-curtain {
+    transition: none;
+  }
+
+  .has-splash-intro .hero__title,
+  .has-splash-intro .hero__cards .music-card,
+  .has-splash-intro .hero__actions,
+  .has-splash-intro.splash-ready .hero__title,
+  .has-splash-intro.splash-ready .hero__cards .music-card,
+  .has-splash-intro.splash-ready .hero__actions {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+
+  .has-splash-intro.splash-ready .hero__highlight {
+    animation: none !important;
+    filter: none;
+  }
+
+
+  /* Revelação por scroll sem movimento: tudo já visível. */
+  .reveal-on-scroll,
+  .reveal-on-scroll.is-visible {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .track-row,
+  .review-row,
+  .music-card__favorite,
+  .album-hero__icon-btn,
+  .chart-row {
+    transition: none;
+  }
+
+  .feature__cover--skeleton {
+    animation: none;
+  }
+
+  .feature__cover-img {
+    transition: none;
+  }
+
+  .musica-letra__toggle i {
+    transition: none;
+  }
 }
+
+
 
 /*--------- Splash Intro (página inicial) ---------*/
 /*
@@ -555,9 +703,11 @@ body[data-page="noticias"] #news_nav{
   pointer-events: none;
   transition: opacity 900ms ease;
 }
+
 .splash-curtain.is-hidden {
   opacity: 0;
 }
+
 
 /* Estado inicial (oculto) do título, cards e CTA, só quando a intro
    está ativa — se o JS não adicionar "splash-ready", nada fica preso
@@ -568,82 +718,48 @@ body[data-page="noticias"] #news_nav{
   opacity: 0;
 }
 
+
 .has-splash-intro.splash-ready .hero__title {
   animation: splash-fade-up 550ms ease forwards;
   animation-delay: 850ms;
 }
+
 .has-splash-intro.splash-ready .hero__highlight {
   animation: splash-glow 900ms ease-out;
   animation-delay: 1400ms;
 }
+
 .has-splash-intro.splash-ready .hero__cards .music-card {
   animation: splash-slide-in 450ms ease forwards;
   animation-delay: var(--enter-delay, 0ms);
 }
+
 .has-splash-intro.splash-ready .hero__actions {
   animation: splash-fade-up-sm 500ms ease forwards;
   animation-delay: 2600ms;
 }
 
+
 @keyframes splash-fade-up {
   from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
 @keyframes splash-fade-up-sm {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
 @keyframes splash-slide-in {
   from { opacity: 0; transform: translateX(20px); }
   to { opacity: 1; transform: translateX(0); }
 }
+
 @keyframes splash-glow {
   0%, 100% { filter: brightness(1); }
   40% { filter: brightness(1.35); }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .music-card,
-  .music-card__play,
-  .music-card__eq,
-  .hero__btn {
-    transition: none;
-  }
-  .music-card:hover {
-    transform: none;
-  }
-  .music-card__eq span {
-    animation: none !important;
-    height: 10px;
-  }
-
-  /* Splash sem movimento: cortina não anima e tudo aparece de uma vez. */
-  .splash-curtain {
-    transition: none;
-  }
-  .has-splash-intro .hero__title,
-  .has-splash-intro .hero__cards .music-card,
-  .has-splash-intro .hero__actions,
-  .has-splash-intro.splash-ready .hero__title,
-  .has-splash-intro.splash-ready .hero__cards .music-card,
-  .has-splash-intro.splash-ready .hero__actions {
-    animation: none !important;
-    opacity: 1;
-    transform: none;
-  }
-  .has-splash-intro.splash-ready .hero__highlight {
-    animation: none !important;
-    filter: none;
-  }
-
-  /* Revelação por scroll sem movimento: tudo já visível. */
-  .reveal-on-scroll,
-  .reveal-on-scroll.is-visible {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-  }
-}
 
 /*--------- Features (Splash — "Qual foi sua última música favorita?") ---------*/
 
@@ -652,6 +768,7 @@ body[data-page="noticias"] #news_nav{
   margin: 0 auto;
   padding: 64px 64px 24px;
 }
+
 .features__title {
   color: #F9FAFB;
   font-size: 32px;
@@ -659,12 +776,14 @@ body[data-page="noticias"] #news_nav{
   line-height: 1.3;
   max-width: 560px;
 }
+
 .features__list {
   display: flex;
   flex-direction: column;
   gap: 56px;
   margin-top: 56px;
 }
+
 .feature__row {
   display: flex;
   align-items: center;
@@ -672,17 +791,23 @@ body[data-page="noticias"] #news_nav{
   gap: 32px;
   flex-wrap: wrap;
 }
+
 .feature__text {
   max-width: 380px;
   color: #E5E7EB;
   font-size: 18px;
   font-weight: 700;
   line-height: 1.5;
+  letter-spacing: -0.01em;
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.85), 0 0 8px rgba(0, 0, 0, 0.5);
 }
+
 .feature__text strong {
   color: #F4CD50;
   font-weight: 700;
+  text-shadow: none;
 }
+
 .feature__vinyl {
   flex-shrink: 0;
   width: 84px;
@@ -695,7 +820,14 @@ body[data-page="noticias"] #news_nav{
   border: 1px solid #2e2e2e;
   color: #45464a;
   font-size: 34px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  z-index: 1;
+  margin-top: calc(var(--vinyl-size) / -2);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
 }
+
 
 /*--------- Fechamento (Splash — "Ouviu. Sentiu. Avaliou.") ---------*/
 
@@ -709,36 +841,82 @@ body[data-page="noticias"] #news_nav{
   align-items: center;
   gap: 28px;
 }
+
 .closing__title {
   color: #F9FAFB;
   font-size: 30px;
   font-weight: 800;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
+  line-height: 1;
+  letter-spacing: -0.01em;
 }
+
 .closing__cta {
   padding: 12px 32px;
+  border-radius: 999px;
+  font-size: 17px;
+  font-weight: 800;
+  background: linear-gradient(90deg, #F4CD50, #FEE9A5);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
 }
+
 
 /*--------- Revelação por scroll (features / fechamento) ---------*/
 
 .reveal-on-scroll {
   opacity: 0;
 }
+
 .reveal-on-scroll.is-visible {
   opacity: 1;
 }
-
 @media (prefers-reduced-motion: no-preference) {
+
   .reveal-on-scroll {
     transform: translateY(16px);
     transition: opacity 500ms ease-out, transform 500ms ease-out;
   }
+
   .reveal-on-scroll.is-visible {
     transform: translateY(0);
   }
+
   /* pequeno atraso entre as linhas de feature quando entram próximas */
   .feature__row:nth-of-type(2) { transition-delay: 80ms; }
+
   .feature__row:nth-of-type(3) { transition-delay: 160ms; }
+
+  .auth-form__input-wrap,
+  .auth-form__submit {
+    transition: border-color 0.15s ease, transform 0.15s ease, filter 0.15s ease;
+  }
+
+  .feature__text strong {
+    animation: feature-shine 4s ease-in-out infinite;
+  }
+
+  /* desencontra o brilho entre as palavras para não piscar tudo junto */
+  .feature__text strong:nth-of-type(2) { animation-delay: 0.6s; }
+
+  .feature__text strong:nth-of-type(3) { animation-delay: 1.2s; }
+
+  .feature__vinyl {
+    transition: transform 500ms ease;
+  }
+
+  .feature__row:hover .feature__vinyl {
+    transform: translateX(calc(var(--cover-size) * -0.08)) rotate(90deg);
+  }
+
+  .closing__word--3 {
+    animation: feature-shine 4s ease-in-out infinite;
+  }
 }
+
+
 
 /*--------- Auth (Login / Criar Conta) ---------*/
 /*
@@ -766,6 +944,7 @@ body[data-page="noticias"] #news_nav{
   flex-wrap: wrap;
 }
 
+
 .auth-shell__form {
   flex: 1 1 480px;
   display: flex;
@@ -773,6 +952,7 @@ body[data-page="noticias"] #news_nav{
   justify-content: center;
   padding: 48px 24px;
 }
+
 
 .auth-card {
   width: 100%;
@@ -784,17 +964,20 @@ body[data-page="noticias"] #news_nav{
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
 }
 
+
 .auth-card__title {
   font-size: 26px;
   font-weight: 800;
   color: #111827;
 }
 
+
 .auth-card__subtitle {
   margin-top: 6px;
   font-size: 14px;
   color: #6b6b6b;
 }
+
 
 .auth-form {
   display: flex;
@@ -803,17 +986,20 @@ body[data-page="noticias"] #news_nav{
   margin-top: 28px;
 }
 
+
 .auth-form__field {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
+
 .auth-form__label {
   font-size: 13px;
   font-weight: 600;
   color: #111827;
 }
+
 
 .auth-form__input-wrap {
   display: flex;
@@ -824,9 +1010,11 @@ body[data-page="noticias"] #news_nav{
   transition: border-color 0.15s ease;
 }
 
+
 .auth-form__input-wrap:focus-within {
   border-color: #F4CD50;
 }
+
 
 .auth-form__input-wrap > i {
   color: #9CA3AF;
@@ -835,6 +1023,7 @@ body[data-page="noticias"] #news_nav{
   text-align: center;
 }
 
+
 .auth-form__input {
   flex: 1;
   border: none;
@@ -842,16 +1031,19 @@ body[data-page="noticias"] #news_nav{
   background: transparent;
   font-size: 15px;
   color: #111827;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
 }
+
 
 .auth-form__input::placeholder {
   color: rgba(17, 24, 39, 0.4);
 }
 
+
 .auth-form__field--invalid .auth-form__input-wrap {
   border-color: #d64545;
 }
+
 
 .auth-form__error {
   min-height: 16px;
@@ -859,17 +1051,21 @@ body[data-page="noticias"] #news_nav{
   color: #d64545;
 }
 
+
 .auth-form__status {
   min-height: 18px;
   font-size: 13px;
   font-weight: 600;
 }
+
 .auth-form__status.is-success {
   color: #1a7f37;
 }
+
 .auth-form__status.is-error {
   color: #d64545;
 }
+
 
 .auth-form__submit {
   font-weight: 700;
@@ -882,14 +1078,17 @@ body[data-page="noticias"] #news_nav{
   cursor: pointer;
   transition: transform 0.15s ease, filter 0.15s ease;
 }
+
 .auth-form__submit:hover {
   transform: translateY(-2px);
   filter: brightness(1.05);
 }
+
 .auth-form__submit:focus-visible {
   outline: 2px solid #111827;
   outline-offset: 2px;
 }
+
 
 .auth-social {
   display: flex;
@@ -898,14 +1097,17 @@ body[data-page="noticias"] #news_nav{
   gap: 12px;
   margin-top: 4px;
 }
+
 .auth-social__divider {
   font-size: 12px;
   color: #9CA3AF;
 }
+
 .auth-social__row {
   display: flex;
   gap: 12px;
 }
+
 .auth-social__btn {
   width: 40px;
   height: 40px;
@@ -921,19 +1123,23 @@ body[data-page="noticias"] #news_nav{
   opacity: 0.55;
 }
 
+
 .auth-switch {
   text-align: center;
   font-size: 13px;
   color: #6b6b6b;
 }
+
 .auth-switch a {
   color: #111827;
   font-weight: 700;
   text-decoration: underline;
 }
+
 .auth-switch a:hover {
   opacity: 0.75;
 }
+
 
 .auth-shell__brand {
   flex: 1 1 420px;
@@ -957,17 +1163,12 @@ body[data-page="noticias"] #news_nav{
   */
  
 }
+
 .auth-shell__logo {
   width: min(58%, 380px);
   height: auto;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .auth-form__input-wrap,
-  .auth-form__submit {
-    transition: border-color 0.15s ease, transform 0.15s ease, filter 0.15s ease;
-  }
-}
 
 /*--------- Album / Favorite additions to music-card ---------*/
 /*
@@ -994,19 +1195,20 @@ body[data-page="noticias"] #news_nav{
   transform: translateY(-4px);
   transition: opacity 0.2s ease, transform 0.2s ease, color 0.2s ease;
 }
+
 .music-card:hover .music-card__favorite,
 .music-card__favorite.is-favorite,
 .music-card__favorite:focus-visible {
   opacity: 1;
   transform: translateY(0);
-}
-.music-card__favorite.is-favorite {
-  color: #F4CD50;
-}
-.music-card__favorite:focus-visible {
   outline: 2px solid #F9FAFB;
   outline-offset: 2px;
 }
+
+.music-card__favorite.is-favorite {
+  color: #F4CD50;
+}
+
 .music-card__rating {
   position: absolute;
   left: 10px;
@@ -1021,9 +1223,11 @@ body[data-page="noticias"] #news_nav{
   font-size: 12px;
   font-weight: 700;
 }
+
 .album-card--clickable {
   cursor: pointer;
 }
+
 
 /*--------- Shared status/empty/error states (Album + Perfil) ---------*/
 
@@ -1033,12 +1237,14 @@ body[data-page="noticias"] #news_nav{
   margin: 0 auto;
   padding: 40px 32px 80px;
 }
+
 .album-page__status,
 .album-page__empty {
   color: #9CA3AF;
   font-size: 14px;
   padding: 24px 0;
 }
+
 .album-page__demo-flag {
   background: #2a2a2a7a;
   border: 0.5px solid #45464a6f;
@@ -1049,6 +1255,7 @@ body[data-page="noticias"] #news_nav{
   margin-bottom: 20px;
   display: inline-block;
 }
+
 .album-page__error {
   display: flex;
   flex-direction: column;
@@ -1057,6 +1264,7 @@ body[data-page="noticias"] #news_nav{
   color: #E5E7EB;
   padding: 48px 0;
 }
+
 
 /*--------- Album hero ---------*/
 
@@ -1067,10 +1275,12 @@ body[data-page="noticias"] #news_nav{
   align-items: flex-end;
   margin-bottom: 40px;
 }
+
 .album-hero__cover-wrap {
   width: 220px;
   flex-shrink: 0;
 }
+
 .album-hero__cover {
   width: 100%;
   aspect-ratio: 1 / 1;
@@ -1079,6 +1289,7 @@ body[data-page="noticias"] #news_nav{
   display: block;
   box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45);
 }
+
 .album-hero__cover--placeholder {
   display: flex;
   align-items: center;
@@ -1088,10 +1299,12 @@ body[data-page="noticias"] #news_nav{
   font-size: 56px;
   border: 1px solid #2e2e2e;
 }
+
 .album-hero__info {
   flex: 1 1 320px;
   min-width: 0;
 }
+
 .album-hero__eyebrow {
   color: #F4CD50;
   font-size: 12px;
@@ -1099,6 +1312,7 @@ body[data-page="noticias"] #news_nav{
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
+
 .album-hero__title {
   color: #F9FAFB;
   font-size: 36px;
@@ -1106,6 +1320,7 @@ body[data-page="noticias"] #news_nav{
   line-height: 1.15;
   margin-top: 6px;
 }
+
 .album-hero__artist {
   display: inline-block;
   color: #E5E7EB;
@@ -1113,27 +1328,33 @@ body[data-page="noticias"] #news_nav{
   font-size: 16px;
   margin-top: 6px;
 }
+
 .album-hero__artist:hover {
   color: #F4CD50;
 }
+
 .album-hero__meta {
   color: #9CA3AF;
   font-size: 13px;
   margin-top: 4px;
 }
+
 .album-hero__actions {
   display: flex;
   align-items: center;
   gap: 12px;
   margin-top: 20px;
 }
+
 .album-hero__play i {
   margin-right: 6px;
 }
+
 .album-hero__play:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
 .album-hero__icon-btn {
   width: 40px;
   height: 40px;
@@ -1144,18 +1365,22 @@ body[data-page="noticias"] #news_nav{
   cursor: pointer;
   transition: color 0.15s ease, background-color 0.15s ease;
 }
+
 .album-hero__icon-btn:hover {
   background-color: #2a2a2a47;
 }
+
 .album-hero__favorite.is-favorite {
   color: #F4CD50;
 }
+
 .album-hero__share-status {
   min-height: 16px;
   font-size: 12px;
   color: #F4CD50;
   margin-top: 8px;
 }
+
 .album-hero__rating {
   display: flex;
   flex-direction: column;
@@ -1166,15 +1391,18 @@ body[data-page="noticias"] #news_nav{
   border-radius: 16px;
   padding: 12px 20px;
 }
+
 .album-hero__rating-value {
   color: #F4CD50;
   font-weight: 800;
   font-size: 18px;
 }
+
 .album-hero__rating-count {
   color: #9CA3AF;
   font-size: 11px;
 }
+
 
 /*--------- Album content: track list + sidebar ---------*/
 
@@ -1184,21 +1412,25 @@ body[data-page="noticias"] #news_nav{
   align-items: flex-start;
   flex-wrap: wrap;
 }
+
 .album-tracklist {
   flex: 2 1 480px;
   min-width: 0;
 }
+
 .album-section__title {
   color: #F9FAFB;
   font-size: 20px;
   font-weight: 800;
   margin-bottom: 16px;
 }
+
 .track-list {
   list-style: none;
   display: flex;
   flex-direction: column;
 }
+
 .track-row {
   display: flex;
   align-items: center;
@@ -1208,15 +1440,19 @@ body[data-page="noticias"] #news_nav{
   border-radius: 8px;
   transition: background-color 0.15s ease;
 }
+
 .track-row:hover {
   background-color: #2a2a2a47;
 }
+
 .track-row.is-playing {
   background-color: #2a2a2a7a;
 }
+
 .track-row.is-playing .track-row__title {
   color: #F4CD50;
 }
+
 .track-row__number {
   width: 20px;
   text-align: center;
@@ -1224,6 +1460,7 @@ body[data-page="noticias"] #news_nav{
   font-size: 13px;
   flex-shrink: 0;
 }
+
 .track-row__play {
   width: 30px;
   height: 30px;
@@ -1235,11 +1472,13 @@ body[data-page="noticias"] #news_nav{
   flex-shrink: 0;
   transition: background-color 0.15s ease, color 0.15s ease;
 }
+
 .track-row__play:hover,
 .track-row.is-playing .track-row__play {
   background: linear-gradient(rgb(244, 205, 80), rgb(254, 233, 165));
   color: #111827;
 }
+
 .track-row__title-wrap {
   flex: 1;
   min-width: 0;
@@ -1248,15 +1487,18 @@ body[data-page="noticias"] #news_nav{
   gap: 8px;
   flex-wrap: wrap;
 }
+
 .track-row__title {
   color: #F9FAFB;
   font-weight: 600;
   font-size: 14px;
 }
+
 .track-row__credit {
   color: #9CA3AF;
   font-size: 12px;
 }
+
 .track-row__rating {
   color: #F4CD50;
   font-size: 12px;
@@ -1264,10 +1506,12 @@ body[data-page="noticias"] #news_nav{
   width: 46px;
   flex-shrink: 0;
 }
+
 .track-row__rating--empty {
   color: #45464a;
   font-weight: 400;
 }
+
 .track-row__duration {
   color: #9CA3AF;
   font-size: 13px;
@@ -1276,22 +1520,26 @@ body[data-page="noticias"] #news_nav{
   flex-shrink: 0;
 }
 
+
 .album-sidebar {
   flex: 1 1 260px;
   min-width: 240px;
 }
+
 .album-sidebar__card {
   background: linear-gradient(180deg, rgba(28, 28, 30, 0.8), rgba(20, 20, 20, 0.9));
   border: 1px solid #2e2e2e;
   border-radius: 16px;
   padding: 20px;
 }
+
 .album-sidebar__title {
   color: #F9FAFB;
   font-size: 15px;
   font-weight: 800;
   margin-bottom: 14px;
 }
+
 .album-sidebar__label {
   color: #9CA3AF;
   font-size: 11px;
@@ -1299,6 +1547,7 @@ body[data-page="noticias"] #news_nav{
   letter-spacing: 0.05em;
   margin-top: 12px;
 }
+
 .album-sidebar__value {
   color: #F9FAFB;
   font-size: 14px;
@@ -1306,9 +1555,11 @@ body[data-page="noticias"] #news_nav{
   margin-top: 2px;
   display: block;
 }
+
 .album-sidebar__artist-link:hover {
   color: #F4CD50;
 }
+
 
 /*--------- Album comments ---------*/
 
@@ -1317,12 +1568,14 @@ body[data-page="noticias"] #news_nav{
   border-top: 1px solid #262626;
   padding-top: 32px;
 }
+
 .comment-row {
   display: flex;
   gap: 14px;
   padding: 16px 0;
   border-bottom: 1px solid #262626;
 }
+
 .comment-row__avatar {
   width: 36px;
   height: 36px;
@@ -1336,35 +1589,42 @@ body[data-page="noticias"] #news_nav{
   flex-shrink: 0;
   font-size: 14px;
 }
+
 .comment-row__body {
   min-width: 0;
 }
+
 .comment-row__head {
   display: flex;
   align-items: center;
   gap: 10px;
 }
+
 .comment-row__author {
   color: #F9FAFB;
   font-weight: 700;
   font-size: 13px;
 }
+
 .comment-row__rating {
   color: #F4CD50;
   font-size: 12px;
   font-weight: 700;
 }
+
 .comment-row__text {
   color: #E5E7EB;
   font-size: 14px;
   margin-top: 4px;
   line-height: 1.5;
 }
+
 .comment-row__date {
   color: #6b6b6b;
   font-size: 11px;
   margin-top: 6px;
 }
+
 
 /*--------- Profile header ---------*/
 
@@ -1377,6 +1637,7 @@ body[data-page="noticias"] #news_nav{
   border-bottom: 1px solid #262626;
   margin-bottom: 32px;
 }
+
 .profile-header__avatar {
   width: 84px;
   height: 84px;
@@ -1390,47 +1651,60 @@ body[data-page="noticias"] #news_nav{
   justify-content: center;
   flex-shrink: 0;
 }
+
 .profile-header__info {
   flex: 1 1 220px;
   min-width: 0;
 }
+
 .profile-header__name {
   color: #F9FAFB;
   font-size: 26px;
   font-weight: 800;
 }
+
 .profile-header__handle {
   color: #9CA3AF;
   font-size: 13px;
   margin-top: 2px;
 }
+
 .profile-header__bio {
   color: #E5E7EB;
   font-size: 14px;
   margin-top: 8px;
   max-width: 480px;
 }
+
 .profile-header__stats {
   display: flex;
   gap: 28px;
   flex-wrap: wrap;
+  background: #2a2a2a7a;
+  border: 0.5px solid #45464a6f;
+  border-radius: 12px;
+  padding: 12px 20px;
 }
+
 .profile-header__stat {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
 .profile-header__stat-value {
   color: #F9FAFB;
   font-size: 20px;
   font-weight: 800;
 }
+
 .profile-header__stat-label {
   color: #9CA3AF;
   font-size: 11px;
   margin-top: 2px;
   white-space: nowrap;
 }
+
 
 /*--------- Profile content layout ---------*/
 
@@ -1440,6 +1714,7 @@ body[data-page="noticias"] #news_nav{
   align-items: flex-start;
   flex-wrap: wrap;
 }
+
 .profile-main {
   flex: 2 1 480px;
   min-width: 0;
@@ -1447,22 +1722,27 @@ body[data-page="noticias"] #news_nav{
   flex-direction: column;
   gap: 40px;
 }
+
 .profile-section {
   min-width: 0;
 }
+
 .profile-favorites-grid {
   display: flex;
   flex-wrap: wrap;
   gap: 18px;
 }
+
 .profile-favorites-grid .music-card {
   width: 160px;
 }
+
 
 .profile-reviews-list {
   display: flex;
   flex-direction: column;
 }
+
 .review-row {
   display: flex;
   gap: 14px;
@@ -1471,9 +1751,11 @@ body[data-page="noticias"] #news_nav{
   border-radius: 8px;
   transition: background-color 0.15s ease;
 }
+
 .review-row:hover {
   background-color: #2a2a2a47;
 }
+
 .review-row__cover {
   width: 48px;
   height: 48px;
@@ -1486,31 +1768,37 @@ body[data-page="noticias"] #news_nav{
   color: #45464a;
   flex-shrink: 0;
 }
+
 .review-row__cover img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
+
 .review-row__body {
   flex: 1;
   min-width: 0;
 }
+
 .review-row__album {
   color: #F9FAFB;
   font-weight: 700;
   font-size: 14px;
 }
+
 .review-row__artist {
   color: #9CA3AF;
   font-size: 12px;
   margin-top: 1px;
 }
+
 .review-row__comment {
   color: #E5E7EB;
   font-size: 13px;
   margin-top: 6px;
   line-height: 1.4;
 }
+
 .review-row__meta {
   display: flex;
   flex-direction: column;
@@ -1518,17 +1806,20 @@ body[data-page="noticias"] #news_nav{
   gap: 4px;
   flex-shrink: 0;
 }
+
 .review-row__rating {
   color: #F4CD50;
   font-size: 12px;
   font-weight: 700;
   white-space: nowrap;
 }
+
 .review-row__date {
   color: #6b6b6b;
   font-size: 11px;
   white-space: nowrap;
 }
+
 
 /*--------- DNA Musical card ---------*/
 /*
@@ -1551,22 +1842,26 @@ body[data-page="noticias"] #news_nav{
   --dna-mood-3: #4FA98C;
   --dna-mood-4: #8B7FD1;
 }
+
 .dna-card__header {
   display: flex;
   align-items: center;
   gap: 10px;
   margin-bottom: 20px;
 }
+
 .dna-card__header i {
   color: #F4CD50;
   font-size: 18px;
 }
+
 .dna-card__title {
   color: #F9FAFB;
   font-size: 17px;
   font-weight: 800;
   flex: 1;
 }
+
 .dna-card__beta {
   background: #F4CD5022;
   color: #F4CD50;
@@ -1576,12 +1871,15 @@ body[data-page="noticias"] #news_nav{
   padding: 3px 8px;
   border-radius: 8px;
 }
+
 .dna-block {
   margin-bottom: 24px;
 }
+
 .dna-block:last-child {
   margin-bottom: 0;
 }
+
 .dna-block__label {
   color: #9CA3AF;
   font-size: 11px;
@@ -1591,44 +1889,52 @@ body[data-page="noticias"] #news_nav{
   margin-bottom: 10px;
 }
 
+
 .dna-radar {
   width: 100%;
   height: auto;
   overflow: visible;
 }
+
 .dna-radar__grid {
   fill: rgba(244, 205, 80, 0.05);
   stroke: #33333a;
   stroke-width: 1;
 }
+
 .dna-radar__shape {
   fill: rgba(244, 205, 80, 0.35);
   stroke: #F4CD50;
   stroke-width: 2;
   stroke-linejoin: round;
 }
+
 .dna-radar__label {
   fill: #9CA3AF;
   font-size: 10px;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
 }
+
 
 .dna-bars {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
+
 .dna-bar-row {
   display: flex;
   align-items: center;
   gap: 10px;
 }
+
 .dna-bar-row__label {
   width: 28px;
   color: #9CA3AF;
   font-size: 11px;
   flex-shrink: 0;
 }
+
 .dna-bar-row__track {
   flex: 1;
   height: 6px;
@@ -1636,12 +1942,14 @@ body[data-page="noticias"] #news_nav{
   background-color: #262626;
   overflow: hidden;
 }
+
 .dna-bar-row__fill {
   display: block;
   height: 100%;
   border-radius: 4px;
   background: linear-gradient(90deg, rgb(244, 205, 80), rgb(254, 233, 165));
 }
+
 .dna-bar-row__value {
   width: 34px;
   text-align: right;
@@ -1650,11 +1958,13 @@ body[data-page="noticias"] #news_nav{
   flex-shrink: 0;
 }
 
+
 .dna-pills {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
+
 .dna-pill {
   background-color: #2a2a2a7a;
   border: 0.5px solid #45464a6f;
@@ -1664,11 +1974,13 @@ body[data-page="noticias"] #news_nav{
   border-radius: 14px;
 }
 
+
 .dna-mood {
   display: flex;
   align-items: center;
   gap: 18px;
 }
+
 .dna-mood__donut {
   width: 84px;
   height: 84px;
@@ -1678,6 +1990,7 @@ body[data-page="noticias"] #news_nav{
   align-items: center;
   justify-content: center;
 }
+
 .dna-mood__donut-hole {
   width: 56px;
   height: 56px;
@@ -1688,11 +2001,13 @@ body[data-page="noticias"] #news_nav{
   justify-content: center;
   text-align: center;
 }
+
 .dna-mood__label {
   color: #F9FAFB;
   font-size: 11px;
   font-weight: 700;
 }
+
 .dna-mood-legend {
   list-style: none;
   display: flex;
@@ -1700,6 +2015,7 @@ body[data-page="noticias"] #news_nav{
   gap: 6px;
   flex: 1;
 }
+
 .dna-mood-legend__item {
   display: flex;
   align-items: center;
@@ -1707,35 +2023,30 @@ body[data-page="noticias"] #news_nav{
   color: #E5E7EB;
   font-size: 12px;
 }
+
 .dna-mood-legend__dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   flex-shrink: 0;
 }
+
 .dna-mood-legend__value {
   margin-left: auto;
   color: #9CA3AF;
 }
+
 .dna-mood__blurb {
   color: #9CA3AF;
   font-size: 12px;
   line-height: 1.5;
   margin-top: 14px;
 }
+
 .dna-mood__blurb strong {
   color: #F9FAFB;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .track-row,
-  .review-row,
-  .music-card__favorite,
-  .album-hero__icon-btn,
-  .chart-row {
-    transition: none;
-  }
-}
 
 /* =========================================================
    Charts: badge de posição no music-card (pódio)
@@ -1759,9 +2070,11 @@ body[data-page="noticias"] #news_nav{
   justify-content: center;
   z-index: 2;
 }
+
 .music-card__rank i {
   font-size: 11px;
 }
+
 
 /* =========================================================
    Charts: chart-row (linha de ranking)
@@ -1780,9 +2093,11 @@ body[data-page="noticias"] #news_nav{
   margin-bottom: 8px;
   transition: background 0.15s ease;
 }
+
 .chart-row:hover {
   background-color: #1c1c1f;
 }
+
 .chart-row__rank {
   width: 22px;
   text-align: center;
@@ -1791,6 +2106,7 @@ body[data-page="noticias"] #news_nav{
   font-size: 14px;
   flex-shrink: 0;
 }
+
 .chart-row__cover {
   width: 44px;
   height: 44px;
@@ -1799,6 +2115,7 @@ body[data-page="noticias"] #news_nav{
   background-color: #0f0f0f;
   flex-shrink: 0;
 }
+
 .chart-row__title-wrap {
   flex: 1;
   min-width: 0;
@@ -1806,6 +2123,7 @@ body[data-page="noticias"] #news_nav{
   flex-direction: column;
   gap: 2px;
 }
+
 .chart-row__title {
   color: #F9FAFB;
   font-weight: 700;
@@ -1814,6 +2132,7 @@ body[data-page="noticias"] #news_nav{
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .chart-row__credit {
   color: #9CA3AF;
   font-size: 12px;
@@ -1821,6 +2140,7 @@ body[data-page="noticias"] #news_nav{
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .chart-row__variation {
   width: 46px;
   text-align: right;
@@ -1828,9 +2148,13 @@ body[data-page="noticias"] #news_nav{
   font-weight: 700;
   flex-shrink: 0;
 }
+
 .chart-row__variation--up { color: #3ED598; }
+
 .chart-row__variation--down { color: #F16565; }
+
 .chart-row__variation--flat { color: #5B6270; }
+
 .chart-row__count {
   width: 72px;
   text-align: right;
@@ -1838,6 +2162,7 @@ body[data-page="noticias"] #news_nav{
   font-size: 13px;
   flex-shrink: 0;
 }
+
 .chart-row__rating {
   width: 60px;
   text-align: right;
@@ -1846,17 +2171,20 @@ body[data-page="noticias"] #news_nav{
   font-size: 13px;
   flex-shrink: 0;
 }
+
 .chart-row__rating--empty {
   color: #45464a;
   font-weight: 400;
 }
-
 @media (max-width: 640px) {
+
   .chart-row__count,
   .chart-row__credit {
     display: none;
   }
 }
+
+
 /* =========================================================
    Música (página de detalhe da faixa)
    Reaproveita a mesma linguagem visual do Álbum (.album-hero,
@@ -1872,16 +2200,19 @@ body[data-page="noticias"] #news_nav{
   padding: 40px 32px 80px;
   color: #E5E7EB;
 }
+
 .musica-page__status,
 .musica-page__error {
   color: #9CA3AF;
   font-size: 14px;
   padding: 24px 0;
 }
+
 .musica-page__error a {
   color: #F4CD50;
   font-weight: 600;
 }
+
 
 .musica-hero {
   display: flex;
@@ -1890,10 +2221,12 @@ body[data-page="noticias"] #news_nav{
   align-items: flex-end;
   margin-bottom: 40px;
 }
+
 .musica-hero__cover-wrap {
   width: 220px;
   flex-shrink: 0;
 }
+
 .musica-hero__cover {
   width: 100%;
   aspect-ratio: 1 / 1;
@@ -1902,6 +2235,7 @@ body[data-page="noticias"] #news_nav{
   display: block;
   box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45);
 }
+
 .musica-hero__cover--placeholder {
   display: flex;
   align-items: center;
@@ -1911,10 +2245,12 @@ body[data-page="noticias"] #news_nav{
   font-size: 56px;
   border: 1px solid #2e2e2e;
 }
+
 .musica-hero__info {
   flex: 1 1 320px;
   min-width: 0;
 }
+
 .musica-hero__eyebrow {
   color: #F4CD50;
   font-size: 12px;
@@ -1922,6 +2258,7 @@ body[data-page="noticias"] #news_nav{
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
+
 .musica-hero__title {
   color: #F9FAFB;
   font-size: 36px;
@@ -1929,6 +2266,7 @@ body[data-page="noticias"] #news_nav{
   line-height: 1.15;
   margin-top: 6px;
 }
+
 .musica-hero__artist {
   display: block;
   color: #E5E7EB;
@@ -1936,12 +2274,14 @@ body[data-page="noticias"] #news_nav{
   font-size: 16px;
   margin-top: 6px;
 }
+
 .musica-hero__actions {
   display: flex;
   align-items: center;
   gap: 12px;
   margin-top: 20px;
 }
+
 .musica-hero__play {
   font-weight: 700;
   font-size: 14px;
@@ -1953,14 +2293,17 @@ body[data-page="noticias"] #news_nav{
   cursor: pointer;
   transition: transform 0.15s ease, filter 0.15s ease;
 }
+
 .musica-hero__play:hover {
   transform: translateY(-2px);
   filter: brightness(1.05);
 }
+
 .musica-hero__play:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
 .musica-hero__icon-btn {
   width: 40px;
   height: 40px;
@@ -1971,18 +2314,22 @@ body[data-page="noticias"] #news_nav{
   cursor: pointer;
   transition: color 0.15s ease, background-color 0.15s ease;
 }
+
 .musica-hero__icon-btn:hover {
   background-color: #2a2a2a47;
 }
+
 .musica-hero__favorite.is-favorite {
   color: #F4CD50;
 }
+
 .musica-hero__share-status {
   min-height: 16px;
   font-size: 12px;
   color: #F4CD50;
   margin-top: 8px;
 }
+
 .musica-hero__rating {
   display: flex;
   flex-direction: column;
@@ -1993,15 +2340,18 @@ body[data-page="noticias"] #news_nav{
   border-radius: 16px;
   padding: 12px 20px;
 }
+
 .musica-hero__rating-value {
   color: #F4CD50;
   font-weight: 800;
   font-size: 18px;
 }
+
 .musica-hero__rating-count {
   color: #9CA3AF;
   font-size: 11px;
 }
+
 
 .musica-content {
   display: flex;
@@ -2009,10 +2359,12 @@ body[data-page="noticias"] #news_nav{
   align-items: flex-start;
   flex-wrap: wrap;
 }
+
 .musica-main {
   flex: 2 1 480px;
   min-width: 0;
 }
+
 .musica-section__title {
   color: #F9FAFB;
   font-size: 20px;
@@ -2022,6 +2374,7 @@ body[data-page="noticias"] #news_nav{
   align-items: center;
   gap: 12px;
 }
+
 .musica-letra__traduzir {
   font-size: 11px;
   font-weight: 700;
@@ -2032,16 +2385,19 @@ body[data-page="noticias"] #news_nav{
   padding: 4px 12px;
   cursor: not-allowed;
 }
+
 .musica-letra__body {
   color: #E5E7EB;
-  font-size: 15px;
-  line-height: 1.8;
+  font-size: 17px;
+  line-height: 1.9;
 }
+
 .musica-letra__indisponivel {
   color: #9CA3AF;
   font-size: 14px;
   line-height: 1.6;
 }
+
 .musica-letra__genius-link {
   display: inline-block;
   margin-top: 16px;
@@ -2050,6 +2406,7 @@ body[data-page="noticias"] #news_nav{
   font-weight: 600;
 }
 
+
 .musica-sidebar {
   flex: 1 1 280px;
   min-width: 240px;
@@ -2057,12 +2414,14 @@ body[data-page="noticias"] #news_nav{
   flex-direction: column;
   gap: 20px;
 }
+
 .musica-sidebar__card {
   background: linear-gradient(180deg, rgba(28, 28, 30, 0.8), rgba(20, 20, 20, 0.9));
   border: 1px solid #2e2e2e;
   border-radius: 16px;
   padding: 20px;
 }
+
 .musica-sidebar__title {
   color: #9CA3AF;
   font-size: 11px;
@@ -2071,6 +2430,7 @@ body[data-page="noticias"] #news_nav{
   letter-spacing: 0.06em;
   margin-bottom: 14px;
 }
+
 .musica-sidebar__label {
   color: #9CA3AF;
   font-size: 11px;
@@ -2079,6 +2439,7 @@ body[data-page="noticias"] #news_nav{
   margin-top: 12px;
   display: block;
 }
+
 .musica-sidebar__value {
   color: #F9FAFB;
   font-size: 14px;
@@ -2087,10 +2448,12 @@ body[data-page="noticias"] #news_nav{
   display: block;
 }
 
+
 .musica-plataformas {
   display: flex;
   gap: 12px;
 }
+
 .musica-plataformas a {
   width: 40px;
   height: 40px;
@@ -2104,15 +2467,18 @@ body[data-page="noticias"] #news_nav{
   font-size: 16px;
   transition: color 0.15s ease, background-color 0.15s ease;
 }
+
 .musica-plataformas a:hover {
   color: #F4CD50;
   background-color: #2a2a2a47;
 }
 
+
 .musica-avalie {
   display: flex;
   gap: 6px;
 }
+
 .musica-avalie__star {
   border: none;
   background: transparent;
@@ -2121,36 +2487,70 @@ body[data-page="noticias"] #news_nav{
   cursor: pointer;
   padding: 0;
 }
+
 .musica-avalie__status {
   color: #9CA3AF;
   font-size: 12px;
   margin-top: 10px;
 }
 
+
 /* Cards clicáveis: navegam para a página de Música (ver musicCard.js/trackCard.js) */
 .music-card--clickable,
 .track_card {
   cursor: pointer;
 }
-
 @media (max-width: 600px) {
+
   .musica-page {
     padding: 24px 16px 56px;
   }
+
   .musica-hero {
     flex-direction: column;
     align-items: flex-start;
   }
+
   .musica-hero__cover-wrap {
     width: 160px;
   }
+
   .musica-content {
     flex-direction: column;
   }
+
   .musica-sidebar {
     width: 100%;
   }
+
+  .comentarios {
+    padding: 20px;
+  }
+
+  .comentarios_composer_footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .comentarios_publicar {
+    width: 100%;
+  }
+
+  .artist_grid { grid-template-columns: repeat(2, 1fr); }
+
+  .artist_avatar { width: 88px; height: 88px; font-size: 26px; }
+
+  .artista-page {
+    padding: 24px 16px 56px;
+  }
+
+  .artista-hero {
+    flex-direction: column;
+    text-align: center;
+  }
 }
+
+
 
 /* =========================================================
    Comentários (componente reutilizável — Música e Álbum)
@@ -2165,6 +2565,7 @@ body[data-page="noticias"] #news_nav{
   border-radius: 20px;
   padding: 28px;
 }
+
 .comentarios_titulo {
   color: #F9FAFB;
   font-size: 20px;
@@ -2172,9 +2573,11 @@ body[data-page="noticias"] #news_nav{
   margin-bottom: 20px;
 }
 
+
 .comentarios_composer {
   margin-bottom: 24px;
 }
+
 .comentarios_input {
   width: 100%;
   min-height: 80px;
@@ -2188,9 +2591,11 @@ body[data-page="noticias"] #news_nav{
   font-size: 14px;
   outline: none;
 }
+
 .comentarios_input::placeholder {
   color: #7a7a7a;
 }
+
 .comentarios_composer_footer {
   display: flex;
   align-items: center;
@@ -2199,6 +2604,7 @@ body[data-page="noticias"] #news_nav{
   gap: 12px;
   flex-wrap: wrap;
 }
+
 .comentarios_nota_campo {
   display: flex;
   align-items: center;
@@ -2206,6 +2612,7 @@ body[data-page="noticias"] #news_nav{
   color: #9CA3AF;
   font-size: 12px;
 }
+
 .comentarios_nota_input {
   width: 64px;
   background: #17171a;
@@ -2216,6 +2623,7 @@ body[data-page="noticias"] #news_nav{
   font-family: inherit;
   font-size: 13px;
 }
+
 .comentarios_publicar {
   border: none;
   border-radius: 999px;
@@ -2226,6 +2634,7 @@ body[data-page="noticias"] #news_nav{
   color: #111827;
   cursor: pointer;
 }
+
 .comentarios_login_aviso {
   color: #9CA3AF;
   font-size: 13px;
@@ -2235,25 +2644,30 @@ body[data-page="noticias"] #news_nav{
   padding: 16px;
 }
 
+
 .comentarios_lista {
   display: flex;
   flex-direction: column;
 }
+
 .comentarios_vazio {
   color: #9CA3AF;
   font-size: 13px;
   padding: 12px 0;
 }
+
 .comentarios_item {
   display: flex;
   gap: 14px;
   padding: 20px 0;
   border-top: 1px solid #262626;
 }
+
 .comentarios_item:first-child {
   border-top: none;
   padding-top: 0;
 }
+
 .comentarios_avatar {
   width: 38px;
   height: 38px;
@@ -2267,15 +2681,18 @@ body[data-page="noticias"] #news_nav{
   font-weight: 800;
   flex-shrink: 0;
 }
+
 .comentarios_avatar--sm {
   width: 28px;
   height: 28px;
   font-size: 10px;
 }
+
 .comentarios_corpo {
   flex: 1;
   min-width: 0;
 }
+
 .comentarios_cabecalho {
   display: flex;
   align-items: center;
@@ -2283,11 +2700,13 @@ body[data-page="noticias"] #news_nav{
   flex-wrap: wrap;
   margin-bottom: 6px;
 }
+
 .comentarios_autor {
   color: #F9FAFB;
   font-weight: 700;
   font-size: 13.5px;
 }
+
 .comentarios_nota {
   display: inline-flex;
   align-items: center;
@@ -2300,11 +2719,14 @@ body[data-page="noticias"] #news_nav{
   padding: 2px 10px;
   border-radius: 999px;
 }
+
 .comentarios_nota i { font-size: 9px; }
+
 .comentarios_tempo {
   color: #6b6b6b;
   font-size: 11.5px;
 }
+
 .comentarios_texto {
   color: #E5E7EB;
   font-size: 14px;
@@ -2312,10 +2734,12 @@ body[data-page="noticias"] #news_nav{
   margin-bottom: 10px;
   white-space: pre-line;
 }
+
 .comentarios_acoes {
   display: flex;
   gap: 18px;
 }
+
 .comentarios_curtir,
 .comentarios_respostas_btn {
   display: inline-flex;
@@ -2328,13 +2752,16 @@ body[data-page="noticias"] #news_nav{
   cursor: pointer;
   padding: 0;
 }
+
 .comentarios_curtir:hover,
 .comentarios_respostas_btn:hover {
   color: #E5E7EB;
 }
+
 .comentarios_curtir.is-active {
   color: #F4CD50;
 }
+
 
 .comentarios_respostas {
   margin-top: 14px;
@@ -2344,20 +2771,24 @@ body[data-page="noticias"] #news_nav{
   flex-direction: column;
   gap: 14px;
 }
+
 .comentarios_resposta {
   display: flex;
   gap: 10px;
 }
+
 .comentarios_resposta .comentarios_texto {
   margin-top: 4px;
   margin-bottom: 0;
   font-size: 13px;
 }
+
 .comentarios_resposta_form {
   display: flex;
   gap: 8px;
   margin-top: 4px;
 }
+
 .comentarios_resposta_input {
   flex: 1;
   background: #17171a;
@@ -2369,6 +2800,7 @@ body[data-page="noticias"] #news_nav{
   font-size: 12.5px;
   outline: none;
 }
+
 .comentarios_resposta_enviar {
   border: 0.5px solid #45464a6f;
   border-radius: 999px;
@@ -2379,22 +2811,11 @@ body[data-page="noticias"] #news_nav{
   color: #E5E7EB;
   cursor: pointer;
 }
+
 .comentarios_resposta_enviar:hover {
   color: #F4CD50;
 }
 
-@media (max-width: 600px) {
-  .comentarios {
-    padding: 20px;
-  }
-  .comentarios_composer_footer {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .comentarios_publicar {
-    width: 100%;
-  }
-}
 
 /* =========================================================
    Álbum — complementos (tracklist em largura total, avaliação,
@@ -2404,26 +2825,33 @@ body[data-page="noticias"] #news_nav{
 .album-hero__rating[hidden] {
   display: none;
 }
+
 .album-tracks {
   margin-bottom: 48px;
 }
+
 .track-row--link {
   cursor: pointer;
 }
+
 .track-row__rating i {
   font-size: 10px;
 }
+
 .album-tracklist > .comentarios {
   margin-top: 0;
 }
+
 .album-sidebar__card + .album-sidebar__card {
   margin-top: 20px;
 }
+
 
 .album-avalie {
   display: flex;
   gap: 6px;
 }
+
 .album-avalie__star {
   border: none;
   background: transparent;
@@ -2432,17 +2860,20 @@ body[data-page="noticias"] #news_nav{
   cursor: pointer;
   padding: 0;
 }
+
 .album-avalie__status {
   color: #E5E7EB;
   font-size: 12.5px;
   margin-top: 10px;
   min-height: 16px;
 }
+
 .album-avalie__media {
   color: #9CA3AF;
   font-size: 11.5px;
   margin-top: 6px;
 }
+
 
 /* =========================================================
    Artist card (grid do Explorar — aba "Artistas" e descoberta)
@@ -2456,6 +2887,7 @@ body[data-page="noticias"] #news_nav{
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
 }
+
 .artist_card {
   display: flex;
   flex-direction: column;
@@ -2464,6 +2896,7 @@ body[data-page="noticias"] #news_nav{
   gap: 12px;
   cursor: pointer;
 }
+
 .artist_avatar {
   width: 110px;
   height: 110px;
@@ -2476,32 +2909,131 @@ body[data-page="noticias"] #news_nav{
   align-items: center;
   justify-content: center;
   transition: transform 0.2s ease;
+  overflow: hidden;
 }
+
 .artist_card:hover .artist_avatar {
   transform: translateY(-4px) scale(1.03);
 }
+
 .artist_info {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
+
 .artist_nome {
   color: #F9FAFB;
   font-size: 15px;
   font-weight: 700;
 }
+
 .artist_label {
   color: #9CA3AF;
   font-size: 12px;
 }
+/* ---------- Responsive ---------- */
 
+/*--------- Header: estado mobile (drawer) ---------*/
 @media (max-width: 900px) {
+
   .artist_grid { grid-template-columns: repeat(3, 1fr); }
+
+  /* Header deixa de tentar caber tudo em uma linha: vira
+     [logo | hambúrguer] em cima, e a nav abre como drawer abaixo
+     quando .is-menu-open. A busca e o login ficam em uma linha
+     própria (order alto) — assim não competem com o logo. */
+  .header {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px;
+  }
+
+
+  .header__logo_nav {
+    flex: 1 1 auto;
+    flex-wrap: wrap;   /* a nav é filha DESTE container (não do .header) —
+                          sem wrap aqui, o flex-basis:100% dela não consegue
+                          empurrá-la pra uma linha nova */
+    align-items: center;
+    gap: 12px;
+    justify-content: space-between;
+    min-width: 0;
+  }
+
+
+  .header__logo_nav > a > img {
+    width: auto;
+    height: 40px;
+    display: block;
+  }
+
+
+  .header__burger {
+    display: inline-flex;
+  }
+
+
+  /* Nav vira drawer: some por padrão, ocupa a linha inteira quando
+     aberta. O "flex-basis: 100%" força a quebra de linha dentro do
+     header (que tem flex-wrap: wrap), então ela cai embaixo do logo
+     sem precisar de position: absolute. */
+  .header__nav {
+    display: none;
+    flex-basis: 100%;
+    flex-direction: column;
+    gap: 8px;
+    margin: 4px 0 0;
+    order: 10;
+  }
+
+  .header.is-menu-open .header__nav {
+    display: flex;
+  }
+
+
+  .header__nav > a {
+    /* Pílula vira linha cheia: área de toque maior, alinhamento
+       à esquerda (mais legível em lista vertical que centralizado). */
+    text-align: left;
+    padding: 12px 16px;
+    border-radius: 12px;
+  }
+
+
+  /* Busca e login vão para baixo do logo/nav. search ocupa a linha
+     toda; login fica alinhado à direita. */
+  .header__search_form {
+    flex-basis: 100%;
+    width: 100%;
+    order: 20;
+    margin: 0;
+  }
+
+  .header_login {
+    flex-basis: 100%;
+    order: 30;
+    justify-content: flex-end;
+    gap: 10px;
+    margin: 0;
+  }
+
+
+  /* Busca e login vão para baixo do logo/nav. search ocupa a linha
+     toda; login fica alinhado à direita. */
+  .header__search_wrap {
+    flex-basis: 100%;
+    width: 100%;
+    max-width: none;
+    order: 20;
+    margin: 0;
+  }
 }
-@media (max-width: 600px) {
-  .artist_grid { grid-template-columns: repeat(2, 1fr); }
-  .artist_avatar { width: 88px; height: 88px; font-size: 26px; }
-}
+
+
 
 /* =========================================================
    Página de Artista
@@ -2516,16 +3048,19 @@ body[data-page="noticias"] #news_nav{
   padding: 40px 32px 80px;
   color: #E5E7EB;
 }
+
 .artista-page__status,
 .artista-page__error {
   color: #9CA3AF;
   font-size: 14px;
   padding: 24px 0;
 }
+
 .artista-page__error a {
   color: #F4CD50;
   font-weight: 600;
 }
+
 
 .artista-hero {
   display: flex;
@@ -2533,6 +3068,7 @@ body[data-page="noticias"] #news_nav{
   gap: 24px;
   margin-bottom: 48px;
 }
+
 .artista-hero__avatar {
   width: 120px;
   height: 120px;
@@ -2546,6 +3082,7 @@ body[data-page="noticias"] #news_nav{
   justify-content: center;
   flex-shrink: 0;
 }
+
 .artista-hero__eyebrow {
   color: #F4CD50;
   font-size: 12px;
@@ -2553,6 +3090,7 @@ body[data-page="noticias"] #news_nav{
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
+
 .artista-hero__nome {
   color: #F9FAFB;
   font-size: 34px;
@@ -2560,26 +3098,31 @@ body[data-page="noticias"] #news_nav{
   line-height: 1.15;
   margin-top: 6px;
 }
+
 .artista-hero__genero {
   color: #9CA3AF;
   font-size: 14px;
   margin-top: 4px;
 }
 
+
 .artista-secao {
   margin-bottom: 44px;
 }
+
 .artista-secao__titulo {
   color: #F9FAFB;
   font-size: 20px;
   font-weight: 800;
   margin-bottom: 18px;
 }
+
 .artista-secao__vazio {
   color: #9CA3AF;
   font-size: 13px;
   padding: 12px 0;
 }
+
 
 .artista-vermais {
   display: block;
@@ -2594,50 +3137,12 @@ body[data-page="noticias"] #news_nav{
   cursor: pointer;
   transition: background-color 0.15s ease, color 0.15s ease;
 }
+
 .artista-vermais:hover {
   background-color: #2a2a2a47;
   color: #F4CD50;
 }
 
-@media (max-width: 600px) {
-  .artista-page {
-    padding: 24px 16px 56px;
-  }
-  .artista-hero {
-    flex-direction: column;
-    text-align: center;
-  }
-}
-header{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-    width: 100%;
-    padding: 12px 32px;
-    background-color: rgba(15, 15, 15, 0.35);
-    flex-wrap: wrap;
-}
-
-.header__logo_nav{
-    display: flex;
-    align-items: center;
-    gap: 32px;           /* espaço entre logo e nav */
-    flex-shrink: 0;
-}
-
-.header__nav{
-    display: flex;
-    gap: 8px;            /* links mais colados entre si */
-    margin: 0;           /* tira o `margin: auto` atual que centraliza */
-}
-
-.header_login{
-    display: flex;
-    gap: 10px;
-    margin: 0;
-    flex-shrink: 0;
-}
 
 /*--------- Header: botão hambúrguer (mobile) ---------*/
 /*
@@ -2661,60 +3166,13 @@ header{
   cursor: pointer;
   transition: background-color 0.15s ease, color 0.15s ease;
 }
+
 .header__burger:hover,
 .header__burger:focus-visible {
   background-color: #dfd07824;
   color: #F4CD50;
   outline: none;
 }
-
-.header__search_form{
-    display: flex;
-    align-items: center;
-    gap: 8px;             /* faltava — sem isso o ícone fica colado/sobreposto ao texto */
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-left: auto;   /* empurra pra direita, junto do nav */
-    background: linear-gradient(rgb(33, 32, 32), rgb(22, 16, 16));
-    padding: 10px;
-    flex: 1 1 20%;       /* flex-basis controla o tamanho — width sozinho
-                            era ignorado por causa da flex-basis de 240px
-                            que existia numa declaração duplicada acima */
-    max-width: 420px;
-    min-width: 160px;
-    border-radius: 20px;
-}
-.header__search_form>i{
-    color: rgb(156, 163, 175);
-    flex-shrink: 0;       /* nunca deixa o ícone encolher/sumir por baixo do texto */
-}
-.header__search_form > input{
-    font-size: 16px;
-    background: transparent;
-    border: none;
-    flex: 1 1 auto;       /* em vez de width:100%, que ignorava o espaço do ícone */
-    min-width: 0;
-    outline: none;
-    color: white;
-}
-
-/*--------- Header: avatar de perfil (logado) ---------*/
-/*
-  Adicionar ao final de css/components.css, dentro (ou logo após) do
-  bloco "Header".
-
-  .header_login > a já estiliza qualquer link direto ali dentro como
-  pílula escura (mesmo efeito de "Entrar"). Isso é ótimo para o link
-  "Sair" (fica igual ao "Entrar", sem CSS extra) — mas precisa ser
-  desligado no link do avatar (.header_profile), senão ele também vira
-  uma pílula retangular em vez de um círculo.
-
-  Cor do avatar: mesmo gradiente dourado + #111827 já usados em
-  .profile-header__avatar e .comment-row__avatar. Nenhuma cor nova.
-*/
-
-/*--------- Footer ---------*/
-
 /*--------- Footer: mobile ---------*/
 /*
   .footer_up tinha gap:150px fixo (cabia só em telas largas) e
@@ -2724,164 +3182,57 @@ header{
   espaçamento da tabela encolhe, sem mudar a marcação (continua <table>).
 */
 @media (max-width: 700px) {
+
   .footer {
     padding: 40px 24px 24px;
     gap: 24px;
   }
+
   .footer_up {
     flex-direction: column;
     align-items: center;
     text-align: center;
     gap: 32px;
   }
+
   .footer_beebop {
     align-items: center;
     max-width: none;
   }
+
   .footer_links {
     border-spacing: 24px 10px;
     margin: -10px 0 0 -24px;
   }
+
+  .features {
+    padding: 48px 24px 16px;
+  }
+
+  .feature__row {
+    justify-content: center;
+  }
+
+  .feature__media {
+    --cover-size: 150px;
+  }
+
+  .closing {
+    padding: 32px 24px 88px;
+    gap: 40px;
+  }
+
+  .closing__title { gap: 28px; }
+
+  .closing__word--1 { margin-left: 0; }
+
+  .closing__word--2 { margin-left: 18%; }
+
+  .closing__word--3 { margin-left: 36%; }
 }
 
-/* ---------- Responsive ---------- */
-
-/*--------- Header: estado mobile (drawer) ---------*/
-@media (max-width: 900px) {
-  /* Header deixa de tentar caber tudo em uma linha: vira
-     [logo | hambúrguer] em cima, e a nav abre como drawer abaixo
-     quando .is-menu-open. A busca e o login ficam em uma linha
-     própria (order alto) — assim não competem com o logo. */
-  .header {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 12px 16px;
-  }
-
-  .header__logo_nav {
-    flex: 1 1 auto;
-    flex-wrap: wrap;   /* a nav é filha DESTE container (não do .header) —
-                          sem wrap aqui, o flex-basis:100% dela não consegue
-                          empurrá-la pra uma linha nova */
-    align-items: center;
-    gap: 12px;
-    justify-content: space-between;
-    min-width: 0;
-  }
-
-  .header__logo_nav > a > img {
-    width: auto;
-    height: 40px;
-    display: block;
-  }
-
-  .header__burger {
-    display: inline-flex;
-  }
-
-  /* Nav vira drawer: some por padrão, ocupa a linha inteira quando
-     aberta. O "flex-basis: 100%" força a quebra de linha dentro do
-     header (que tem flex-wrap: wrap), então ela cai embaixo do logo
-     sem precisar de position: absolute. */
-  .header__nav {
-    display: none;
-    flex-basis: 100%;
-    flex-direction: column;
-    gap: 8px;
-    margin: 4px 0 0;
-    order: 10;
-  }
-  .header.is-menu-open .header__nav {
-    display: flex;
-  }
-
-  .header__nav > a {
-    /* Pílula vira linha cheia: área de toque maior, alinhamento
-       à esquerda (mais legível em lista vertical que centralizado). */
-    text-align: left;
-    padding: 12px 16px;
-    border-radius: 12px;
-  }
-
-  /* Busca e login vão para baixo do logo/nav. search ocupa a linha
-     toda; login fica alinhado à direita. */
-  .header__search_form {
-    flex-basis: 100%;
-    width: 100%;
-    order: 20;
-    margin: 0;
-  }
-  .header_login {
-    flex-basis: 100%;
-    order: 30;
-    justify-content: flex-end;
-    gap: 10px;
-    margin: 0;
-  }
-}
-
-/*--------- Hero ---------*/
-
-/*--------- Music Card ---------*/
-
-/* Ao pausar: deixa a barra terminar o ciclo atual (1 iteração) e parar
-   na altura de repouso do próprio keyframe (4px), em vez de congelar
-   no meio do movimento. "animation-fill-mode: forwards" mantém a
-   barra nessa altura de repouso até a classe ser removida pelo JS. */
-
-/*--------- Skeleton Loading (hero cards, enquanto a API responde) ---------*/
-/*
-  Reaproveita o tamanho/raio/borda de .music-card (a classe continua
-  aplicada no elemento) — aqui só entram o efeito de shimmer e os
-  "ossos" no lugar de capa/título/artista, para o card real (quando
-  chegar) encaixar exatamente no mesmo espaço, sem pulo de layout.
-*/
-
-/*--------- Fallback de erro (hero cards) ---------*/
-
-/*--------- Splash Intro (página inicial) ---------*/
-/*
-  A colmeia/fundo não existe como elementos separados no projeto (é uma
-  única imagem, assets/fundoBeebop.png, aplicada globalmente no <body>).
-  Por isso os passos BACKGROUND + HEXAGONS da sequência viram uma única
-  "cortina" escura, só nesta página, que desaparece suavemente revelando
-  o fundo que já existe — sem duplicar ou recriar o sistema visual.
-*/
-
-/* Estado inicial (oculto) do título, cards e CTA, só quando a intro
-   está ativa — se o JS não adicionar "splash-ready", nada fica preso
-   invisível, porque o resto da página já depende de JS para existir. */
-
-/*--------- Features (Splash — "Qual foi sua última música favorita?") ---------*/
-
-.feature__text {
-  max-width: 400px;
-  color: #FFF8E1;
-  font-size: 20px;
-  font-weight: 800;
-  line-height: 1.1;      /* entrelinha apertada, como no Figma */
-  letter-spacing: -0.01em;
-}
-/* sombra escura marcada atrás das letras (efeito do Figma) */
-.feature__text {
-  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.85), 0 0 8px rgba(0, 0, 0, 0.5);
-}
-/*
-  Destaques dourados com brilho: degradê no tom dos botões primários
-  (#F4CD50 -> #FEE9A5) recortado na letra, com uma faixa clara que
-  "passeia" por cima (animação de background-position). Como a cor da
-  letra fica transparente, o glow usa drop-shadow (text-shadow atravessaria
-  o texto). clone = o degradê recomeça em cada linha quando a frase quebra.
-*/
-.feature__text strong {
-  font-weight: 800;
-  color: #F4CD50; /* fallback se background-clip:text não for suportado */
-  text-shadow: none;
-}
 @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+
   .feature__text strong {
     background-image: linear-gradient(
       100deg,
@@ -2902,189 +3253,7 @@ header{
     filter: drop-shadow(0 2px 1px rgba(0, 0, 0, 0.85))
             drop-shadow(0 0 6px rgba(244, 205, 80, 0.4));
   }
-}
-@keyframes feature-shine {
-  0%   { background-position: 100% 0; }
-  55%  { background-position: 0% 0; }
-  100% { background-position: 0% 0; }
-}
-@media (prefers-reduced-motion: no-preference) {
-  .feature__text strong {
-    animation: feature-shine 4s ease-in-out infinite;
-  }
-  /* desencontra o brilho entre as palavras para não piscar tudo junto */
-  .feature__text strong:nth-of-type(2) { animation-delay: 0.6s; }
-  .feature__text strong:nth-of-type(3) { animation-delay: 1.2s; }
-}
-/*
-  Mídia de cada linha (Figma): capa real do álbum na frente e um vinil
-  saindo por trás dela, para a esquerda. Tudo é dimensionado a partir de
-  --cover-size, então o mobile só precisa trocar essa variável.
-*/
-.feature__media {
-  --cover-size: 200px;
-  --vinyl-size: calc(var(--cover-size) * 1.1);
-  position: relative;
-  flex-shrink: 0;
-  width: calc(var(--cover-size) * 1.6);
-  height: var(--cover-size);
-}
-.feature__cover {
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 2;
-  width: var(--cover-size);
-  height: var(--cover-size);
-  border-radius: 4px;
-  overflow: hidden;
-  background: #1c1c1e;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
-}
-.feature__cover-img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity 400ms ease;
-}
-.feature__cover-img.is-loaded {
-  opacity: 1;
-}
-.feature__cover--placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #45464a;
-  font-size: 40px;
-}
-/* Skeleton: mesmo shimmer dos cards do hero (keyframes skeleton-shimmer). */
-.feature__cover--skeleton {
-  background-color: #1c1c1e;
-  background-image: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.06) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  background-size: 160px 100%;
-  background-repeat: no-repeat;
-  animation: skeleton-shimmer 1.3s ease-in-out infinite;
-}
-.feature__vinyl {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  z-index: 1;
-  width: var(--vinyl-size);
-  height: var(--vinyl-size);
-  margin-top: calc(var(--vinyl-size) / -2);
-  border-radius: 50%;
-  /* sulcos do disco */
-  background: repeating-radial-gradient(
-    circle at center,
-    #050505 0,
-    #050505 2px,
-    #141414 3px,
-    #141414 4px
-  );
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
-}
-/* brilho do disco */
-.feature__vinyl::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: conic-gradient(
-    from 30deg,
-    transparent 0deg,
-    rgba(255, 255, 255, 0.09) 40deg,
-    transparent 90deg,
-    transparent 180deg,
-    rgba(255, 255, 255, 0.09) 220deg,
-    transparent 270deg
-  );
-}
-/* selo central */
-.feature__vinyl::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 30%;
-  height: 30%;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  background: radial-gradient(circle, #0b0b0b 0 10%, #d9d9d9 11%);
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .feature__vinyl {
-    transition: transform 500ms ease;
-  }
-  .feature__row:hover .feature__vinyl {
-    transform: translateX(calc(var(--cover-size) * -0.08)) rotate(90deg);
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .feature__cover--skeleton {
-    animation: none;
-  }
-  .feature__cover-img {
-    transition: none;
-  }
-}
-
-@media (max-width: 700px) {
-  .features {
-    padding: 48px 24px 16px;
-  }
-  .feature__row {
-    justify-content: center;
-  }
-  .feature__media {
-    --cover-size: 150px;
-  }
-}
-
-/*--------- Fechamento (Splash — "Ouviu. Sentiu. Avaliou.") ---------*/
-
-.closing {
-  max-width: 880px;
-  margin: 0 auto;
-  padding: 40px 64px 120px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 56px;
-}
-/* Três palavras em "escada" (Figma): esquerda -> meio -> direita. */
-.closing__title {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 44px;
-  color: #F9FAFB;
-  font-size: clamp(40px, 7vw, 64px);
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: -0.01em;
-}
-.closing__word {
-  display: block;
-  align-self: flex-start;
-}
-.closing__word--1 { margin-left: 4%; }
-.closing__word--2 { margin-left: 32%; }
-.closing__word--3 { margin-left: 62%; }
-
-/* "Avaliou." em dourado, mesmo degradê/brilho dos destaques das features. */
-.closing__word--3 {
-  color: #F4CD50; /* fallback */
-}
-@supports ((-webkit-background-clip: text) or (background-clip: text)) {
   .closing__word--3 {
     background-image: linear-gradient(
       100deg,
@@ -3102,110 +3271,120 @@ header{
     color: transparent;
   }
 }
-@media (prefers-reduced-motion: no-preference) {
-  .closing__word--3 {
-    animation: feature-shine 4s ease-in-out infinite;
-  }
+
+
+@keyframes feature-shine {
+  0%   { background-position: 100% 0; }
+  55%  { background-position: 0% 0; }
+  100% { background-position: 0% 0; }
 }
 
-/* Botão "Começar": pill dourado, degradê horizontal (escuro -> claro). */
-.closing__cta {
-  padding: 16px 48px;
-  border-radius: 999px;
-  font-size: 17px;
-  font-weight: 800;
-  background: linear-gradient(90deg, #F4CD50, #FEE9A5);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
-}
-
-@media (max-width: 700px) {
-  .closing {
-    padding: 32px 24px 88px;
-    gap: 40px;
-  }
-  .closing__title { gap: 28px; }
-  .closing__word--1 { margin-left: 0; }
-  .closing__word--2 { margin-left: 18%; }
-  .closing__word--3 { margin-left: 36%; }
-}
-
-/*--------- Revelação por scroll (features / fechamento) ---------*/
-
-/*--------- Auth (Login / Criar Conta) ---------*/
 /*
-  Paleta e tipografia reaproveitadas do resto do projeto: dourado =
-  linear-gradient(rgb(244,205,80), rgb(254,233,165)) (igual
-  .hero__btn--primary / .header_account); claro = #F9FAFB e escuro de
-  texto sobre dourado = #111827 (já usados em .hero__title e nos botões
-  primários); cinza de texto secundário = #6b6b6b (já usado em
-  .footer_copyright p); fundo do painel de marca = assets/fundoBeebop.png
-  com o MESMO overlay já usado no <body> (style.css) — mesma imagem,
-  mesmos valores de opacidade. O traço sob os inputs é o próprio #111827
-  em baixa opacidade (rgba), seguindo o padrão que o projeto já usa para
-  variantes translúcidas (ex.: #2a2a2a7a, #45464a6f).
-
-  ÚNICA coisa genuinamente nova: vermelho de erro (#d64545) e verde de
-  sucesso (#1a7f37) no feedback do formulário. Não existe nenhum estado
-  de erro/validação em nenhum outro lugar do projeto para reaproveitar
-  — sem essas duas cores, não dá para diferenciar "campo inválido" de
-  "campo comum" nem "sucesso" de "erro" no aviso de status.
+  Mídia de cada linha (Figma): capa real do álbum na frente e um vinil
+  saindo por trás dela, para a esquerda. Tudo é dimensionado a partir de
+  --cover-size, então o mobile só precisa trocar essa variável.
 */
-
-/*--------- Album / Favorite additions to music-card ---------*/
-/*
-  Reaproveita 100% a paleta já em uso (dourado #F4CD50, texto #F9FAFB/
-  #9CA3AF, fundo escuro translúcido rgba(15,15,15,*)) — nenhuma cor
-  nova nesta seção.
-*/
-
-/*--------- Shared status/empty/error states (Album + Perfil) ---------*/
-
-/*--------- Album hero ---------*/
-
-/*--------- Album content: track list + sidebar ---------*/
-
-/*--------- Album comments ---------*/
-
-/*--------- Profile header ---------*/
-
-/*--------- Profile content layout ---------*/
-
-/*--------- DNA Musical card ---------*/
-/*
-  --dna-mood-* são as únicas cores genuinamente novas desta seção: o
-  donut de "Humor predominante" precisa de 4 tons distinguíveis entre
-  si, e o projeto não tinha nenhuma paleta categórica antes (só um
-  dourado). Uma das 4 já é o próprio #F4CD50 existente (Eufórico); as
-  outras 3 são novas, indispensáveis para diferenciar as fatias.
-*/
-
-/* =========================================================
-   Charts: badge de posição no music-card (pódio)
-   Reaproveita o mesmo cartão/posicionamento de .music-card__favorite
-   (top-right) espelhado para o canto oposto (top-left).
-========================================================= */
-
-/* =========================================================
-   Charts: chart-row (linha de ranking)
-   Mesma linguagem visual de .track-row (numeração de faixas do Álbum),
-   mas em bloco próprio: aqui a posição é de um ranking GLOBAL (não as
-   faixas de um único álbum) e a linha também tem capa e variação.
-========================================================= */
-
-/* =========================================================
-   Música (página de detalhe da faixa)
-   Reaproveita a mesma linguagem visual do Álbum (.album-hero,
-   .album-sidebar) — aqui como .musica-hero/.musica-sidebar, com o
-   mesmo dourado (#F4CD50), fundo translúcido (#2a2a2a7a) e cards em
-   gradiente escuro (rgba(28,28,30,.8) -> rgba(20,20,20,.9)) já usados
-   em .music-card e .album-sidebar__card. Nenhuma cor nova nesta seção.
-========================================================= */
-
-.musica-letra__body {
-  color: #E5E7EB;
-  font-size: 17px;
-  line-height: 1.9;
+.feature__media {
+  --cover-size: 200px;
+  --vinyl-size: calc(var(--cover-size) * 1.1);
+  position: relative;
+  flex-shrink: 0;
+  width: calc(var(--cover-size) * 1.6);
+  height: var(--cover-size);
 }
+
+.feature__cover {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  width: var(--cover-size);
+  height: var(--cover-size);
+  border-radius: 4px;
+  overflow: hidden;
+  background: #1c1c1e;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
+}
+
+.feature__cover-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 400ms ease;
+}
+
+.feature__cover-img.is-loaded {
+  opacity: 1;
+}
+
+.feature__cover--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #45464a;
+  font-size: 40px;
+}
+
+/* Skeleton: mesmo shimmer dos cards do hero (keyframes skeleton-shimmer). */
+.feature__cover--skeleton {
+  background-color: #1c1c1e;
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.06) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 160px 100%;
+  background-repeat: no-repeat;
+  animation: skeleton-shimmer 1.3s ease-in-out infinite;
+}
+
+/* brilho do disco */
+.feature__vinyl::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 30deg,
+    transparent 0deg,
+    rgba(255, 255, 255, 0.09) 40deg,
+    transparent 90deg,
+    transparent 180deg,
+    rgba(255, 255, 255, 0.09) 220deg,
+    transparent 270deg
+  );
+}
+
+/* selo central */
+.feature__vinyl::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30%;
+  height: 30%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, #0b0b0b 0 10%, #d9d9d9 11%);
+}
+
+.closing__word {
+  display: block;
+  align-self: flex-start;
+}
+
+.closing__word--1 { margin-left: 4%; }
+
+.closing__word--2 { margin-left: 32%; }
+
+.closing__word--3 {
+  margin-left: 62%;
+  color: #F4CD50;
+}
+
 
 /* Letra recolhida por padrão: altura máxima + fade no final, com botão
    de seta para expandir. Só aparece quando o texto realmente ultrapassa
@@ -3214,11 +3393,13 @@ header{
   position: relative;
   overflow: hidden;
 }
+
 .musica-letra__collapse.is-collapsed {
   max-height: 340px;
 }
+
 .musica-letra__collapse.is-collapsed::after {
-  content: "";
+  content: '';
   position: absolute;
   left: 0;
   right: 0;
@@ -3227,6 +3408,7 @@ header{
   background: linear-gradient(180deg, rgba(10, 10, 9, 0) 0%, rgba(10, 10, 9, 0.92) 85%);
   pointer-events: none;
 }
+
 
 .musica-letra__toggle {
   display: flex;
@@ -3242,21 +3424,19 @@ header{
   cursor: pointer;
   transition: color 0.15s ease;
 }
+
 .musica-letra__toggle:hover {
   color: #F4CD50;
 }
+
 .musica-letra__toggle i {
   transition: transform 0.2s ease;
 }
+
 .musica-letra__toggle.is-expanded i {
   transform: rotate(180deg);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .musica-letra__toggle i {
-    transition: none;
-  }
-}
 
 /* Cards clicáveis: navegam para a página de Música (ver musicCard.js/trackCard.js) */
 
@@ -3281,6 +3461,7 @@ header{
   gap: 10px;
   margin-top: 12px;
 }
+
 .profile-header__stream-btn {
   width: 32px;
   height: 32px;
@@ -3292,16 +3473,12 @@ header{
   cursor: not-allowed;
   opacity: 0.55;
 }
-.profile-header__stats {
-  background: #2a2a2a7a;
-  border: 0.5px solid #45464a6f;
-  border-radius: 12px;
-  padding: 12px 20px;
-}
+
 .profile-header .hero__btn:disabled {
   opacity: 0.55;
   cursor: not-allowed;
 }
+
 
 .profile-tabs {
   display: flex;
@@ -3309,6 +3486,7 @@ header{
   margin-bottom: 28px;
   border-bottom: 1px solid #262626;
 }
+
 .profile-tabs__tab {
   background: none;
   border: none;
@@ -3320,17 +3498,21 @@ header{
   border-bottom: 2px solid transparent;
   transition: color 0.15s ease, border-color 0.15s ease;
 }
+
 .profile-tabs__tab:hover {
   color: #F9FAFB;
 }
+
 .profile-tabs__tab.is-active {
   color: #F4CD50;
   border-bottom-color: #F4CD50;
 }
+
 .profile-tabs__tab:focus-visible {
   outline: 2px solid #F4CD50;
   outline-offset: 2px;
 }
+
 
 .profile-link {
   color: #F4CD50;
@@ -3338,14 +3520,17 @@ header{
   text-decoration: underline;
 }
 
+
 .activity-grid {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
 }
+
 .activity-item {
   width: 110px;
 }
+
 .activity-item__cover {
   aspect-ratio: 1 / 1;
   border-radius: 12px;
@@ -3358,12 +3543,14 @@ header{
   color: #45464a;
   font-size: 28px;
 }
+
 .activity-item__cover img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
+
 .activity-item__title {
   color: #E5E7EB;
   font-size: 12px;
@@ -3373,11 +3560,13 @@ header{
   text-overflow: ellipsis;
 }
 
+
 .profile-playlists {
   list-style: none;
   display: flex;
   flex-direction: column;
 }
+
 .profile-playlists__item {
   display: flex;
   align-items: center;
@@ -3388,15 +3577,18 @@ header{
   font-size: 14px;
   font-weight: 600;
 }
+
 .profile-playlists__item > i {
   color: #F4CD50;
 }
+
 .profile-playlists__count {
   margin-left: auto;
   color: #9CA3AF;
   font-size: 12px;
   font-weight: 400;
 }
+
 
 .dna-card__cta {
   width: 100%;
@@ -3411,22 +3603,27 @@ header{
   cursor: pointer;
   transition: transform 0.15s ease, filter 0.15s ease;
 }
+
 .dna-card__cta i {
   margin-right: 6px;
 }
+
 .dna-card__cta:hover {
   transform: translateY(-2px);
   filter: brightness(1.05);
 }
+
 .dna-card__cta:focus-visible {
   outline: 2px solid #F9FAFB;
   outline-offset: 2px;
 }
 
+
 /* Modal */
 body.modal-open {
   overflow: hidden;
 }
+
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -3437,6 +3634,7 @@ body.modal-open {
   justify-content: center;
   padding: 24px;
 }
+
 .modal {
   width: 100%;
   max-width: 560px;
@@ -3447,6 +3645,7 @@ body.modal-open {
   border-radius: 20px;
   padding: 24px;
 }
+
 .modal__header {
   display: flex;
   align-items: flex-start;
@@ -3454,16 +3653,19 @@ body.modal-open {
   gap: 16px;
   margin-bottom: 8px;
 }
+
 .modal__title {
   color: #F9FAFB;
   font-size: 20px;
   font-weight: 800;
 }
+
 .modal__subtitle {
   color: #9CA3AF;
   font-size: 12px;
   margin-top: 4px;
 }
+
 .modal__close {
   width: 32px;
   height: 32px;
@@ -3474,24 +3676,29 @@ body.modal-open {
   color: #E5E7EB;
   cursor: pointer;
 }
+
 .modal__close:hover {
   background-color: #2a2a2a47;
 }
+
 
 .similar-list {
   list-style: none;
   display: flex;
   flex-direction: column;
 }
+
 .similar-user {
   display: flex;
   gap: 14px;
   padding: 16px 0;
   border-bottom: 1px solid #262626;
 }
+
 .similar-user:last-child {
   border-bottom: none;
 }
+
 .similar-user__avatar {
   width: 44px;
   height: 44px;
@@ -3505,26 +3712,31 @@ body.modal-open {
   justify-content: center;
   flex-shrink: 0;
 }
+
 .similar-user__body {
   flex: 1;
   min-width: 0;
 }
+
 .similar-user__name {
   color: #F9FAFB;
   font-weight: 700;
   font-size: 14px;
 }
+
 .similar-user__handle {
   color: #9CA3AF;
   font-weight: 400;
   font-size: 12px;
   margin-left: 4px;
 }
+
 .similar-user__bio {
   color: #E5E7EB;
   font-size: 13px;
   margin: 4px 0 8px;
 }
+
 .similar-user__side {
   display: flex;
   flex-direction: column;
@@ -3532,15 +3744,18 @@ body.modal-open {
   gap: 2px;
   flex-shrink: 0;
 }
+
 .similar-user__match {
   color: #F4CD50;
   font-size: 18px;
   font-weight: 800;
 }
+
 .similar-user__match-label {
   color: #6b6b6b;
   font-size: 11px;
 }
+
 .similar-user__follow {
   margin-top: 8px;
   font-size: 12px;
@@ -3552,27 +3767,32 @@ body.modal-open {
   color: #111827;
   cursor: pointer;
 }
+
 .similar-user__follow.is-following {
   background: #2a2a2a7a;
   border: 0.5px solid #45464a6f;
   color: #E5E7EB;
 }
-
 @media (max-width: 520px) {
+
   .similar-user {
     flex-wrap: wrap;
   }
+
   .similar-user__side {
     flex-direction: row;
     align-items: center;
     gap: 8px;
     margin-left: 58px;
   }
+
   .similar-user__follow {
     margin-top: 0;
     margin-left: auto;
   }
 }
+
+
 
 /* =========================================================
    Álbum — complementos (tracklist em largura total, avaliação,
@@ -3583,9 +3803,6 @@ body.modal-open {
   cursor: pointer;
 }
 
-.artist_avatar {
-  overflow: hidden;   /* corta a imagem no formato do círculo */
-}
 
 .artist_avatar img {
   display: block;
@@ -3593,4 +3810,137 @@ body.modal-open {
   height: 100%;
   object-fit: cover;          /* preenche o círculo sem distorcer */
   object-position: center 20%; /* favorece o topo, onde ficam os rostos */
+}
+
+.header__search_wrap{
+    position: relative;   /* âncora pro dropdown de resultados */
+    display: flex;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;   /* empurra pra direita, junto do nav */
+    flex: 1 1 20%;        /* flex-basis controla o tamanho — width sozinho
+                            era ignorado por causa da flex-basis de 240px
+                            que existia numa declaração duplicada antiga */
+    max-width: 420px;
+    min-width: 160px;
+}
+
+
+/*--------- Header: dropdown de resultados rápidos ---------*/
+/*
+  Aparece abaixo de .header__search_form enquanto a pessoa digita (ver
+  header.js). .header__search_wrap é a âncora (position:relative) — o
+  dropdown fica position:absolute em relação a ele, então cabe tanto no
+  header desktop quanto no drawer mobile sem precisar de regra própria
+  em responsive.css.
+*/
+.header__search_results{
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background: #17171a;
+    border: 1px solid #2a2a2e;
+    border-radius: 14px;
+    padding: 8px;
+    max-height: 360px;
+    overflow-y: auto;
+    z-index: 60;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+
+.header__search_result{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-radius: 10px;
+    padding: 8px;
+    cursor: pointer;
+    text-align: left;
+    color: #ffffff;
+    font-family: inherit;
+}
+
+.header__search_result:hover,
+.header__search_result:focus-visible{
+    background: #232326;
+}
+
+.header__search_result__cover{
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    object-fit: cover;
+    background: #333;
+    flex-shrink: 0;
+}
+
+.header__search_result__cover--placeholder{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #7a7a7a;
+    font-size: 14px;
+}
+
+.header__search_result__info{
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+.header__search_result__title{
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.header__search_result__subtitle{
+    font-size: 11px;
+    color: #a3a3a3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.header__search_result__type{
+    font-size: 10px;
+    font-weight: 700;
+    color: #f5c400;
+    text-transform: uppercase;
+    flex-shrink: 0;
+}
+
+.header__search_verTodos{
+    display: block;
+    width: 100%;
+    text-align: center;
+    background: transparent;
+    border: none;
+    border-top: 1px solid #2a2a2e;
+    margin-top: 6px;
+    padding-top: 10px;
+    color: #f5c400;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.header__search_verTodos:hover{
+    text-decoration: underline;
+}
+
+.header__search_empty{
+    padding: 16px 8px;
+    color: #9a9a9a;
+    font-size: 13px;
+    text-align: center;
 }
