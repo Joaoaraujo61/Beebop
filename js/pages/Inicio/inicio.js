@@ -2,11 +2,12 @@
 
 import { playSplashIntro, observeScrollReveal } from './splashScreen.js';
 import { renderHeroCards } from './heroCards.js';
+import { renderFeatureAlbums } from './featureAlbums.js';
 
-// Textos da seção de features. Não há capas reais associadas (o projeto
-// não tem dados de álbum/artista carregados aqui), então cada item usa
-// apenas um ícone de vinil decorativo — nenhuma imagem de capa/artista
-// real é usada ou inventada.
+// Textos da seção de features. As capas ao lado de cada texto NÃO ficam
+// aqui: vêm de álbuns sorteados a cada carregamento da página
+// (featureAlbums.js -> curatedSelections.js -> iTunes API), então a
+// seção mostra discos diferentes a cada reload.
 const FEATURES = [
   {
     text: 'Redescubra <strong>seus gostos</strong>, descubra <strong>novos sons</strong> e opine junto com <strong>seus amigos</strong>.',
@@ -47,7 +48,11 @@ export function initInicioPage({ header }) {
     </section>
 
     <section class="closing reveal-on-scroll">
-      <h2 class="closing__title">Ouviu. Sentiu. Avaliou.</h2>
+      <h2 class="closing__title">
+        <span class="closing__word closing__word--1">Ouviu.</span>
+        <span class="closing__word closing__word--2">Sentiu.</span>
+        <span class="closing__word closing__word--3">Avaliou.</span>
+      </h2>
       <a class="hero__btn hero__btn--primary closing__cta" href="../CriarConta/criar_conta.html">Começar</a>
     </section>
   `;
@@ -59,10 +64,13 @@ export function initInicioPage({ header }) {
   FEATURES.forEach((feature) => {
     const row = document.createElement('div');
     row.className = 'feature__row reveal-on-scroll';
+    // Vinil (decorativo) atrás + capa do álbum na frente. A capa nasce
+    // como skeleton e é preenchida por renderFeatureAlbums().
     row.innerHTML = `
       <p class="feature__text">${feature.text}</p>
-      <div class="feature__vinyl" aria-hidden="true">
-        <i class="fa-solid fa-record-vinyl"></i>
+      <div class="feature__media">
+        <div class="feature__vinyl" aria-hidden="true"></div>
+        <div class="feature__cover feature__cover--skeleton"></div>
       </div>
     `;
     featuresList.appendChild(row);
@@ -78,6 +86,9 @@ export function initInicioPage({ header }) {
   //    refatoração existe para evitar).
   playSplashIntro(heroEl);
   renderHeroCards(cardsWrap);
+  // Também sem "await": as capas só são buscadas quando a seção se
+  // aproxima da tela e não bloqueiam nada.
+  renderFeatureAlbums(featuresList);
 
   observeScrollReveal(container);
 

@@ -2,8 +2,9 @@
 
 import { appState } from '../store/appState.js';
 import { logout } from '../services/authService.js';
+import { renderNav } from './nav.js';
 
-export function renderHeader({ onSearch, initialQuery = '' } = {}) {
+export function renderHeader({ onSearch, initialQuery = '', activePage } = {}) {
   const header = document.createElement('header');
   header.className = 'header';
 
@@ -20,13 +21,6 @@ export function renderHeader({ onSearch, initialQuery = '' } = {}) {
       >
         <i class="fa-solid fa-bars" aria-hidden="true"></i>
       </button>
-
-      <nav class="header__nav" id="header-nav">
-        <a id="inicio_nav" href="../Inicio/inicio.html">Inicio</a>
-        <a id="explorar_nav" href="../Explorar/explorar.html">Explorar</a>
-        <a id="charts_nav" href="../Charts/charts.html">Charts</a>
-        <a id="news_nav" href="../Noticias/noticias.html">Notícias</a>
-      </nav>
     </div>
     <form class="header__search_form">
       <input
@@ -40,6 +34,14 @@ export function renderHeader({ onSearch, initialQuery = '' } = {}) {
     <div class="header_login"></div>
 `;
 
+  // Nav agora é um componente à parte (ver components/Nav/Nav.js) — se a
+  // página já souber qual link deve estar ativo no momento de criar o
+  // header, passa `activePage` aqui; senão, dá pra marcar depois com
+  // applyActiveNavLink(header, 'explorar') (ver explorar.js).
+  const logoNav = header.querySelector('.header__logo_nav');
+  const nav = renderNav({ activePage });
+  logoNav.appendChild(nav);
+
   // Eventos ficam encapsulados aqui dentro — a página não precisa
   // saber COMO o header funciona, só o QUE ele faz (callback)
   const form = header.querySelector('.header__search_form');
@@ -47,7 +49,6 @@ export function renderHeader({ onSearch, initialQuery = '' } = {}) {
   const loginArea = header.querySelector('.header_login');
 
   const burger = header.querySelector('.header__burger');
-  const nav = header.querySelector('.header__nav');
 
   if (burger && nav) {
     const fecharMenu = () => {

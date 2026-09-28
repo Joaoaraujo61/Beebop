@@ -16,6 +16,7 @@ import { renderTrackCard, attachTrackCardEvents } from '../../components/trackCa
 import { renderAlbumCard, attachAlbumCardEvents } from '../../components/albumCard.js';
 import { renderArtistCard } from '../../components/artistCard.js';
 import { getMusicasParaDescoberta, getAlbunsParaDescoberta } from '../../data/curatedSelections.js';
+import { applyActiveNavLink } from '../../components/nav.js';
 
 const generos = [
   'Todos os gêneros', 'Pop', 'Rock', 'Hip-Hop', 'K-pop', 'Jazz', 'Indie', 'MPB'
@@ -102,7 +103,12 @@ export function initExplorarPage({ header } = {}) {
     return;
   }
 
-  // Resultados completos desta página (antes do filtro de gênero e da paginação).
+  // Marca "Explorar" como ativo na nav do header (ver components/Nav/Nav.js).
+  // `header` é o elemento já criado por renderHeader() em app.js — antes
+  // esse parâmetro chegava aqui e não era usado pra nada.
+  applyActiveNavLink(header, 'explorar');
+
+  // Resultados completos desta página (antes do filtro de gênero e da pagirração).
   // Ficam locais porque combinam três formatos diferentes (músicas/álbuns/artistas),
   // enquanto store/appState.js guarda o que é realmente compartilhado entre páginas:
   // termo de busca, categoria/gênero ativos, loading e erro.
@@ -148,7 +154,7 @@ export function initExplorarPage({ header } = {}) {
 
   // --- Modo descoberta: sem busca ativa, mostra a seleção curada (Top charts + Surpresas) ---
   async function renderDescoberta() {
-    modoDescoberta = true;  
+    modoDescoberta = true;
     mostrarStatus('Carregando sugestões...');
 
     const musicas = await getMusicasParaDescoberta(ITENS_MUSICAS_DESCOBERTA);
