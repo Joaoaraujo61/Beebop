@@ -1,193 +1,213 @@
-# 🎵 Beebop - Catálogo Web de Músicas / Web Music Catalog
+<div align="center">
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Status-Em%20Desenvolvimento%20%2F%20In%20Development-yellow?style=for-the-badge" alt="Status">
-</p>
+# 🐝 Beebop
 
----
+### Catálogo Web de Músicas · Web Music Catalog
 
-## 🌐 Idiomas / Languages
+**🎓 Projeto Integrador** — Serasa *Transforme-se* × SENAC-DF
 
-- [Português (BR)](#-português-br)
-- [English](#-english)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES%20Modules-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![iTunes API](https://img.shields.io/badge/iTunes%20API-FA243C?style=for-the-badge&logo=apple-music&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel%20Functions-000000?style=for-the-badge&logo=vercel&logoColor=white)
 
----
+[🇧🇷 Português](#-português) · [🇬🇧 English](#-english)
 
-## 🇧🇷 Português (BR)
-
-### 📌 Sobre o Projeto
-
-O **Beebop** é uma plataforma/catálogo web de música desenvolvida como **Projeto Integrador**. A aplicação foi projetada para conectar entusiastas de música a um acervo interativo, permitindo explorar novos artistas, álbuns, playlists e faixas com uma experiência visual moderna e responsiva.
+</div>
 
 ---
 
-### ✨ Funcionalidades Principais
+# 🇧🇷 Português
 
-- 🔍 **Busca & Descobrimento:** Pesquisa dinâmica por músicas, artistas, gêneros e álbuns.
-- 🎨 **Interface Interativa:** Layout dinâmico com modo escuro/claro e navegação fluida.
-- 🎧 **Player / Prévia de Áudio:** Execução de amostras de áudio e controle de reprodução.
-- ❤️ **Favoritos e Playlists:** Permite salvar músicas preferidas e criar listas personalizadas.
-- 👤 **Autenticação de Usuário:** Sistema de login/cadastro para personalização da experiência.
-- 📱 **Design Responsivo:** Adaptável a dispositivos móveis, tablets e desktops.
+## 🎵 O que é o Beebop?
 
----
+O **Beebop** é um **catálogo web de músicas** feito para quem ama música: busque álbuns, artistas e faixas, ouça prévias, **avalie, comente e salve seus favoritos** e descubra pessoas com gostos parecidos com os seus.
 
-### 🚀 Tecnologias e Ferramentas
+Este projeto é o nosso **Projeto Integrador**, desenvolvido no programa **Serasa Transforme-se** em parceria com o **SENAC-DF**.
 
-#### **Front-end**
-- **React.js** (com Hooks e Context API)
-- **HTML5 & CSS3** / **Tailwind CSS** ou **Styled Components**
-- **Axios** (para consumo de APIs)
-- **Lucide / FontAwesome** (Ícones)
+## ✨ Destaques
 
-#### **Back-end (se aplicável)**
-- **Node.js** & **Express**
-- **JWT (JSON Web Token)** para autenticação
-- **Prisma / Sequelize** (ORM)
+- 🔎 **Explorar** — busca em tempo real, filtros, ordenação e paginação
+- 💿 **Álbuns, Artistas e Músicas** — páginas de detalhe com dados reais do catálogo
+- 🏆 **Charts** — rankings de álbuns e músicas
+- 📰 **Notícias** — seleção curada do mundo da música
+- ⭐ **Avaliações e comentários** — dê sua nota e opine
+- 🎧 **Player** — prévias de áudio com controle de reprodução
+- 📝 **Letras** — integração com Genius e Lyrics.ovh
+- 👤 **Login, Cadastro e Perfil** — conta de usuário e itens salvos
+- 📱 **Layout responsivo** — funciona em celular, tablet e desktop
 
-#### **Banco de Dados & Outros**
-- **PostgreSQL** / **MongoDB**
-- **Git & GitHub** (Controle de versão)
+## 🧰 Tecnologias
 
----
+| Tecnologia | Para que usamos |
+|---|---|
+| **HTML5** | Estrutura das páginas |
+| **CSS3** | Visual, animações e responsividade |
+| **JavaScript (ES Modules)** | Lógica, componentes e navegação — sem framework |
+| **iTunes Search API** | Catálogo de músicas, álbuns, artistas e prévias |
+| **TheAudioDB** | Fotos de artistas |
+| **Genius API** + **Lyrics.ovh** | Busca de letras |
+| **Vercel Functions** | Proxy seguro para esconder o token da Genius |
+| **localStorage** | Sessão, contas simuladas e favoritos no navegador |
+| **Font Awesome** + **Google Fonts (Inter)** | Ícones e tipografia |
 
-### 📂 Estrutura de Pastas
+## 🗂️ Estrutura
 
 ```text
-beebop/
-├── public/              # Arquivos estáticos (favicon, imagens, index.html)
-├── src/
-│   ├── assets/          # Estilos globais, imagens e mídias
-│   ├── components/      # Componentes reutilizáveis (Header, Player, Card, etc.)
-│   ├── context/         # Contextos da aplicação (Autenticação, Player)
-│   ├── pages/           # Páginas principais (Home, Search, Library, Profile)
-│   ├── services/        # Configuração de rotas de API (Axios/Fetch)
-│   ├── utils/           # Funções utilitárias e helpers
-│   ├── App.jsx          # Componente raiz
-│   └── main.jsx         # Ponto de entrada da aplicação
-├── .env.example         # Exemplo de variáveis de ambiente
-├── package.json         # Dependências do projeto
-└── README.md            # Documentação
+Beebop/
+├── api/            # Função serverless (proxy da Genius)
+├── assets/         # Imagens e identidade visual
+├── css/            # style, components e responsive
+├── js/
+│   ├── components/ # Header, Player, Cards, Paginação...
+│   ├── pages/      # Início, Explorar, Álbum, Artista, Música, Charts, Notícias, Perfil, Login...
+│   ├── services/   # Acesso às APIs e autenticação
+│   ├── store/      # Estado compartilhado (appState)
+│   ├── data/       # Seleções e notícias curadas
+│   └── utils/      # Formatadores, validadores e helpers
+└── index.html      # Redireciona para a página inicial
 ```
 
----
+## 🚀 Como rodar
 
-### 🛠️ Pré-requisitos e Instalação
+O projeto usa ES Modules e `fetch`, então precisa de um servidor local (abrir o `index.html` direto do disco não funciona).
 
-Antes de começar, certifique-se de ter instalado em sua máquina:
-- [Node.js](https://nodejs.org/) (versão 18 ou superior)
-- [Git](https://git-scm.com/)
-- Gerenciador de pacotes `npm` ou `yarn`
+```bash
+# 1. Clone o repositório
+git clone https://github.com/seu-usuario/beebop.git
+cd beebop
 
-#### **Passo a passo:**
+# 2. Suba um servidor local (escolha um)
+python3 -m http.server 8080
+# ou
+npx serve .
+```
 
-1. **Clonar o repositório:**
-   ```bash
-   git clone https://github.com/seu-usuario/beebop.git
-   cd beebop
-   ```
+Acesse **http://localhost:8080** 🎉
 
-2. **Instalar as dependências:**
-   ```bash
-   npm install
-   ```
+> 💡 **Letras via Genius (opcional):** publique `api/genius-search.js` como função serverless (ex.: Vercel) e defina a variável de ambiente `GENIUS_ACCESS_TOKEN`. Nunca coloque o token no código do front-end.
 
-3. **Configurar as Variáveis de Ambiente:**
-   Crie um arquivo `.env` na raiz do projeto com base no `.env.example`:
-   ```env
-   VITE_API_URL=http://localhost:3000
-   VITE_MUSIC_API_KEY=sua_chave_aqui
-   ```
+## 📍 Status das páginas
 
-4. **Executar a aplicação:**
-   ```bash
-   npm run dev
-   # ou
-   npm start
-   ```
-   Acesse no navegador: `http://localhost:5173` (ou a porta informada no terminal).
+| Página | Status |
+|---|---|
+| Início, Explorar, Álbum, Artista, Música | ✅ Funcionais |
+| Charts, Notícias, Perfil | ✅ Funcionais |
+| Login e Criar Conta | ✅ Funcionais (simulados no navegador, sem backend) |
+| Playlist | 🚧 Em desenvolvimento |
 
----
+## ⚠️ Observações
 
-<br/>
+- A autenticação é **simulada** (dados no `localStorage`) e serve apenas para fins didáticos — não use senhas reais.
+- A chave do TheAudioDB é a de teste pública, com limite de requisições.
 
----
+## 🤝 Contribuindo
 
-## 🇬🇧 English
-
-### 📌 About the Project
-
-**Beebop** is a web music catalog platform developed as an **Integrated Project**. The application was designed to connect music enthusiasts with an interactive library, allowing users to explore new artists, albums, playlists, and tracks through a modern, responsive user experience.
+1. Faça um **fork**
+2. Crie uma branch: `git checkout -b feature/minha-feature`
+3. Commit: `git commit -m "Adiciona minha feature"`
+4. Push: `git push origin feature/minha-feature`
+5. Abra um **Pull Request**
 
 ---
 
-### ✨ Key Features
+# 🇬🇧 English
 
-- 🔍 **Search & Discovery:** Dynamic search for tracks, artists, genres, and albums.
-- 🎨 **Interactive UI:** Dynamic layout with dark/light mode and seamless navigation.
-- 🎧 **Audio Player / Preview:** Play audio samples with full playback controls.
-- ❤️️ **Favorites & Playlists:** Save favorite songs and create custom playlists.
-- 👤 **User Authentication:** Login and signup system for personalized user experience.
-- 📱 **Responsive Design:** Fully optimized for mobile, tablet, and desktop devices.
+## 🎵 What is Beebop?
+
+**Beebop** is a **web music catalog** built for music lovers: search albums, artists and tracks, play previews, **rate, comment and save your favorites**, and find people with similar taste.
+
+This project is our **Integrated Project (Projeto Integrador)**, developed in the **Serasa *Transforme-se*** program in partnership with **SENAC-DF**.
+
+## ✨ Highlights
+
+- 🔎 **Explore** — real-time search, filters, sorting and pagination
+- 💿 **Albums, Artists & Tracks** — detail pages with real catalog data
+- 🏆 **Charts** — album and track rankings
+- 📰 **News** — a curated selection from the music world
+- ⭐ **Ratings & comments** — leave your score and share your opinion
+- 🎧 **Player** — audio previews with playback controls
+- 📝 **Lyrics** — Genius and Lyrics.ovh integration
+- 👤 **Login, Sign-up & Profile** — user account and saved items
+- 📱 **Responsive layout** — works on mobile, tablet and desktop
+
+## 🧰 Tech Stack
+
+| Technology | What we use it for |
+|---|---|
+| **HTML5** | Page structure |
+| **CSS3** | Look & feel, animations and responsiveness |
+| **JavaScript (ES Modules)** | Logic, components and navigation — no framework |
+| **iTunes Search API** | Music, album and artist catalog, plus previews |
+| **TheAudioDB** | Artist photos |
+| **Genius API** + **Lyrics.ovh** | Lyrics lookup |
+| **Vercel Functions** | Secure proxy to keep the Genius token private |
+| **localStorage** | Session, simulated accounts and favorites in the browser |
+| **Font Awesome** + **Google Fonts (Inter)** | Icons and typography |
+
+## 🗂️ Structure
+
+```text
+Beebop/
+├── api/            # Serverless function (Genius proxy)
+├── assets/         # Images and branding
+├── css/            # style, components and responsive
+├── js/
+│   ├── components/ # Header, Player, Cards, Pagination...
+│   ├── pages/      # Home, Explore, Album, Artist, Track, Charts, News, Profile, Login...
+│   ├── services/   # API access and authentication
+│   ├── store/      # Shared state (appState)
+│   ├── data/       # Curated selections and news
+│   └── utils/      # Formatters, validators and helpers
+└── index.html      # Redirects to the home page
+```
+
+## 🚀 Getting Started
+
+The project uses ES Modules and `fetch`, so it must be served over HTTP (opening `index.html` straight from disk won't work).
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/your-username/beebop.git
+cd beebop
+
+# 2. Start a local server (pick one)
+python3 -m http.server 8080
+# or
+npx serve .
+```
+
+Open **http://localhost:8080** 🎉
+
+> 💡 **Lyrics via Genius (optional):** deploy `api/genius-search.js` as a serverless function (e.g. Vercel) and set the `GENIUS_ACCESS_TOKEN` environment variable. Never put the token in front-end code.
+
+## 📍 Page Status
+
+| Page | Status |
+|---|---|
+| Home, Explore, Album, Artist, Track | ✅ Working |
+| Charts, News, Profile | ✅ Working |
+| Login & Sign-up | ✅ Working (simulated in the browser, no backend) |
+| Playlist | 🚧 In progress |
+
+## ⚠️ Notes
+
+- Authentication is **simulated** (data lives in `localStorage`) and is for learning purposes only — don't use real passwords.
+- The TheAudioDB key is the public test key and is rate-limited.
+
+## 🤝 Contributing
+
+1. **Fork** the repo
+2. Create a branch: `git checkout -b feature/my-feature`
+3. Commit: `git commit -m "Add my feature"`
+4. Push: `git push origin feature/my-feature`
+5. Open a **Pull Request**
 
 ---
 
-### 🚀 Tech Stack
+<div align="center">
 
-#### **Front-end**
-- **React.js** (Hooks & Context API)
-- **HTML5 & CSS3** / **Tailwind CSS** or **Styled Components**
-- **Axios** (API requests)
-- **Lucide / FontAwesome** (Icon sets)
+Feito com 💛 pela equipe Beebop · Made with 💛 by the Beebop team
 
-#### **Back-end (if applicable)**
-- **Node.js** & **Express**
-- **JWT (JSON Web Token)** for authentication
-- **Prisma / Sequelize** (ORM)
-
-#### **Database & Tools**
-- **PostgreSQL** / **MongoDB**
-- **Git & GitHub** (Version Control)
-
----
-
-### 🛠️ Prerequisites and Installation
-
-Make sure you have installed on your machine:
-- [Node.js](https://nodejs.org/) (v18 or higher)
-- [Git](https://git-scm.com/)
-- `npm` or `yarn` package manager
-
-#### **Step by Step:**
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/your-username/beebop.git
-   cd beebop
-   ```
-
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-
-3. **Environment Variables:**
-   Create a `.env` file in the root directory using `.env.example` as a template:
-   ```env
-   VITE_API_URL=http://localhost:3000
-   VITE_MUSIC_API_KEY=your_key_here
-   ```
-
-4. **Run the project:**
-   ```bash
-   npm run dev
-   # or
-   npm start
-   ```
-   Open your browser at: `http://localhost:5173`
-
-
-
-<p align="center">
-  <i>Desenvolvido com 💜 pela equipe do <b>Projeto Integrador Beebop</b>.</i>
-</p>
+</div>
