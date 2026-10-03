@@ -2,9 +2,6 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Status-Em%20Desenvolvimento%20%2F%20In%20Development-yellow?style=for-the-badge" alt="Status">
-  <img src="https://img.shields.io/badge/React-18.x-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React">
-  <img src="https://img.shields.io/badge/Node.js-18.x-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js">
-  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License">
 </p>
 
 ---
@@ -189,24 +186,7 @@ Make sure you have installed on your machine:
    ```
    Open your browser at: `http://localhost:5173`
 
----
 
-## 🤝 Contribuição / Contributing
-
-Contribuições são super bem-vindas! Se deseja melhorar o projeto:
-1. Faça um **Fork** do projeto.
-2. Crie uma nova branch com a sua feature (`git checkout -b feature/MinhaFeature`).
-3. Commit suas alterações (`git commit -m 'Adiciona nova feature'`).
-4. Envie para o branch (`git push origin feature/MinhaFeature`).
-5. Abra um **Pull Request**.
-
----
-
-## 📄 Licença / License
-
-Este projeto está sob a licença MIT - consulte o arquivo [LICENSE](LICENSE) para obter mais detalhes.
-
----
 
 <p align="center">
   <i>Desenvolvido com 💜 pela equipe do <b>Projeto Integrador Beebop</b>.</i>
